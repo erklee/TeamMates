@@ -16,15 +16,19 @@ TeamMates is a web application that allows people to find sports events that the
 - User Authorization
 - Hosting
 - Demo User
+  
 - Events: Sport Events (CRUD)
   - Create Event
   - Update Event
   - Delete Event
+    
 - Google Maps API
   - Allows users to find locations of events near them
+    
 - Users can show events they are interested in
   - Have the option to attend events
       - Can decide to not attend the events
+        
 - Adding friends and see what events they're attending
 
 
