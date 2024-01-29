@@ -18,6 +18,14 @@ const userSchema = new Schema({
         type: Date,
         required: true 
     },
+    fname:{
+      type: String,
+      required: true
+    },
+    lname:{
+      type: String,
+      required: true
+    },
     address: {
         street: {
           type: String
@@ -29,15 +37,8 @@ const userSchema = new Schema({
           type: String
         },
         zipcode: {
-          type: Number,
+          type: String,
           required: false,
-          validate: {
-            validator: function (v) {
-              // Check if the zipcode is a 5-digit integer
-              return /^[0-9]{5}$/.test(v.toString());
-            },
-            message: props => `${props.value} is not a valid 5-digit zipcode!`
-          }
         }
       }
   }, {

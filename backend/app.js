@@ -10,6 +10,7 @@ const csurf = require('csurf');
 
 
 require('./models/User');
+require('./models/Event');
 require('./config/passport');
 
 
@@ -19,6 +20,7 @@ const { isProduction } = require('./config/keys');
 
 const usersRouter = require('./routes/api/users');
 const csrfRouter = require('./routes/api/csrf');
+const eventsRouter = require('./routes/api/events');
 
 const app = express();
 
@@ -51,48 +53,49 @@ app.use(
 // Attach Express routers
 app.use('/api/users', usersRouter);
 app.use('/api/csrf', csrfRouter);
+app.use('/api/events', eventsRouter);
 
 app.use((req, res, next) => {
-    const err = new Error('Not Found');
-    err.statusCode = 404;
-    next(err);
+  const err = new Error('Not Found');
+  err.statusCode = 404;
+  next(err);
+});
+  
+const serverErrorLogger = debug('backend:error');
+
+// Express custom error handler that will be called whenever a route handler or
+// middleware throws an error or invokes the `next` function with a truthy value
+app.use((err, req, res, next) => {
+  serverErrorLogger(err);
+  const statusCode = err.statusCode || 500;
+  res.status(statusCode);
+  res.json({
+    message: err.message,
+    statusCode,
+    errors: err.errors
+  })
+});
+
+if (isProduction) {
+  const path = require('path');
+  // Serve the frontend's index.html file at the root route
+  app.get('/', (req, res) => {
+    res.cookie('CSRF-TOKEN', req.csrfToken());
+    res.sendFile(
+      path.resolve(__dirname, '../frontend', 'dist', 'index.html')
+    );
   });
-  
-  const serverErrorLogger = debug('backend:error');
-  
-  // Express custom error handler that will be called whenever a route handler or
-  // middleware throws an error or invokes the `next` function with a truthy value
-  app.use((err, req, res, next) => {
-    serverErrorLogger(err);
-    const statusCode = err.statusCode || 500;
-    res.status(statusCode);
-    res.json({
-      message: err.message,
-      statusCode,
-      errors: err.errors
-    })
+
+  // Serve the static assets in the frontend's dist folder
+  app.use(express.static(path.resolve("../frontend/dist")));
+
+  // Serve the frontend's index.html file at all other routes NOT starting with /api
+  app.get(/^(?!\/?api).*/, (req, res) => {
+    res.cookie('CSRF-TOKEN', req.csrfToken());
+    res.sendFile(
+      path.resolve(__dirname, '../frontend', 'dist', 'index.html')
+    );
   });
-  
-  if (isProduction) {
-    const path = require('path');
-    // Serve the frontend's index.html file at the root route
-    app.get('/', (req, res) => {
-      res.cookie('CSRF-TOKEN', req.csrfToken());
-      res.sendFile(
-        path.resolve(__dirname, '../frontend', 'dist', 'index.html')
-      );
-    });
-  
-    // Serve the static assets in the frontend's dist folder
-    app.use(express.static(path.resolve("../frontend/dist")));
-  
-    // Serve the frontend's index.html file at all other routes NOT starting with /api
-    app.get(/^(?!\/?api).*/, (req, res) => {
-      res.cookie('CSRF-TOKEN', req.csrfToken());
-      res.sendFile(
-        path.resolve(__dirname, '../frontend', 'dist', 'index.html')
-      );
-    });
-  }
+}
 
 module.exports = app;
