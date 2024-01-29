@@ -8,9 +8,9 @@ const Event = mongoose.model('Event');
 const { requireUser } = require('../../config/passport');
 
 
-router.get("/", async (req, res, next) => {
+router.get("/", async function(req, res, next) {
     try {
-        const events = Event.find({})
+        const events = await Event.find({})
                             .populate("coordinator", "_id username")
                             .populate("attendees", "_id username");
         return res.json(events);
@@ -20,12 +20,18 @@ router.get("/", async (req, res, next) => {
     }
 })
 
-router.get("/:id", async (req, res, next) => {
+router.get("/:id", async function(req, res, next) {
+    try {
+        const event = await Event.findById(req.params.id);
+    }
+    catch(err) {
+        return res.json({ errors: "Can't find this event" })
+    }
 
 })
 
 
-router.post("/", async (req, res, next) => {
+router.post("/", requireUser, async function(req, res, next) {
     let user
     try {
         user = await fetch('/api/users/current');
@@ -55,6 +61,8 @@ router.post("/", async (req, res, next) => {
     }
 })
 
-router.get("/:id", async (req, res, next) => {
+router.get("/:id", async function(req, res, next) {
     
 })
+
+module.exports = router;
