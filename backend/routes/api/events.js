@@ -26,7 +26,7 @@ router.get("/:id", async function(req, res, next) {
         return res.json(event);
     }
     catch(err) {
-        return res.json({ errors: ["Can not find this event"] })
+        return res.json({ errors: ["Could not find this event"] })
     }
 })
 
@@ -61,9 +61,11 @@ router.patch("/:id/unattend", requireUser, async function(req, res, next) {
     }
     try {
         if (!event.current.attendees.includes(req.user._id)) return res.json(["You are not attending this event"])
-        event.current.attendees = event.current.attendees.filter(attendee => attendee != req.user._id);
-        event.current.save();
-        return res.json(event.current);
+        event.current.attendees = event.current.attendees.filter(attendee => {
+            return attendee.equals(req.user._id)
+        });
+        const patchedEvent = await event.current.save();
+        return res.json(patchedEvent);
     }
     catch(err) {
         next(err)
