@@ -1,7 +1,7 @@
 // backend/app.js
 
-const express = require("express");
 const cookieParser = require('cookie-parser');
+const express = require("express");
 const logger = require('morgan');
 const debug = require('debug');
 
