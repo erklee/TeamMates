@@ -30,9 +30,18 @@ export default function LoginModal() {
     dispatch(hideModal("LoginModal"))
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(login({ email, password })); 
+    const result = await dispatch(login({ email, password }));
+    // dispatch(hideModal("LoginModal"))
+    if (result && result.success) {
+    // Close the modal on successful login
+      dispatch(hideModal("LoginModal"));
+    } else {
+      // Handle errors, display them in the modal, etc.
+      console.error("Login failed:", result.errors);
+    }
+    // return dispatch(login({ email, password })); 
   }
 
   return (
@@ -49,6 +58,7 @@ export default function LoginModal() {
             placeholder="Email"
           />
         </label>
+        <div className="errors">{errors?.password}</div>
         <label>
           <p>Password</p>
           <input type="password"
