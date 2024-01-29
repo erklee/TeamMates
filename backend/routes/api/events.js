@@ -23,9 +23,51 @@ router.get("/", async function(req, res, next) {
 router.get("/:id", async function(req, res, next) {
     try {
         const event = await Event.findById(req.params.id);
+        return res.json(event);
     }
     catch(err) {
-        return res.json({ errors: "Can't find this event" })
+        return res.json({ errors: ["Could not find this event"] })
+    }
+})
+
+router.patch("/:id/attend", requireUser, async function(req, res, next) {
+    const event = { current: null }
+    try {
+        event.current = await Event.findById(req.params.id)
+        
+    }
+    catch(err) {
+        return res.json({ errors: ["Could not find Event #{VALUE}"]})
+    }
+    try {
+        if (event.current.attendees.includes(req.user._id)) return res.json(["You are already attending this event"])
+        event.current.attendees.push(req.user._id);
+        event.current.save();
+        return res.json(event.current);
+    }
+    catch(err) {
+        next(err)
+    }
+})
+
+router.patch("/:id/unattend", requireUser, async function(req, res, next) {
+    const event = { current: null }
+    try {
+        event.current = await Event.findById(req.params.id)
+    }
+    catch(err) {
+        return res.json({ errors: ["Could not find Event #{VALUE}"]})
+    }
+    try {
+        if (event.current.attendees.includes(req.user._id)) return res.json(["You are not attending this event yet"]);
+        event.current.attendees = event.current.attendees.filter(attendee => {
+            return attendee.equals(req.user._id)
+        });
+        const patchedEvent = await event.current.save();
+        return res.json(patchedEvent);
+    }
+    catch(err) {
+        next(err)
     }
 })
 
@@ -43,7 +85,7 @@ router.post("/", requireUser, async function(req, res, next) {
             coordinator: req.user._id,
             title: req.body.title,
             description: req.body.description,
-            category: req.body.category,
+            category: req.body.category.toLowerCase(),
             date: new Date(req.body.date),
             attendeesMax: parseInt(req.body.attendeesMax),
             attendees: [req.user._id],
