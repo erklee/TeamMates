@@ -1,0 +1,28 @@
+.links-auth {
+  display: flex;
+  flex-direction: row;
+}
+
+#navBarSignUp {
+  margin-right: 50px;
+}
+
+#navBarLogin {
+  margin-right: 20px;
+}
+
+.navBarContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 100px;
+  background-color: blue;
+  padding: 0px 30px;
+}
+
+.navBarContainer h1 {
+  color: white;
+  font-size: 50px;
+  font-weight: 600;
+}
