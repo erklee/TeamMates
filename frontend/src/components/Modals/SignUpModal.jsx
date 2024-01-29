@@ -65,6 +65,7 @@ export default function SignUpModal() {
         <h1 className="signUpModalTitle">Sign Up</h1>
         <div className="errors">{errors?.email}</div>
         <p>An asterisk (*) indicates a required field</p>
+        <div className="errors">{errors?.username}</div>
         <label>
           <p>Username*</p>
           <input type="text"
@@ -73,6 +74,7 @@ export default function SignUpModal() {
             placeholder="Username"
           />
         </label>
+        <div className="errors">{errors?.email}</div>
         <label>
           <p>Email*</p>
           <input type="text"
@@ -81,6 +83,7 @@ export default function SignUpModal() {
             placeholder="Email"
           />
         </label>
+        <div className="errors">{errors?.password}</div>
         <label>
           <p>Password*</p>
           <input type="password"
@@ -89,6 +92,7 @@ export default function SignUpModal() {
             placeholder="Password"
           />
         </label>
+        <div className="errors">{errors?.birthdate}</div>
         <label>
           <p>Birthdate*</p>
           <input type="date"
@@ -96,7 +100,8 @@ export default function SignUpModal() {
             onChange={(e) => setBirthDate(e.target.value)}
           />
         </label>
-      
+
+        <div className="errors">{errors?.street}</div>
         <label>
           <p>Street</p>
           <input type="string"
@@ -105,6 +110,7 @@ export default function SignUpModal() {
           />
         </label>
 
+        <div className="errors">{errors?.city}</div>
         <label>
           <p>City</p>
           <input type="string"
@@ -113,6 +119,7 @@ export default function SignUpModal() {
           />
         </label>
 
+        <div className="errors">{errors?.state}</div>
         <label>
           <p>State</p>
           <input type="string"
@@ -120,7 +127,8 @@ export default function SignUpModal() {
             onChange={(e) => setState(e.target.value)}
           />
         </label>
-
+        
+        <div className="errors">{errors?.zipcode}</div>
         <label>
           <p>Zip Code</p>
           <input type="number"
