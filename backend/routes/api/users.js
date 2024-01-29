@@ -24,7 +24,7 @@ router.post('/register', validateRegisterInput, async (req, res, next) => {
   // Check to make sure no one has already registered with the proposed email or
   // username.
   const user = await User.findOne({
-    $or: [{ email: req.body.email }, { username: req.body.username }, {birthdate: req.body.birthdate}]
+    $or: [{ email: req.body.email }, { username: req.body.username }, {birthdate: req.body.birthdate}, {fname: req.body.fname}, {lname: req.body.lname}]
   });
 
   if (user) {
@@ -47,6 +47,8 @@ router.post('/register', validateRegisterInput, async (req, res, next) => {
     username: req.body.username,
     email: req.body.email,
     birthdate: req.body.birthdate,
+    fname: req.body.fname,
+    lname: req.body.lname,
     address: {
       street: req.body.address ? req.body.address.street : undefined,
       city: req.body.address ? req.body.address.city : undefined,
@@ -100,6 +102,8 @@ router.get('/current', restoreUser, (req, res) => {
     username: req.user.username,
     email: req.user.email,
     birthdate: req.user.birthdate,
+    fname: req.user.fname,
+    fname: req.user.fname,
     address: {
       street: req.user.address.street,
       city: req.user.address.city,
