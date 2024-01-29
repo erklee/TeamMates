@@ -33,7 +33,7 @@ export default function SignUpModal() {
     dispatch(hideModal("SignUpModal"));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     const user = {
       email,
       username,
@@ -47,15 +47,23 @@ export default function SignUpModal() {
       },
     };
     e.preventDefault();
-    dispatch(signup(user)); 
-    setEmail('');
-    setUsername('');
-    setPassword('');
-    setStreet('');
-    setCity('');
-    setState('');
-    setZipcode('');
+    const result = await dispatch(signup(user)); 
 
+    if (result && result.success) {
+    // Close the modal on successful login
+      dispatch(hideModal("SignUpModal"));
+      setEmail('');
+      setUsername('');
+      setPassword('');
+      setStreet('');
+      setCity('');
+      setState('');
+      setZipcode('');
+    } else {
+      // Handle errors, display them in the modal, etc.
+      console.error("Signup failed:", result.errors);
+    }
+  
   };
 
   return (
