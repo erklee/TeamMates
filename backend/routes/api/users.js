@@ -19,12 +19,12 @@ const validateLoginInput = require('../../validations/login');
 
 
 //routes/api/users.js
-// POST /api/users/register
+
 router.post('/register', validateRegisterInput, async (req, res, next) => {
   // Check to make sure no one has already registered with the proposed email or
   // username.
   const user = await User.findOne({
-    $or: [{ email: req.body.email }, { username: req.body.username }, {birthdate: req.body.birthdate}, {fname: req.body.fname}, {lname: req.body.lname}]
+    $or: [{ email: req.body.email }, { username: req.body.username }]
   });
 
   if (user) {
@@ -73,6 +73,10 @@ router.post('/register', validateRegisterInput, async (req, res, next) => {
   });
 });
 
+
+
+
+
 // POST /api/users/login
 router.post('/login', validateLoginInput, async (req, res, next) => {
   passport.authenticate('local', async function(err, user) {
@@ -103,7 +107,7 @@ router.get('/current', restoreUser, (req, res) => {
     email: req.user.email,
     birthdate: req.user.birthdate,
     fname: req.user.fname,
-    fname: req.user.fname,
+    lname: req.user.lname,
     address: {
       street: req.user.address.street,
       city: req.user.address.city,
