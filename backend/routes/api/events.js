@@ -54,13 +54,12 @@ router.patch("/:id/unattend", requireUser, async function(req, res, next) {
     const event = { current: null }
     try {
         event.current = await Event.findById(req.params.id)
-        
     }
     catch(err) {
         return res.json({ errors: ["Could not find Event #{VALUE}"]})
     }
     try {
-        if (!event.current.attendees.includes(req.user._id)) return res.json(["You are not attending this event"])
+        if (event.current.attendees.includes(req.user._id)) return res.json(["You are not attending this event yet"]);
         event.current.attendees = event.current.attendees.filter(attendee => {
             return attendee.equals(req.user._id)
         });
