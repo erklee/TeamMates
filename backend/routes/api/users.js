@@ -48,10 +48,10 @@ router.post('/register', validateRegisterInput, async (req, res, next) => {
     email: req.body.email,
     birthdate: req.body.birthdate,
     address: {
-      street: req.body.address.street,
-      city: req.body.address.city,
-      state: req.body.address.state,
-      zipcode: req.body.address.zipcode
+      street: req.body.address ? req.body.address.street : undefined,
+      city: req.body.address ? req.body.address.city : undefined,
+      state: req.body.address ? req.body.address.state : undefined,
+      zipcode: req.body.address ? req.body.address.zipcode : undefined
     }
   });
 

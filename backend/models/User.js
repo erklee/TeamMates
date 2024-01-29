@@ -30,6 +30,7 @@ const userSchema = new Schema({
         },
         zipcode: {
           type: Number,
+          required: false,
           validate: {
             validator: function (v) {
               // Check if the zipcode is a 5-digit integer
