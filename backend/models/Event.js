@@ -1,5 +1,6 @@
 const SPORTS = [
     "basketball",
+    "football",
     "baseball",
     "tennis",
     "soccer",
