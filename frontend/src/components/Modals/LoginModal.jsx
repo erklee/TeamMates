@@ -33,7 +33,7 @@ export default function LoginModal() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const result = await dispatch(login({ email, password }));
-    // dispatch(hideModal("LoginModal"))
+
     if (result && result.success) {
     // Close the modal on successful login
       dispatch(hideModal("LoginModal"));
