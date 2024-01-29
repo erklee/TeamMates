@@ -27,42 +27,37 @@ router.get("/:id", async function(req, res, next) {
     catch(err) {
         return res.json({ errors: "Can't find this event" })
     }
-
 })
 
 
 router.post("/", requireUser, async function(req, res, next) {
-    let user
-    try {
-        user = await fetch('/api/users/current');
-    }
-    catch(err) {
-        return res.json("Must be logged in to create an event")
-    }
+    // let user
+    // try {
+    //     user = await fetch('/api/users/current');
+    // }
+    // catch(err) {
+    //     return res.json("Must be logged in to create an event")
+    // }
     try {
         const newEvent = new Event({
-            coordinator: user._id,
+            coordinator: req.user._id,
             title: req.body.title,
             description: req.body.description,
             category: req.body.category,
-            date: req.body.date,
-            attendeesMax: req.body.attendeesMax,
-            attendees: [user],
+            date: new Date(req.body.date),
+            attendeesMax: parseInt(req.body.attendeesMax),
+            attendees: [req.user._id],
             location: {
                 address: req.body.location.address,
                 zipcode: req.body.location.zipcode
             }
         });
         let event = await newEvent.save();
-        return res.json(tweet);
+        return res.json(event);
     } 
     catch(err) {
         next(err)
     }
-})
-
-router.get("/:id", async function(req, res, next) {
-    
-})
+});
 
 module.exports = router;
