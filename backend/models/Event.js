@@ -1,5 +1,5 @@
 const SPORTS = [
-    "backetball",
+    "basketball",
     "baseball",
     "tennis",
     "soccer",
@@ -43,7 +43,6 @@ const eventSchema = new Schema({
             type: String,
             required: true
         },
-        required: true
     }
 },
 {
