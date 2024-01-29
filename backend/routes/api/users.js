@@ -48,10 +48,10 @@ router.post('/register', validateRegisterInput, async (req, res, next) => {
     email: req.body.email,
     birthdate: req.body.birthdate,
     address: {
-      street: req.body.street,
-      city: req.body.city,
-      state: req.body.state,
-      zipcode: req.body.zipcode
+      street: req.body.address.street,
+      city: req.body.address.city,
+      state: req.body.address.state,
+      zipcode: req.body.address.zipcode
     }
   });
 
@@ -101,10 +101,10 @@ router.get('/current', restoreUser, (req, res) => {
     email: req.user.email,
     birthdate: req.user.birthdate,
     address: {
-      street: req.user.street,
-      city: req.user.city,
-      state: req.user.state,
-      zipcode: req.user.zipcode
+      street: req.user.address.street,
+      city: req.user.address.city,
+      state: req.user.address.state,
+      zipcode: req.user.address.zipcode
     }
   });
 });
