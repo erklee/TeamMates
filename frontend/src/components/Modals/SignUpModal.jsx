@@ -10,6 +10,8 @@ export default function SignUpModal() {
   const showModal = useSelector(state => state.modals["SignUpModal"]);
 
   const [email, setEmail] = useState('');
+  const [fname, setFname] = useState('');
+  const [lname, setLname] = useState('');
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
   const [birthdate, setBirthDate] = useState('');
@@ -39,6 +41,8 @@ export default function SignUpModal() {
       username,
       password,
       birthdate,
+      fname,
+      lname,
       address: {
         street,
         city,
@@ -46,6 +50,7 @@ export default function SignUpModal() {
         zipcode,
       },
     };
+
     e.preventDefault();
     const result = await dispatch(signup(user)); 
 
@@ -59,10 +64,9 @@ export default function SignUpModal() {
       setCity('');
       setState('');
       setZipcode('');
-    } else {
-      // Handle errors, display them in the modal, etc.
-      console.error("Signup failed:", result.errors);
-    }
+      setFname(''),
+      setLname('')
+    } 
   
   };
 
@@ -71,8 +75,25 @@ export default function SignUpModal() {
     <div className="modal-overlay">
       <form className="signUpModal" action="submit" onSubmit={handleSubmit}>
         <h1 className="signUpModalTitle">Sign Up</h1>
-        <div className="errors">{errors?.email}</div>
         <p>An asterisk (*) indicates a required field</p>
+        <div className="errors">{errors?.fname}</div>
+        <label>
+          <p>First Name*</p>
+          <input type="text"
+            value={fname}
+            onChange={(e) => setFname(e.target.value)}
+            placeholder="First name"
+          />
+        </label>
+        <div className="errors">{errors?.lname}</div>
+        <label>
+          <p>Last Name*</p>
+          <input type="text"
+            value={lname}
+            onChange={(e) => setLname(e.target.value)}
+            placeholder="Last name"
+          />
+        </label>
         <div className="errors">{errors?.username}</div>
         <label>
           <p>Username*</p>

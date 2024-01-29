@@ -1,5 +1,3 @@
-// validations/register.js
-
 const { check } = require("express-validator");
 const handleValidationErrors = require('./handleValidationErrors');
 
@@ -15,16 +13,6 @@ const isUserOver13 = (value) => {
   return true;
 };
 
-const isValidZipcode = (value) => {
-  if (!/^\d{5}$/.test(value)) {
-    throw new Error('Zipcode must be exactly 5 digits');
-  }
-
-  return true;
-};
-
-
-
 const validateRegisterInput = [
   check('email')
     .exists({ checkFalsy: true })
@@ -33,7 +21,7 @@ const validateRegisterInput = [
   check('username')
     .exists({ checkFalsy: true })
     .isLength({ min: 3, max: 30 })
-    .withMessage('Username must be between 2 and 30 characters'),
+    .withMessage('Username must be between 3 and 30 characters'),
   check('fname')
     .exists({ checkFalsy: true })
     .withMessage('First name must exist'),
@@ -49,11 +37,17 @@ const validateRegisterInput = [
     .isISO8601()
     .custom(isUserOver13) 
     .withMessage('You must be 13 years or older to register'),
-    check('address.zipcode') 
-    .optional() 
-    .custom(isValidZipcode) 
-    .withMessage('Zipcode must be 5 digits'),
+  check('address.zipcode')
+    .optional({ checkFalsy: true })
+    .isLength({ min: 5, max: 5 })
+    .withMessage('Zipcode must be exactly 5 digits')
+    .isNumeric()
+    .withMessage('Zipcode must be a numeric value'),
   handleValidationErrors
 ];
+
+module.exports = validateRegisterInput;
+
+
 
 module.exports = validateRegisterInput;

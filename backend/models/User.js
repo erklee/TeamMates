@@ -28,17 +28,20 @@ const userSchema = new Schema({
     },
     address: {
         street: {
-          type: String
+          type: String,
+          required: false
         },
         city: {
-          type: String
+          type: String,
+          required: false
         },
         state: {
-          type: String
+          type: String,
+          required: false
         },
         zipcode: {
           type: String,
-          required: false,
+          required: false
         }
       }
   }, {
