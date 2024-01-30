@@ -6,8 +6,8 @@ import { fetchEvents } from "../../store/events";
 const EventMap = () => {
   const events = useSelector((state) => Object.values(state.events.all));
   const [markers, setMarkers] = useState([]);
-  const [userLocation, setUserLocation] = useState("");
-  const [selectedMarker, setSelectedMarker] = useState("");
+  const [userLocation, setUserLocation] = useState(null);
+  const [selectedMarker, setSelectedMarker] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [filterRange, setFilterRange] = useState(10);
   const dispatch = useDispatch();
@@ -34,8 +34,8 @@ const EventMap = () => {
               if (data.status === "OK" && data.results && data.results.length > 0) {
                 const location = data.results[0].geometry.location;
                 const distance = calculateDistance(
-                  userLocation.lat,
-                  userLocation.lng,
+                  userLocation?.lat,
+                  userLocation?.lng,
                   location.lat,
                   location.lng
                 );
@@ -62,39 +62,44 @@ const EventMap = () => {
         "This app would like to use your location. Allow?"
       );
 
-      if (confirmGeolocation) {
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(
-            (position) => {
-              setUserLocation({
-                lat: position.coords.latitude,
-                lng: position.coords.longitude,
-              });
-            },
-            (error) => {
-              console.error("Error getting user location:", error);
-            },
-            { enableHighAccuracy: true }
-          );
-        } else {
-          console.error("Geolocation is not supported by your browser");
-        }
+      if (confirmGeolocation && navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            setUserLocation({
+              lat: position.coords.latitude,
+              lng: position.coords.longitude,
+            });
+          },
+          (error) => {
+            console.error("Error getting user location:", error);
+          },
+          { enableHighAccuracy: true }
+        );
       } else {
-        console.log("User denied geolocation access.");
-        // Handle the case where the user denies geolocation access
+        console.log("User denied geolocation access or not supported.");
+        // Handle the case where the user denies geolocation access or geolocation is not supported
       }
     };
 
     getUserLocation();
   }, []);
 
-  // ... (remaining code)
+  const calculateDistance = (lat1, lon1, lat2, lon2) => {
+    // Function to calculate distance (unchanged)
+  };
+
+
+  const containerStyle = {
+    width: '100%',
+    height: '100%'
+  };
 
   return (
+    <div className="eventMapWrapper">
     <LoadScript googleMapsApiKey={import.meta.env.VITE_APP_GOOGLE_MAPS_API_KEY}>
       <GoogleMap
-        mapContainerStyle={{ width: "100%", height: "100%" }}
-        center={userLocation}
+        mapContainerStyle={containerStyle}
+        center={userLocation } // Use a default center if userLocation is null
         zoom={10}
         onLoad={() => console.log("Map is loaded")}
       >
@@ -120,6 +125,7 @@ const EventMap = () => {
         )}
       </GoogleMap>
     </LoadScript>
+    </div>
   );
 };
 
