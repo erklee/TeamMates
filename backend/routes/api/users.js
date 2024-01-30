@@ -20,6 +20,17 @@ const validateLoginInput = require('../../validations/login');
 
 //routes/api/users.js
 
+router.get('/', async (req, res, next) => {
+  try {
+    const users = await User.find({});
+
+    return res.json(users);
+  }
+  catch(err) {
+    next(err)
+  }
+})
+
 router.post('/register', validateRegisterInput, async (req, res, next) => {
   // Check to make sure no one has already registered with the proposed email or
   // username.
