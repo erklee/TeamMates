@@ -3,6 +3,23 @@
   flex-direction: row;
 }
 
+.userIconContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  background-color: white;
+  /* padding: 10px; */
+  height: 50px;
+  width: 50px;
+  padding: 5px;
+  border-style: solid;
+  border-color: orange;
+  border-width: 3px;
+  border-radius: 30px;
+
+}
+
 #navBarSignUp {
   margin-right: 50px;
 }
@@ -10,6 +27,7 @@
 #navBarLogin {
   margin-right: 20px;
 }
+
 
 .navBarContainer {
   display: flex;

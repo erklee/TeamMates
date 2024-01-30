@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {signup, clearSessionErrors } from '../../store/session';
 import { hideModal } from '../../store/modals';
+import closeIcon from "../../assets/icons/closeIcon.png"
 import "./SignUpModal.css";
 
 
@@ -152,8 +153,9 @@ export default function SignUpModal() {
           disabled={!email || !username || !password || !birthdate}
         />
 
+        <img src={closeIcon} onClick={handleHideModal} className="closeSignUpImg" alt="closeIcon" />
 
-        <button className='closeSignUpModal' onClick={handleHideModal}>close</button>
+        {/* <button className='closeSignUpModal' onClick={handleHideModal}>close</button> */}
       </form>
     </div>
   );

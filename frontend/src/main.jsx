@@ -6,6 +6,8 @@ import './index.css';
 import configureStore from './store/store';
 import * as sessionActions from './store/session'
 import * as modalActions from './store/modals'
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 const store = configureStore();
 

@@ -1,17 +1,25 @@
-import { Link } from 'react-router-dom';
+
 import { useSelector, useDispatch } from 'react-redux';
+import { useState  } from 'react';
 import './NavBar.css';
-import { logout } from '../../store/session';
+
 import { showModal } from '../../store/modals';
+import jerseyIcon from '../../assets/icons/jerseyIcon.png'
+import ProfileDropdown from './profileDropdown';
+
 
 function NavBar () {
+  const [visible, setVisible] = useState(true);
+  const currentUser = useSelector(state => state.session.user)
   const loggedIn = useSelector(state => !!state.session.user);
   const dispatch = useDispatch();
+  console.log(currentUser)
   
-  const logoutUser = e => {
-      e.preventDefault();
-      dispatch(logout());
-  };
+
+  const handleProfileDropdown = e => {
+    e.preventDefault()
+    setVisible(!visible)
+  }
 
   const handleShowModal = e => {
     e.preventDefault()
@@ -30,8 +38,14 @@ function NavBar () {
       return (
         <div className="links-nav">
 
-          <button onClick={logoutUser}>Logout</button>
+          <div className='userIconContainer' onClick={handleProfileDropdown}>
+            <img src={jerseyIcon}  height='30' width='30' alt="profile icon" />
+            <p>{currentUser.fname}</p>
+          </div>
+          {visible && <ProfileDropdown className="profileDropdownWrapper" />}
+
         </div>
+          
       );
     } else {
       return (
