@@ -9,7 +9,7 @@
   top: 50%;
   transform: translate(-50%, -50%);
   border-style: solid;
-  border-color: red;
+  border-color: #ff7300;
   border-width: 5px;
   border-radius: 20px;
   padding: 20px;
@@ -52,6 +52,22 @@
 .closeSignUpModal {
   position: absolute;
   top: 20px;
-  left: 460px;
+  left: 430px;
   width: 50px;
+}
+
+.closeSignUpImg {
+  width: 35px;
+  height: 35px;
+  padding: 5px;
+  transition: background-image 0.3s ease;
+  position: absolute;
+  top: 15px;
+  left: 440px;
+  /* Add a transition for a smooth effect */
+}
+
+.closeSignUpImg:hover {
+  background-color: rgba(226, 226, 226, 0.913);
+  border-radius: 20px;
 }
