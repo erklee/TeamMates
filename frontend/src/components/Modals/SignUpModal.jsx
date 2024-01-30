@@ -22,7 +22,7 @@ export default function SignUpModal() {
   const [zipcode, setZipcode] = useState('');
   const errors = useSelector(state => state.errors.session);
   const dispatch = useDispatch();
-
+ 
   useEffect(() => {
     return () => {
       dispatch(clearSessionErrors());
@@ -51,7 +51,6 @@ export default function SignUpModal() {
         zipcode,
       },
     };
-
     e.preventDefault();
     const result = await dispatch(signup(user)); 
 
