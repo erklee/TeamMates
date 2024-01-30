@@ -9,7 +9,7 @@ import ProfileDropdown from './profileDropdown';
 
 
 function NavBar () {
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(false);
   const currentUser = useSelector(state => state.session.user)
   const loggedIn = useSelector(state => !!state.session.user);
   const dispatch = useDispatch();
@@ -39,7 +39,7 @@ function NavBar () {
         <div className="links-nav">
 
           <div className='userIconContainer' onClick={handleProfileDropdown}>
-            <img src={jerseyIcon}  height='30' width='30' alt="profile icon" />
+            <img src={currentUser.profileImageUrl}  height='25' width='25' alt="profile icon" />
             <p>{currentUser.fname}</p>
           </div>
           {visible && <ProfileDropdown className="profileDropdownWrapper" />}
