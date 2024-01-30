@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom'
 import {login, clearSessionErrors } from '../../store/session';
 import { hideModal } from '../../store/modals';
 import closeIcon from "../../assets/icons/closeIcon.png"
@@ -8,6 +9,7 @@ import "./LoginModal.css"
 
 
 export default function LoginModal() {
+  const navigate = useNavigate();
   const showModal = useSelector(state => state.modals["LoginModal"])
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -37,9 +39,16 @@ export default function LoginModal() {
 
     if (result && result.success) {
     // Close the modal on successful login
+      navigate("/")
       dispatch(hideModal("LoginModal"));
     } 
     // return dispatch(login({ email, password })); 
+  }
+
+  const handleDemo = (e) => {
+    e.preventDefault();
+    setPassword('password')
+    setEmail('shaun@aa.io')
   }
 
   return (
@@ -71,6 +80,7 @@ export default function LoginModal() {
           value="Log In"
           disabled={!email || !password}
         />
+        <button className='loginModalSubmit' onClick={handleDemo}>Demo</button>
         <img src={closeIcon} onClick={handleHideModal} className="closeLoginImg" alt="closeIcon" />
         {/* <button className='closeLoginModal' onClick={handleHideModal}>close</button> */}
       </form>

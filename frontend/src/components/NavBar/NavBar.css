@@ -4,20 +4,22 @@
 }
 
 .userIconContainer {
+  color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
   position: relative;
-  background-color: white;
+  top: 10px;
+  /* background-color: white; */
   /* padding: 10px; */
-  height: 50px;
-  width: 50px;
-  padding: 5px;
-  border-style: solid;
-  border-color: orange;
-  border-width: 3px;
-  border-radius: 30px;
+  /* height: 50px;
+  width: 50px; */
+  /* padding: 5px; */
+}
 
+.userIconContainer img {
+  border-style: none;
+  border-radius: 20px;
 }
 
 #navBarSignUp {
@@ -34,7 +36,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  height: 100px;
+  height: 50px;
   background-color: blue;
   padding: 0px 30px;
 }
