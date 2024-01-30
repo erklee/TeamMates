@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 .loginModal {
   display: flex;
   flex-direction: column;
@@ -9,16 +10,16 @@
   top: 50%;
   transform: translate(-50%, -50%);
   border-style: solid;
-  border-color: red;
+  border-color: #ff7300;
   border-width: 5px;
   border-radius: 20px;
   padding: 20px;
-  background-color: white
+  background-color: white;
 }
 .loginModalTitle {
+  font-family: 'Roboto', sans-serif;
   font-size: 40px;
-  font-weight: 200px;
-  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 0px;
   margin-bottom: 10px; 
 }
 
@@ -47,11 +48,29 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1;
 }
 
 .closeLoginModal {
   position: absolute;
   top: 20px;
-  left: 460px;
+  left: 430px;
   width: 50px;
 }
+
+.closeLoginImg {
+  width: 35px;
+  height: 35px;
+  padding: 5px;
+  transition: background-image 0.3s ease;
+  position: absolute;
+  top: 15px;
+  left: 440px;
+  /* Add a transition for a smooth effect */
+}
+
+.closeLoginImg:hover {
+  background-color: rgba(226, 226, 226, 0.913);
+  border-radius: 20px;
+}
+
