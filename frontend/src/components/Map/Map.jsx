@@ -3,6 +3,7 @@ import { GoogleMap, MarkerF, InfoWindow, LoadScript } from "@react-google-maps/a
 import { useDispatch, useSelector } from "react-redux";
 import { fetchEvents } from "../../store/events";
 
+
 const EventMap = () => {
   const events = useSelector((state) => Object.values(state.events.all));
   const [markers, setMarkers] = useState([]);
@@ -11,7 +12,7 @@ const EventMap = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [filterRange, setFilterRange] = useState(10);
   const dispatch = useDispatch();
-
+     
   useEffect(() => {
     dispatch(fetchEvents());
   }, [dispatch]);
@@ -90,8 +91,8 @@ const EventMap = () => {
 
 
   const containerStyle = {
-    width: '100%',
-    height: '100%'
+    width: '100vw',
+    height: '100vh'
   };
 
   return (
@@ -99,7 +100,7 @@ const EventMap = () => {
     <LoadScript googleMapsApiKey={import.meta.env.VITE_APP_GOOGLE_MAPS_API_KEY}>
       <GoogleMap
         mapContainerStyle={containerStyle}
-        center={userLocation } // Use a default center if userLocation is null
+        center={userLocation || {lat: 40.78585773023068, lng: -73.46763094030253}} 
         zoom={10}
         onLoad={() => console.log("Map is loaded")}
       >
