@@ -8,7 +8,6 @@ import "./LoginModal.css"
 
 export default function LoginModal() {
   const showModal = useSelector(state => state.modals["LoginModal"])
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const errors = useSelector(state => state.errors.session);
@@ -32,15 +31,13 @@ export default function LoginModal() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+ 
     const result = await dispatch(login({ email, password }));
 
     if (result && result.success) {
     // Close the modal on successful login
       dispatch(hideModal("LoginModal"));
-    } else {
-      // Handle errors, display them in the modal, etc.
-      console.error("Login failed:", result.errors);
-    }
+    } 
     // return dispatch(login({ email, password })); 
   }
 

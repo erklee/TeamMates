@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import { AuthRoute, ProtectedRoute } from './components/Routes/Routes';
 import NavBar from './components/NavBar/NavBar';
 import MainPage from './components/MainPage/MainPage';
+import EventMap from './components/Map/Map';
 
 import { getCurrentUser } from './store/session';
 
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <AuthRoute component={MainPage} />
+      },
+      {
+        path: "events",
+        element: <ProtectedRoute component={EventMap} />
       },
       // {
       //   path: "login",

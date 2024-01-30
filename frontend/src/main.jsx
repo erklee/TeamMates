@@ -6,6 +6,7 @@ import './index.css';
 import configureStore from './store/store';
 import * as sessionActions from './store/session'
 import * as modalActions from './store/modals'
+import * as eventActions from './store/events'
 
 const store = configureStore();
 
@@ -13,6 +14,7 @@ if (import.meta.env.MODE !== 'production') {
   window.store = store;
   window.sessionActions = sessionActions;
   window.modalActions = modalActions;
+  window.eventActions = eventActions
 
 }
 
