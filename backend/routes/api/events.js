@@ -41,11 +41,11 @@ router.patch("/:id/attend", requireUser, async function(req, res, next) {
         event = await Event.findById(req.params.id)
     }
     catch(err) {
-        return res.json({ errors: [`Could not find event with id ${req.params.id}`]})
+        return res.json({ errors: [`Could not find this event`]})
     }
     try {
-        if (event.attendees.includes(req.user._id)) return res.json(["You are already attending this event"])
-        if (event.attendees.length === event.attendeesMax) return res.json([`This event is at max attendance: ${event.attendeesMax} attendees`])
+        if (event.attendees.includes(req.user._id)) return res.json({ errors: ["You are already attending this event"] })
+        if (event.attendees.length === event.attendeesMax) return res.json({ errors: [`This event is at max attendance: ${event.attendeesMax} attendees`] })
         event.attendees.push(req.user._id);
         event.save();
         return res.json(event);
@@ -61,12 +61,12 @@ router.patch("/:id/unattend", requireUser, validateEventUpdate, async function(r
         event = await Event.findById(req.params.id)
     }
     catch(err) {
-        return res.json({ errors: ["Could not find Event #{VALUE}"]})
+        return res.json({ errors: ["Could not find this event"]})
     }
     try {
-        if (!event.attendees.some(attendeeId => attendeeId.equals(req.user._id))) return res.json(["You are not attending this event yet"]);
+        if (!event.attendees.some(attendeeId => attendeeId.equals(req.user._id))) return res.json({ errors: "You are not attending this event yet" });
         event.attendees = event.attendees.filter(attendeeId => {
-            return attendeeId.equals(req.user._id)
+            return !attendeeId.equals(req.user._id)
         });
         const patchedEvent = await event.save();
         return res.json(patchedEvent);

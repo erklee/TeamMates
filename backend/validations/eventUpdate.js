@@ -1,6 +1,7 @@
 const { param } = require("express-validator");
 const handleValidationErrors = require("./handleValidationErrors");
-const validateEventCreation = require("./eventCreate")
+const validateEventCreation = require("./eventCreate");
+const Event = require("../models/Event");
 
 const isOwner = async (_id, { req }) => {
     try {
