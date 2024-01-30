@@ -39,7 +39,7 @@ export default function LoginModal() {
       dispatch(hideModal("LoginModal"));
     } else {
       // Handle errors, display them in the modal, etc.
-      console.error("Login failed:", result.errors);
+      console.error("ailed:", result.errors);
     }
     // return dispatch(login({ email, password })); 
   }
