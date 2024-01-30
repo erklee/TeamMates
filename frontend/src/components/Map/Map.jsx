@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
-import { GoogleMap, Marker, InfoWindow, LoadScript } from "@react-google-maps/api";
+import { GoogleMap, Marker, InfoWindow, LoadScript, MarkerF } from "@react-google-maps/api";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchEvents } from "../../store/events";
 import { selectAlleventsArray } from "../../store/events";
+import location from "../../assets/images/location4.png"
 
 const EventMap = () => {
   const events = useSelector(selectAlleventsArray);
   const [markers, setMarkers] = useState([]);
-  const [userLocation, setUserLocation] = useState("");
+  const [userLocation, setUserLocation] = useState(null);
   const [selectedMarker, setSelectedMarker] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [filterRange, setFilterRange] = useState(10);
@@ -75,7 +76,15 @@ const EventMap = () => {
 
   useEffect(() => {
     const getUserLocation = () => {
-      const confirmGeolocation = window.confirm("This app would like to use your location. Allow?");
+        let confirmGeolocation
+        if (!sessionStorage.getItem('confirmedLocation')) {
+          confirmGeolocation = window.confirm("This app would like to use your location. Allow?");
+          sessionStorage.setItem("confirmedLocation", `${confirmGeolocation}`)
+          console.log(confirmGeolocation)
+          console.log(sessionStorage.getItem('confirmedLocation'))
+        } else {
+          confirmGeolocation = JSON.parse(sessionStorage.getItem('confirmedLocation'))
+        }
 
       if (confirmGeolocation && navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
@@ -92,6 +101,7 @@ const EventMap = () => {
         );
       } else {
         console.log("User denied geolocation access or not supported.");
+        setUserLocation({ lat: 40.71679995490363, lng: -73.99771308650402 });
       }
     };
 
@@ -121,6 +131,10 @@ const EventMap = () => {
     height: '100vh',
   };
 
+  const img = {
+    url: location
+}
+
   return (
     <div className="eventMapWrapper">
       <select
@@ -149,14 +163,21 @@ const EventMap = () => {
 
       <LoadScript
         googleMapsApiKey={import.meta.env.VITE_APP_GOOGLE_MAPS_API_KEY}
+        libraries={["places"]}
       >
         <GoogleMap
           mapContainerStyle={containerStyle}
-          center={userLocation || { lat: 40.78585773023068, lng: -73.46763094030253 }}
-          zoom={10}
+          center={userLocation || { lat: 40.71679995490363, lng: -73.99771308650402 }}
+          zoom={13}
           onLoad={() => console.log("Map is loaded")}
         >
-          {userLocation && <Marker position={userLocation} />}
+          {userLocation && window.google && window.google.maps && (
+            <MarkerF
+              position={userLocation}
+              icon={img}
+            />
+          )}
+
           {markers.map((marker, index) => (
             <Marker
               key={`${marker.id} ${index}`}
@@ -183,9 +204,3 @@ const EventMap = () => {
 };
 
 export default EventMap;
-
-
-  
-
-
-
