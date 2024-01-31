@@ -5,13 +5,18 @@ const RECEIVE_EVENTS = "events/RECEIVE_events";
 const RECEIVE_USER_EVENTS = "events/RECEIVE_USER_events";
 const RECEIVE_NEW_EVENT = "events/RECEIVE_NEW_EVENT";
 const RECEIVE_EVENT_ERRORS = "events/RECEIVE_EVENT_ERRORS";
+// const RECEIVE_EVENT = "events/RECEIVE_EVENT"
+const REMOVE_EVENT = "events/REMOVE_EVENT"
 const CLEAR_EVENT_ERRORS = "events/CLEAR_EVENT_ERRORS";
 
 const receiveEvents = events => ({
   type: RECEIVE_EVENTS,
   events
 });
-
+// const receiveEvent = event => ({
+//   type: RECEIVE_EVENT, 
+//   event
+// })
 const receiveUserEvents = events => ({
   type: RECEIVE_USER_EVENTS,
   events
@@ -26,6 +31,12 @@ const receiveErrors = errors => ({
   type: RECEIVE_EVENT_ERRORS,
   errors
 });
+
+const removeEvent = (eventId) => ({
+  type: REMOVE_EVENT,
+  eventId
+})
+
 
 export const clearEventErrors = errors => ({
     type: CLEAR_EVENT_ERRORS,
@@ -74,6 +85,30 @@ export const composeEvent = data => async dispatch => {
   }
 };
 
+export const updatedEvent = (updatedEvent) => async dispatch => {
+  try{
+  const res  = await jwtFetch(`/api/events/${updatedEvent.id}`, {
+      method: "PUT", 
+      body: JSON.stringify(updatedEvent), 
+  });
+      const event = await res.json()
+      dispatch(receiveNewEvent(event))
+  } catch(err) {
+    const resBody = await err.json()
+    if (resBody.statusCode === 400) {
+      return dispatch(receiveErrors(resBody.errors));
+    }
+  }
+}
+
+export const deleteEvent = (eventId) => async dispatch => {
+  const res = await jwtFetch(`/api/reviews/${eventId}`, {
+    method: "DELETE"
+  })
+  if(res.ok){
+      dispatch(removeEvent(eventId))
+  }
+}
 import { createSelector } from 'reselect';
 
 // ...
@@ -86,6 +121,15 @@ export const selectAlleventsArray = createSelector(selectEvents,
 export const selectUsereventsArray = createSelector (selectUserEvents,
   (events) => Object.values(events)
 );
+
+export const selectEventById = (eventId) => (state) => {
+  return state?.events[eventId] || null
+}
+
+// export const selectEventById = (state, eventId) => {
+//   const allEvents = selectEvents(state);
+//   return allEvents[eventId];
+// };
 
 const nullErrors = null;
 
@@ -102,6 +146,7 @@ export const EventErrorsReducer = (state = nullErrors, action) => {
 };
 
 const eventsReducer = (state = { all: {}, user: {}, new: undefined }, action) => {
+  let newState = {...state}
   switch(action.type) {
     case RECEIVE_EVENTS:
       return { ...state, all: action.events, new: undefined};
@@ -111,6 +156,9 @@ const eventsReducer = (state = { all: {}, user: {}, new: undefined }, action) =>
       return { ...state, new: action.event};
     case RECEIVE_USER_LOGOUT:
       return { ...state, user: {}, new: undefined }
+    case REMOVE_EVENT:
+      delete newState[action.eventId]
+      return newState
     default:
       return state;
   }
