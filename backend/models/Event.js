@@ -7,6 +7,12 @@ const SPORTS = [
     "hockey"
 ]
 
+const DIFFICULTIES = [
+    "easy",
+    "medium",
+    "hard"
+]
+
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
@@ -44,6 +50,11 @@ const eventSchema = new Schema({
             type: String,
             required: true
         },
+    },
+    difficulty: {
+        type: String,
+        enum: { values: DIFFICULTIES, message: '{VALUE} is not supported'},
+        required: true
     }
 },
 {
