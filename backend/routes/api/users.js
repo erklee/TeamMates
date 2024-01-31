@@ -129,6 +129,46 @@ router.get('/current', restoreUser, (req, res) => {
   });
 });
 
+router.get('/:id', async (req, res, next) => {
+  try {
+    const userId = req.params.id;
+
+    
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      const err = new Error('Invalid user ID');
+      err.statusCode = 400;
+      return next(err);
+    }
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      const err = new Error('User not found');
+      err.statusCode = 404;
+      return next(err);
+    }
+
+   
+    return res.json({
+      _id: user._id,
+      username: user.username,
+      email: user.email,
+      birthdate: user.birthdate,
+      fname: user.fname,
+      lname: user.lname,
+      profileImageUrl: user.profileImageUrl,
+      address: {
+        street: user.address.street,
+        city: user.address.city,
+        state: user.address.state,
+        zipcode: user.address.zipcode
+      }
+    });
+  } catch (err) {
+    next(err);
+  }
+});
+
 
 
 module.exports = router;
