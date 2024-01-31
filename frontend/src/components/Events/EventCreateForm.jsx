@@ -167,7 +167,7 @@ export default function EventCreateForm() {
                         setZipcode(e.target.value);
                     }} />
             </label>
-            
+            <button type="submit">Submit</button>
         </form>
     )
 }
