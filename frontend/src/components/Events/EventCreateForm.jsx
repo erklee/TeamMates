@@ -1,32 +1,37 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import jwtFetch from "../../store/jwt";
+import { useDispatch } from "react-redux";
+import { composeEvent } from "../../store/events";
+import { eventConstants } from "../../../../backend/models/constants";
 
 export default function EventCreateForm() {
 
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [eventDate, setEventDate] = useState('');
+    const [category, setCategory] = useState(eventConstants.SPORTS[0]);
     const [attendeesMax, setAttendeesMax] = useState(0);
     const [address1, setAddress1] = useState('');
     const [address2, setAddress2] = useState('');
     const [state, setState] = useState('');
     const [zipcode, setZipcode] = useState('');
 
-    const { id } = useParams();
+    const dispatch = useDispatch();
 
     const handleSubmit = async e => {
         e.preventDefault();
-        console.log({
+    
+        dispatch(composeEvent({
             title,
             description,
             eventDate,
             attendeesMax,
-            address1,
-            address2,
-            state,
-            zipcode
-        })
+            address: {
+                location: `${address1} ${address2}, ${state}`,
+                zipcode
+            }
+        }))
     }
 
 
@@ -75,6 +80,20 @@ export default function EventCreateForm() {
                             e.preventDefault();
                             setAttendeesMax(e.target.value);
                         }}/>
+            </label>
+            <label htmlFor="category">
+                <select 
+                    className="category input" 
+                    id="category-select" 
+                    value={category}
+                    onChange={e => {
+                        e.preventDefault();
+                        setCategory(e.target.value);
+                    }}>
+                    {
+                        eventConstants.SPORTS.map((sport, index) => <option key={`sport-${index}`} value={sport}>{sport[0].toUpperCase() + sport.slice(1)}</option>)
+                    }
+                </select>
             </label>
             <div id="address-input wrapper">
                 <label htmlFor="address-line-1">Address Line 1:
