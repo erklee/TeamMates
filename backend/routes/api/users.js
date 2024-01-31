@@ -133,7 +133,7 @@ router.patch('/:id/friend', requireUser, async (req, res) => {
   try {
     const friendUser = await User.findById(req.params.id);
     const youUser = await User.findById(req.user._id);
-    if(youUser.friendIds.some(requestId => requestId.equals(youUser._id))) return res.json(["You are already friends with this user"])
+    if(youUser.friendIds.some(friendId => friendId.equals(friendUser._id))) return res.json({ errors: ["You are already friends with this user"] })
     if(youUser.requestIds.some(requestId => requestId.equals(friendUser._id))) {
       friendUser.friendIds.push(youUser._id);
       friendUser.requestIds = friendUser.requestIds.filter(requestId => !requestId.equals(youUser._id))
@@ -156,6 +156,27 @@ router.patch('/:id/friend', requireUser, async (req, res) => {
     next(err)
   }
 
+})
+
+router.patch('/:id/unfriend', requireUser, async (req, res) => {
+  try {
+    const friendUser = await User.findById(req.params.id);
+    const youUser = await User.findById(req.user._id);
+    if(youUser.friendIds.every(id => !id.equals(friendUser._id))
+    && youUser.requestIds.every(id => !id.equals(friendUser._id))) {
+      return res.json({ errors: ["You are not friends with this user"]})
+    }
+    friendUser.friendIds = friendUser.friendIds.filter(id => !id.equals(youUser._id));
+    friendUser.requestIds = friendUser.requestIds.filter(id => !id.equals(youUser._id));
+    const fUser = await friendUser.save();
+    youUser.friendIds = youUser.friendIds.filter(id => !id.equals(friendUser._id));
+    youUser.requestIds = youUser.friendIds.filter(id => !id.equals(friendUser._id));
+    const yUser = await youUser.save();
+    return res.json([yUser, fUser]);
+  }
+  catch(err) {
+    next(err)
+  }
 })
 
 
