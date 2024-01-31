@@ -3,7 +3,7 @@ import { GoogleMap, Marker, InfoWindow, LoadScript, MarkerF } from "@react-googl
 import { useDispatch, useSelector } from "react-redux";
 import { fetchEvents } from "../../store/events";
 import { selectAlleventsArray } from "../../store/events";
-import location from "../../assets/images/location4.png"
+import location from "../../assets/images/location.png"
 
 const EventMap = () => {
   const events = useSelector(selectAlleventsArray);
@@ -120,7 +120,30 @@ const EventMap = () => {
     return distance;
   };
 
-  const filterRangeOptions = [1, 5, 10, 15, 25, 50];
+
+  const calculateZoomLevel = (distance) => {
+   
+    let zoom;
+
+    
+    if (distance === 1) {
+      zoom = 15; 
+    } if (distance === 5){
+        zoom = 13
+    } if (distance === 10){
+        zoom = 12
+    }
+    if (distance === 15){
+        zoom = 11
+    }if (distance === 25){
+        zoom = 10
+    }
+
+   
+    return zoom;
+  };
+
+  const filterRangeOptions = [1, 5, 10, 15, 25];
 
   const closeInfoWindow = () => {
     setSelectedMarker(null);
@@ -163,12 +186,12 @@ const EventMap = () => {
 
       <LoadScript
         googleMapsApiKey={import.meta.env.VITE_APP_GOOGLE_MAPS_API_KEY}
-        libraries={["places"]}
+        
       >
         <GoogleMap
           mapContainerStyle={containerStyle}
           center={userLocation || { lat: 40.71679995490363, lng: -73.99771308650402 }}
-          zoom={13}
+          zoom={calculateZoomLevel(filterRange)}
           onLoad={() => console.log("Map is loaded")}
         >
           {userLocation && window.google && window.google.maps && (
