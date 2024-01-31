@@ -27,53 +27,30 @@ const userSchema = new Schema({
     required: true,
   },
   address: {
-    street: {
-      type: String,
-      required: false,
-    },
-    city: {
-      type: String,
-      required: false,
-    },
-    state: {
-      type: String,
-      required: false,
-    },
-    zipcode: {
-      type: String,
-      required: false,
-    },
-
-    address: {
-        street: {
-          type: String,
-          required: false
-        },
-        city: {
-          type: String,
-          required: false
-        },
-        state: {
-          type: String,
-          required: false
-        },
-        zipcode: {
-          type: String,
-          required: false
-        }
-    },
-    requestIds: {
-      type: [Schema.Types.ObjectId],
-      ref: 'User'
-    },
-    friendIds: {
-      type: [Schema.Types.ObjectId],
-      ref: 'User'
-    }
-  }, {
-    timestamps: true
-  });
-
+      street: {
+        type: String,
+        required: false
+      },
+      city: {
+        type: String,
+        required: false
+      },
+      state: {
+        type: String,
+        required: false
+      },
+      zipcode: {
+        type: String,
+        required: false
+      }
+  },
+  requestIds: {
+    type: [Schema.Types.ObjectId],
+    ref: 'User'
+  },
+  friendIds: {
+    type: [Schema.Types.ObjectId],
+    ref: 'User'
   },
   profileImageUrl: {
     type: String,
@@ -83,7 +60,5 @@ const userSchema = new Schema({
   timestamps: true,
 });
 
-
-  userSchema.add
 
 module.exports = mongoose.model('User', userSchema);
