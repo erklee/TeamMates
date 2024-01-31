@@ -22,7 +22,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <AuthRoute component={MainPage} />
+        element: <MainPage />
       },
       {
         path: "events",

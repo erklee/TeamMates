@@ -1,30 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
 .signUpModal {
   display: flex;
   flex-direction: column;
-
+  color: white;
   position: absolute;
   min-height: 200px;
-  width: 500px;
+  min-width: 400px;
+  max-width: 450px;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
   border-style: solid;
-  border-color: #ff7300;
+  border-color: #ffffff;
   border-width: 5px;
-  border-radius: 20px;
+  border-radius: 4px;
   padding: 20px;
-  background-color: white
+  background-color: transparent;
+  backdrop-filter: blur(20px);
 }
+
 .signUpModalTitle {
+  font-family: 'Roboto', sans-serif;
   font-size: 40px;
   font-weight: 200px;
   font-family: Arial, Helvetica, sans-serif;
-  margin-bottom: 10px; 
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.asterickRequired {
+  margin-bottom: 20px;
+}
+
+.errors {
+  margin-bottom: 10px;
+}
+
+.signUpModal label {
+  display: flex;
+  margin-bottom: 20px;
 }
 
 .signUpModal input {
+  color: white;
   margin-bottom: 10px;
+  background-color: transparent;
+  border-style: none;
+  border-bottom: 4px solid rgb(244, 85, 0);
 }
+
+.signUpModal input:focus {
+  outline: none;
+}
+
+.signUpModal input::placeholder {
+  color: white;
+}
+
 .signUpModal label p {
   margin-bottom: 10px;
 }
@@ -32,27 +65,45 @@
 .signUpModalSubmit {
   color: white;
   background-color: rgb(0, 13, 255);
-  width: 100px;
-  height: 30px;
+  width: 380px;
+  /* max-width: 570px; */
+  margin-top: 20px;
+  height: 50px;
+  border-style: none;
   border-radius: 5px;
+  transition: 0.3s;
 }
+
+.signUpModalSubmit:hover {
+  color: rgb(0, 13, 255);
+  background-color: white;
+}
+
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(229, 229, 229, 0.5);
+  /* background-color: rgba(229, 229, 229, 0.5); */
   /* Adjust the color and opacity as needed */
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
+.birthdateInput {
+  align-items: last baseline;
+}
+
+.birthdateInput p {
+  margin-right: 20px;
+}
+
 .closeSignUpModal {
-  position: absolute;
+  position: relative;
   top: 20px;
-  left: 430px;
+  left: 400px;
   width: 50px;
 }
 
@@ -62,12 +113,49 @@
   padding: 5px;
   transition: background-image 0.3s ease;
   position: absolute;
-  top: 15px;
-  left: 440px;
+  top: 7px;
+  right: 3%;
   /* Add a transition for a smooth effect */
 }
 
 .closeSignUpImg:hover {
   background-color: rgba(226, 226, 226, 0.913);
   border-radius: 20px;
+}
+
+.nameInput {
+  display: flex;
+  /* gap: 20px; */
+}
+
+.usernameEmailInput {
+  display: flex;
+  flex-direction: row;
+}
+
+.usernameInput {
+  margin-right: 10px;
+}
+
+.lastNameInput {
+  margin-left: 10px;
+}
+
+
+
+.streetInput input {
+  width: 370px;
+}
+
+.cityInfo {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.stateInput {
+  margin-left: 10px;
+}
+
+.zipCodeInput {
+  margin-left: 10px;
 }

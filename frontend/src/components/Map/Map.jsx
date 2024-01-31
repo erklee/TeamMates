@@ -4,13 +4,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchEvents } from "../../store/events";
 import { selectAlleventsArray } from "../../store/events";
 import location from "../../assets/images/location.png"
+import { useLocation } from 'react-router-dom';
+
 
 const EventMap = () => {
+  const {state} =  useLocation()
+  const { sport } = state || {};
+
   const events = useSelector(selectAlleventsArray);
   const [markers, setMarkers] = useState([]);
   const [userLocation, setUserLocation] = useState(null);
   const [selectedMarker, setSelectedMarker] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState(sport ||"");
   // const [selectedDifficulty, setSelectedDifficulty] = useState("");
   const [filterRange, setFilterRange] = useState(10);
   const dispatch = useDispatch();
