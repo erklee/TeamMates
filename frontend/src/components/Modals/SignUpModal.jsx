@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {signup, clearSessionErrors } from '../../store/session';
 import { hideModal } from '../../store/modals';
-import closeIcon from "../../assets/icons/closeIcon.png"
+import closeIcon from "../../assets/icons/closeIcon.png";
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import "./SignUpModal.css";
 
 
@@ -34,6 +36,7 @@ export default function SignUpModal() {
   const handleHideModal = (e) => {
     e.preventDefault();
     dispatch(hideModal("SignUpModal"));
+    dispatch(clearSessionErrors());
   };
 
   const handleSubmit = async (e) => {
@@ -65,7 +68,7 @@ export default function SignUpModal() {
       setState('');
       setZipcode('');
       setFname(''),
-      setLname('')
+      setLname('');
     } 
   
   };
@@ -75,103 +78,124 @@ export default function SignUpModal() {
     <div className="modal-overlay">
       <form className="signUpModal" action="submit" onSubmit={handleSubmit}>
         <h1 className="signUpModalTitle">Sign Up</h1>
-        <p>An asterisk (*) indicates a required field</p>
-        <div className="errors">{errors?.fname}</div>
+        <p className='asterickRequired'>An asterisk (*) indicates a required field</p>
+        { errors?.fname && <li className="errors">{errors?.fname}</li>}
+        { errors?.lname && <li className="errors">{errors?.lname}</li> }
+        { errors?.username && <li className="errors">{errors?.username}</li> }
+        { errors?.email && <li className="errors">{errors?.email}</li> }
+        { errors?.password && <li className="errors">{errors?.password}</li> }
+        { errors?.birthdate && <li className="errors">{errors?.birthdate}</li> }
+        { errors?.street && <li className="errors">{errors?.street}</li> }
+        { errors?.city && <li className="errors">{errors?.city}</li> }
+        { errors?.state && <li className="errors">{errors?.state}</li> }
+        { errors?.zipcode && <li className="errors">{errors?.zipcode}</li> }
+
+        <div className='nameInput'>
+          <label className='firstNameInput'>
+
+            <input type="text"
+              value={fname}
+              onChange={(e) => setFname(e.target.value)}
+              placeholder="First Name*"
+
+            />
+          </label>
+          <label className='lastNameInput'>
+            <input type="text"
+              value={lname}
+              onChange={(e) => setLname(e.target.value)}
+              placeholder="Last name*"
+            />
+          </label>
+        </div>
+        <div className='usernameEmailInput'>
+          <label className='usernameInput'>
+            <input type="text" 
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="Username*"
+            />
+          </label>
+
+          <label>
+
+            <input type="text"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Email*"
+            />
+          </label>
+
+        </div>
+
         <label>
-          <p>First Name*</p>
-          <input type="text"
-            value={fname}
-            onChange={(e) => setFname(e.target.value)}
-            placeholder="First name"
-          />
-        </label>
-        <div className="errors">{errors?.lname}</div>
-        <label>
-          <p>Last Name*</p>
-          <input type="text"
-            value={lname}
-            onChange={(e) => setLname(e.target.value)}
-            placeholder="Last name"
-          />
-        </label>
-        <div className="errors">{errors?.username}</div>
-        <label>
-          <p>Username*</p>
-          <input type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            placeholder="Username"
-          />
-        </label>
-        <div className="errors">{errors?.email}</div>
-        <label>
-          <p>Email*</p>
-          <input type="text"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Email"
-          />
-        </label>
-        <div className="errors">{errors?.password}</div>
-        <label>
-          <p>Password*</p>
+
           <input type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Password"
           />
         </label>
-        <div className="errors">{errors?.birthdate}</div>
-        <label>
-          <p>Birthdate*</p>
-          <input type="date"
+
+        <label className='birthdateInput'>
+
+          {/* <input type="date"
             value={birthdate}
             onChange={(e) => setBirthDate(e.target.value)}
+          /> */}
+          <DatePicker
+            selected={birthdate}
+            onChange={(date) => setBirthDate(date)}
+            placeholderText="Birthdate* MM/DD/YYYY"
+            dateFormat="MM/dd/yyyy"  // Customize date format if needed
+            // Add any other customization props here
           />
         </label>
 
-        <div className="errors">{errors?.street}</div>
-        <label>
-          <p>Street</p>
+
+        <label className='streetInput'>
           <input type="string"
             value={street}
             onChange={(e) => setStreet(e.target.value)}
+            placeholder='Street'
           />
         </label>
 
-        <div className="errors">{errors?.city}</div>
-        <label>
-          <p>City</p>
-          <input type="string"
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
-          />
-        </label>
+        <div className='cityInfo'>
+          <label className='cityInput'>
+            <input type="string"
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+              placeholder='City'
+            />
+          </label>
 
-        <div className="errors">{errors?.state}</div>
-        <label>
-          <p>State</p>
-          <input type="string"
-            value={state}
-            onChange={(e) => setState(e.target.value)}
-          />
-        </label>
-        
-        <div className="errors">{errors?.zipcode}</div>
-        <label>
-          <p>Zip Code</p>
-          <input type="number"
-            value={zipcode}
-            onChange={(e) => setZipcode(e.target.value)}
-          />
-        </label>
-   
-        <input
+
+          <label className='stateInput'>
+
+            <input type="string"
+              value={state}
+              onChange={(e) => setState(e.target.value)}
+              placeholder='State'
+            />
+          </label>
+          
+
+          <label className='zipCodeInput'>
+
+            <input type="text"
+              value={zipcode}
+              onChange={(e) => setZipcode(e.target.value)}
+              placeholder='Zip Code'
+            />
+          </label>
+        </div>
+        <button 
           className='signUpModalSubmit'
-          type="submit"
-          value="Sign Up"
-          disabled={!email || !username || !password || !birthdate}
-        />
+          // disabled={!email || !username || !password || !birthdate}
+        >
+          Sign Up
+        </button>
 
         <img src={closeIcon} onClick={handleHideModal} className="closeSignUpImg" alt="closeIcon" />
 

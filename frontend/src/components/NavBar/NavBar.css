@@ -3,6 +3,12 @@
   flex-direction: row;
 }
 
+.links-nav {
+  z-index: 2;
+}
+
+
+
 .userIconContainer {
   color: white;
   display: flex;
@@ -24,25 +30,60 @@
 
 #navBarSignUp {
   margin-right: 50px;
+  color: white;
+  background-color: transparent;
+  border-color: white;
+  border-style: solid;
+  border-radius: 2px;
+  transition: 0.3s;
+}
+
+#navBarSignUp:hover {
+  background-color: white;
+  color: blue;
 }
 
 #navBarLogin {
   margin-right: 20px;
+  color: white;
+  background-color: transparent;
+  border-color: white;
+  border-style: solid;
+  transition: 0.3s;
+  border-radius: 2px;
 }
 
+#navBarLogin:hover {
+  background-color: white;
+  color: blue;
+}
+
+.navBarWrapper {
+  background-color: blue;
+}
 
 .navBarContainer {
+  width: 100vw;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   height: 50px;
   background-color: blue;
-  padding: 0px 30px;
+  padding: 30px 50px;
+  /* position: relative; */
+  /* left: 50%;
+  transform: translateX(-50%); */
 }
 
 .navBarContainer h1 {
   color: white;
+  font-size: 50px;
+  font-weight: 600;
+}
+
+.navBarContainer h1 span {
+  color: rgb(255, 85, 0);
   font-size: 50px;
   font-weight: 600;
 }
