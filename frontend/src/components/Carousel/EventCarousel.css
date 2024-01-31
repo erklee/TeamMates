@@ -1,0 +1,20 @@
+
+.slideImage {
+  height: 500px;
+  width: 100%;
+}
+.carouselContainer {
+  position: relative;
+  min-height: 100px;
+  width: 700px;
+  left: 50%;
+  transform: translateX(-50%);
+  
+}
+
+.carousel-control-next-icon:hover {
+  background-color: #007bff;
+
+  /* Set the desired color */
+}
+

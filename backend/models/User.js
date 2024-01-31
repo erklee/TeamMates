@@ -2,30 +2,48 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-    username: {
+  username: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+  },
+  hashedPassword: {
+    type: String,
+    required: true,
+  },
+  birthdate: {
+    type: Date,
+    required: true, 
+  },
+  fname:{
+    type: String,
+    required: true,
+  },
+  lname:{
+    type: String,
+    required: true,
+  },
+  address: {
+    street: {
       type: String,
-      required: true
+      required: false,
     },
-    email: {
+    city: {
       type: String,
-      required: true
+      required: false,
     },
-    hashedPassword: {
+    state: {
       type: String,
-      required: true
+      required: false,
     },
-    birthdate: {
-        type: Date,
-        required: true 
-    },
-    fname:{
+    zipcode: {
       type: String,
-      required: true
+      required: false,
     },
-    lname:{
-      type: String,
-      required: true
-    },
+
     address: {
         street: {
           type: String,
@@ -56,6 +74,16 @@ const userSchema = new Schema({
     timestamps: true
   });
 
+  },
+  profileImageUrl: {
+    type: String,
+    required: true,
+  },
+}, {
+  timestamps: true,
+});
+
+
   userSchema.add
 
-  module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('User', userSchema);

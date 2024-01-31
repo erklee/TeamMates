@@ -1,13 +1,14 @@
 .profileDropdownWrapper {
   position: absolute;
   right: 20px;
-  top: 100px;
+  top: 55px;
   width: 100px;
   min-height: 90px;
   /* color: black; */
   border-style: none;
   border-width: 5px;
   border-radius: 5px;
+  z-index: 2;
   
 }
 

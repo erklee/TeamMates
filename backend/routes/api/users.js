@@ -155,6 +155,7 @@ router.get('/current', restoreUser, (req, res) => {
     birthdate: req.user.birthdate,
     fname: req.user.fname,
     lname: req.user.lname,
+    profileImageUrl: req.user.profileImageUrl,
     address: {
       street: req.user.address.street,
       city: req.user.address.city,

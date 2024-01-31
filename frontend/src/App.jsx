@@ -5,7 +5,6 @@ import { AuthRoute, ProtectedRoute } from './components/Routes/Routes';
 import NavBar from './components/NavBar/NavBar';
 import MainPage from './components/MainPage/MainPage';
 import EventMap from './components/Map/Map';
-
 import { getCurrentUser } from './store/session';
 
 const Layout = () => {
