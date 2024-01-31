@@ -31,40 +31,40 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-router.get('/:id', async (req, res, next) => {
-  try {
-    const user = await User.findById(req.params.id);
-    const { 
-      _id, 
-      email, 
-      username, 
-      birthdate, 
-      fname, 
-      lname, 
-      address, 
-      requestIds, 
-      friendIds, 
-      createdAt, 
-      updatedAt 
-    } = user;
-    return res.json({ 
-      _id, 
-      email, 
-      username, 
-      birthdate, 
-      fname, 
-      lname, 
-      address, 
-      requestIds, 
-      friendIds, 
-      createdAt, 
-      updatedAt 
-    });
-  }
-  catch(err) {
-    next(err)
-  }
-})
+// router.get('/:id', async (req, res, next) => {
+//   try {
+//     const user = await User.findById(req.params.id);
+//     const { 
+//       _id, 
+//       email, 
+//       username, 
+//       birthdate, 
+//       fname, 
+//       lname, 
+//       address, 
+//       requestIds, 
+//       friendIds, 
+//       createdAt, 
+//       updatedAt 
+//     } = user;
+//     return res.json({ 
+//       _id, 
+//       email, 
+//       username, 
+//       birthdate, 
+//       fname, 
+//       lname, 
+//       address, 
+//       requestIds, 
+//       friendIds, 
+//       createdAt, 
+//       updatedAt 
+//     });
+//   }
+//   catch(err) {
+//     next(err)
+//   }
+// })
 
 
 router.post('/register', validateRegisterInput, async (req, res, next) => {

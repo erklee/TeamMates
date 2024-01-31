@@ -42,26 +42,8 @@ const userSchema = new Schema({
     zipcode: {
       type: String,
       required: false,
-    },
-
-    address: {
-        street: {
-          type: String,
-          required: false
-        },
-        city: {
-          type: String,
-          required: false
-        },
-        state: {
-          type: String,
-          required: false
-        },
-        zipcode: {
-          type: String,
-          required: false
-        }
-    },
+    }
+  },
     requestIds: {
       type: [Schema.Types.ObjectId],
       ref: 'User'
@@ -69,19 +51,17 @@ const userSchema = new Schema({
     friendIds: {
       type: [Schema.Types.ObjectId],
       ref: 'User'
-    }
-  }, {
+    },
+    profileImageUrl: {
+      type: String,
+      required: true,
+    },
+  }, 
+  {
     timestamps: true
   });
 
-  },
-  profileImageUrl: {
-    type: String,
-    required: true,
-  },
-}, {
-  timestamps: true,
-});
+
 
 
   userSchema.add
