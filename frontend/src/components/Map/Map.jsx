@@ -214,7 +214,7 @@ const EventMap = () => {
               onCloseClick={closeInfoWindow}
             >
               <div>
-                <h2>{selectedMarker.event.name}</h2>
+                <h6>{selectedMarker.event.title}</h6>
                 <p>{selectedMarker.event.description}</p>
                 <p>Distance: {selectedMarker.distance.toFixed(2)} miles</p>
               </div>
