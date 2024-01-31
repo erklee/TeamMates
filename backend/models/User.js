@@ -43,7 +43,7 @@ const userSchema = new Schema({
       type: String,
       required: false,
     }
-  },
+   },
     requestIds: {
       type: [Schema.Types.ObjectId],
       ref: 'User'

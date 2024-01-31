@@ -11,6 +11,7 @@ const EventMap = () => {
   const [userLocation, setUserLocation] = useState(null);
   const [selectedMarker, setSelectedMarker] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
+  // const [selectedDifficulty, setSelectedDifficulty] = useState("");
   const [filterRange, setFilterRange] = useState(10);
   const dispatch = useDispatch();
 
@@ -23,7 +24,8 @@ const EventMap = () => {
       try {
         const results = await Promise.allSettled(
           events
-            .filter((event) => !selectedCategory || event.category === selectedCategory)
+            .filter((event) => !selectedCategory || event.category === selectedCategory )
+            // || (!selectedDifficulty || event.difficulty === selectedDifficulty)
             .map(async (event) => {
               try {
                 const response = await fetch(
@@ -136,7 +138,7 @@ const EventMap = () => {
     if (distance === 15){
         zoom = 11
     }if (distance === 25){
-        zoom = 10
+        zoom = 10.5
     }
 
    
@@ -172,6 +174,16 @@ const EventMap = () => {
         <option value="soccer">Soccer</option>
         <option value="hockey">Hockey</option>
       </select>
+
+      {/* <select
+        value={selectedDifficulty}
+        onChange={(e) => setSelectedDifficulty(e.target.value)}
+      >
+        <option value="">All Difficulty</option>
+        <option value="easy">Easy</option>
+        <option value="medium">Medium</option>
+        <option value="hard">Hard</option>
+      </select> */}
 
       <label>
         Filter Range:
