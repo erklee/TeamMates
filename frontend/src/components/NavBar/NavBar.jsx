@@ -5,7 +5,7 @@ import './NavBar.css';
 
 import { showModal } from '../../store/modals';
 import jerseyIcon from '../../assets/icons/jerseyIcon.png'
-import ProfileDropdown from './profileDropdown';
+import ProfileDropdown from './ProfileDropdown';
 
 
 function NavBar () {
