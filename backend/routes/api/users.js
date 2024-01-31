@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const passport = require('passport');
 const router = express.Router();
-const { loginUser, restoreUser } = require('../../config/passport');
+const { loginUser, restoreUser, requireUser } = require('../../config/passport');
 const { isProduction } = require('../../config/keys');
 const validateRegisterInput = require('../../validations/register');
 const validateLoginInput = require('../../validations/login');
@@ -30,6 +30,7 @@ router.get('/', async (req, res, next) => {
     next(err)
   }
 })
+
 
 router.post('/register', validateRegisterInput, async (req, res, next) => {
   // Check to make sure no one has already registered with the proposed email or
@@ -127,6 +128,35 @@ router.get('/current', restoreUser, (req, res) => {
     }
   });
 });
+
+router.patch('/:id/friend', requireUser, async (req, res) => {
+  try {
+    const friendUser = await User.findById(req.params.id);
+    const youUser = await User.findById(req.user._id);
+    if(youUser.friendIds.some(requestId => requestId.equals(youUser._id))) return res.json(["You are already friends with this user"])
+    if(youUser.requestIds.some(requestId => requestId.equals(friendUser._id))) {
+      friendUser.friendIds.push(youUser._id);
+      friendUser.requestIds = friendUser.requestIds.filter(requestId => !requestId.equals(youUser._id))
+      youUser.friendIds.push(friendUser);
+      youUser.requestIds = youUser.requestIds.filter(requestId => !requestId.equals(friendUser._id))
+      youUser.save();
+      friendUser.save();
+      return res.json([
+        youUser,
+        friendUser
+      ])
+    }
+    friendUser.requestIds.push(youUser._id);
+    friendUser.save()
+    return res.json([
+      friendUser
+    ])
+  }
+  catch(err) {
+    next(err)
+  }
+
+})
 
 
 
