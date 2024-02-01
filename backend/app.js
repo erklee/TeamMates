@@ -30,6 +30,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+app.use(
+  csurf({
+    cookie: {
+      secure: isProduction,
+      sameSite: isProduction && "Lax",
+      httpOnly: true
+    }
+  })
+);
+
 // Security Middleware
 if (!isProduction) {
   // Enable CORS only in development because React will be on the React
@@ -62,15 +72,7 @@ if (isProduction) {
 
 // Set the _csrf token and create req.csrfToken method to generate a hashed
 // CSRF token
-app.use(
-  csurf({
-    cookie: {
-      secure: isProduction,
-      sameSite: isProduction && "Lax",
-      httpOnly: true
-    }
-  })
-);
+
 
 // Attach Express routers
 app.use('/api/users', usersRouter);
