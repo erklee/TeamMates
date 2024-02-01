@@ -35,6 +35,18 @@ router.get("/:id", async function (req, res, next) {
   }
 });
 
+router.get('/user/:id', async function (req, res, next) {
+    try {
+        const event = await Event.find( { attendees: `${req.params.id}` })
+            .populate("coordinator", "_id username")
+            .populate("attendees", "_id username");
+        return res.json(event)
+    }
+    catch(err) {
+        return res.json({ errors: "Could not complete this request" })
+    }
+})
+
 router.patch("/:id/attend", requireUser, async function (req, res, next) {
   let event;
   try {

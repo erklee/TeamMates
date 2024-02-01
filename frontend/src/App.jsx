@@ -39,6 +39,10 @@ const router = createBrowserRouter([
         element: <EventMap />,
       },
       {
+        path: "events/:eventId",
+        element: <EventShowPage />
+      },
+      {
         path: `edit/:eventId`,
         loader: eventLoader,
         element: <ProtectedRoute component={Edit} />,
