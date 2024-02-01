@@ -5,7 +5,7 @@ import './NavBar.css';
 
 import { showModal } from '../../store/modals';
 import jerseyIcon from '../../assets/icons/jerseyIcon.png';
-import ProfileDropdown from './profileDropdown';
+import ProfileDropdown from './ProfileDropdown';
 import {useNavigate} from 'react-router-dom'
 
 
@@ -15,6 +15,7 @@ function NavBar() {
   const currentUser = useSelector(state => state.session.user);
   const loggedIn = useSelector(state => !!state.session.user);
   const dispatch = useDispatch();
+
 
   const handleMainPage = e => {
     e.preventDefault()
