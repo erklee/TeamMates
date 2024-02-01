@@ -40,7 +40,7 @@ passport.use(new LocalStrategy({
     };
   };
 
-  // console.log(secretOrKey)
+
 
 const options = {};
 options.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();

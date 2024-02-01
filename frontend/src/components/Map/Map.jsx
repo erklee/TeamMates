@@ -3,8 +3,7 @@ import { GoogleMap, Marker, InfoWindow, LoadScript, MarkerF } from "@react-googl
 import { useDispatch, useSelector } from "react-redux";
 import { fetchEvents } from "../../store/events";
 import { selectAlleventsArray } from "../../store/events";
-import location from "../../assets/images/location.png"
-
+import spinping from "../../assets/images/spin-trans.gif"
 import { useLocation } from 'react-router-dom';
 
 import './map.css';
@@ -109,8 +108,6 @@ const EventMap = () => {
         if (!sessionStorage.getItem('confirmedLocation')) {
           confirmGeolocation = window.confirm("This app would like to use your location. Allow?");
           sessionStorage.setItem("confirmedLocation", `${confirmGeolocation}`)
-          console.log(confirmGeolocation)
-          console.log(sessionStorage.getItem('confirmedLocation'))
         } else {
           confirmGeolocation = JSON.parse(sessionStorage.getItem('confirmedLocation'))
         }
@@ -186,7 +183,7 @@ const EventMap = () => {
   };
 
   const img = {
-    url: location
+    url: spinping
 }
 
   return (

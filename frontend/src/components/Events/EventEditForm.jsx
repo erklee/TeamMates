@@ -13,7 +13,6 @@ function Edit(){
        dispatch(fetchEvent(eventId))
     }, [dispatch,eventId]);
     
-    console.log(eventId)
     const [attendeesMax, setAttendeesMax] = useState(event?.attendeesMax);
     const [category, setCatrgory] = useState(event?.category)
     const[date, setDate] = useState(event?.date)

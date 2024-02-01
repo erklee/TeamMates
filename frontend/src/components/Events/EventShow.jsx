@@ -2,6 +2,10 @@ import jwtFetch from '../../store/jwt';
 import { useEffect } from 'react';
 import { selectEventById } from '../../store/events';
 import { fetchEvent } from '../../store/events';
+import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+
 
 
 
@@ -9,10 +13,10 @@ function EventShowPage() {
     const { eventId } = useParams(); 
     const dispatch = useDispatch();
     const event = useSelector(state => state.events.new);
-    console.log(event)
+
+
 
     useEffect(() => {
-        dispatch((eventId));
         dispatch(fetchEvent(eventId));
     }, [dispatch, eventId]);
 
@@ -41,7 +45,6 @@ function EventShowPage() {
             <p>Description: {event.description}</p>
             <p>Category: {event.category}</p>
             <ul>Attendees: {attendeesList}</ul>
-            <p>Location: {locationDisplay}</p> 
             <p>{`Address: ${event.location.address} ${event.location.zipcode}`} </p>
         </div>
     );
