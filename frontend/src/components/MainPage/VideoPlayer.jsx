@@ -28,7 +28,7 @@ const VideoPlayer = () => {
       videoElement.src = videos[currentVideoIndex];
       videoElement.play();
     }
-  }, [videos,currentVideoIndex]);
+  }, [videos, currentVideoIndex]);
 
   const handleVideoEnded = () => {
     // When a video ends, move to the next one
