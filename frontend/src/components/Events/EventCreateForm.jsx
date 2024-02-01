@@ -39,7 +39,7 @@ export default function EventCreateForm() {
     const handleSubmit = async e => {
         e.preventDefault();
     
-        dispatch(composeEvent({
+        const res = await dispatch(composeEvent({
             title,
             description,
             date: eventDate,
@@ -51,6 +51,8 @@ export default function EventCreateForm() {
                 zipcode
             }
         }))
+
+        console.log(res);
     }
 
 
