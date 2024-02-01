@@ -24,6 +24,10 @@ const EventMap = () => {
     dispatch(fetchEvents());
   }, [dispatch]);
 
+  // useEffect(() => {
+  //   dispatch(fetchEvents())
+  // }, []);
+
   useEffect(() => {
     const geocodeAddresses = async () => {
       try {
