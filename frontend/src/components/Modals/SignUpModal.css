@@ -7,7 +7,7 @@
   position: absolute;
   min-height: 200px;
   min-width: 400px;
-  max-width: 450px;
+  max-width: 430px;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
@@ -64,7 +64,7 @@
 
 .signUpModalSubmit {
   color: white;
-  background-color: rgb(0, 13, 255);
+  background-color: rgb(0, 0, 0);
   width: 380px;
   /* max-width: 570px; */
   margin-top: 20px;
@@ -75,8 +75,14 @@
 }
 
 .signUpModalSubmit:hover {
-  color: rgb(0, 13, 255);
+  color: rgb(0, 0, 0);
   background-color: white;
+}
+
+.signUpModalSubmit:disabled {
+  background-color: transparent;
+  border-style: solid;
+  border-color: rgb(255, 255, 255);
 }
 
 .modal-overlay {
@@ -141,6 +147,10 @@
   margin-left: 10px;
 }
 
+.passwordInput {
+  margin-right: 10px;
+}
+
 
 
 .streetInput input {
@@ -157,5 +167,6 @@
 }
 
 .zipCodeInput {
-  margin-left: 10px;
+  /* margin-left: 10px; */
+
 }

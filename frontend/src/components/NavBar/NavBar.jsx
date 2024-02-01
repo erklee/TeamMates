@@ -1,31 +1,43 @@
 
 import { useSelector, useDispatch } from 'react-redux';
+import { useLocation } from 'react-router-dom';
+
 import { useState  } from 'react';
 import './NavBar.css';
-
+import { useEffect } from 'react';
 import { showModal } from '../../store/modals';
 import jerseyIcon from '../../assets/icons/jerseyIcon.png';
-import ProfileDropdown from './ProfileDropdown';
-import {useNavigate} from 'react-router-dom'
+
+import ProfileDropdown from './profileDropdown';
+import {useNavigate} from 'react-router-dom';
+import { getCurrentUser } from '../../store/session';
+
 
 
 function NavBar() {
-  const navigate = useNavigate()
+  const location = useLocation();
+  // console.log(location.pathname);
+  const navigate = useNavigate();
   const [visible, setVisible] = useState(false);
   const currentUser = useSelector(state => state.session.user);
   const loggedIn = useSelector(state => !!state.session.user);
   const dispatch = useDispatch();
 
 
+  useEffect(() => {
+    dispatch(getCurrentUser());
+  }, [dispatch]);
+
+
   const handleMainPage = e => {
-    e.preventDefault()
-    navigate("/")
-  }
+    e.preventDefault();
+    navigate("/");
+  };
 
   const handleProfileDropdown = e => {
     e.preventDefault();
     setVisible(!visible);
-    console.log('clicked');
+    // console.log('clicked');
   };
 
   const handleShowModal = e => {
@@ -36,6 +48,10 @@ function NavBar() {
     if(e.target.id === 'navBarSignUp'){
       dispatch(showModal('SignUpModal'));
     } 
+
+    if (location.pathname !== "/") {
+      navigate("/");
+    }
   };
 
 
@@ -46,7 +62,7 @@ function NavBar() {
         <div className="links-nav">
 
           <div className='userIconContainer' onClick={handleProfileDropdown}>
-            <img src={currentUser.profileImageUrl}  height='25' width='25' alt="profile icon" />
+            <img src={currentUser?.profileImageUrl}  height='25' width='25' alt="profile icon" />
             <p>{currentUser.fname}</p>
           </div>
           {visible && <ProfileDropdown className="profileDropdownWrapper" visible={visible} setVisible={setVisible}/>}
@@ -63,6 +79,8 @@ function NavBar() {
       );
     }
   };
+
+
 
   return (
     <div className='navBarContainer'>

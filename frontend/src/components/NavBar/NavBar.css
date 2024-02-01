@@ -31,7 +31,7 @@
 #navBarSignUp {
   margin-right: 50px;
   color: white;
-  background-color: transparent;
+  background-color: black;
   border-color: white;
   border-style: solid;
   border-radius: 2px;
@@ -46,7 +46,7 @@
 #navBarLogin {
   margin-right: 20px;
   color: white;
-  background-color: transparent;
+  background-color: black;
   border-color: white;
   border-style: solid;
   transition: 0.3s;
@@ -69,9 +69,10 @@
   justify-content: space-between;
   align-items: center;
   height: 50px;
-  background-color: blue;
+  background-color: black;
   padding: 30px 50px;
-  /* position: relative; */
+  /* position: absolute; */
+  /* z-index: 1; */
   /* left: 50%;
   transform: translateX(-50%); */
 }
