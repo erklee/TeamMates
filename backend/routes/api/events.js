@@ -55,7 +55,7 @@ router.patch("/:id/attend", requireUser, async function (req, res, next) {
   }
 });
 
-router.patch("/:id/unattend", requireUser, validateEventUpdate, async function (req, res, next) {
+router.patch("/:id/unattend", requireUser, async function (req, res, next) {
   let event;
   try {
     event = await Event.findById(req.params.id);
@@ -78,13 +78,6 @@ router.patch("/:id/unattend", requireUser, validateEventUpdate, async function (
 
 
 router.post("/", requireUser, validateEventCreation, async function(req, res, next) {
-    // let user
-    // try {
-    //     user = await fetch('/api/users/current');
-    // }
-    // catch(err) {
-    //     return res.json("Must be logged in to create an event")
-    // }
     try {
         const newEvent = new Event({
             coordinator: req.user._id,

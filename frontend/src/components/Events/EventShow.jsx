@@ -4,6 +4,7 @@ import { selectEventById } from '../../store/events';
 import { fetchEvent } from '../../store/events';
 
 
+
 function EventShowPage() {
     const { eventId } = useParams(); 
     const dispatch = useDispatch();

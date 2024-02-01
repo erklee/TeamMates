@@ -8,6 +8,8 @@ const RECEIVE_EVENT_ERRORS = "events/RECEIVE_EVENT_ERRORS";
 // const RECEIVE_EVENT = "events/RECEIVE_EVENT"
 const REMOVE_EVENT = "events/REMOVE_EVENT"
 const CLEAR_EVENT_ERRORS = "events/CLEAR_EVENT_ERRORS";
+const ATTEND_EVENT = "events/ATTEND_EVENT"
+const UNATTEND_EVENT = "events/UNATTEND_EVENT"
 
 const receiveEvents = events => ({
   type: RECEIVE_EVENTS,
@@ -43,6 +45,16 @@ export const clearEventErrors = errors => ({
     errors
 });
 
+export const attendEventAction = (eventId) => ({
+  type: ATTEND_EVENT,
+  eventId
+})
+
+export const unAttendEventAction = (eventId) => ({
+  type: UNATTEND_EVENT,
+  eventId
+})
+ 
 export const fetchEvents = () => async dispatch => {
   try {
     const res = await jwtFetch ('/api/events');
@@ -115,6 +127,26 @@ export const updatedEvent = (updatedEvent) => async dispatch => {
   }
 }
 
+export const attendEvent = (eventId) => async dispatch => {
+    const res  = await jwtFetch(`/api/events/${eventId}/attend`, {
+        method: "PATCH", 
+    });
+      if(res.ok){
+        const data = await res.json()
+        dispatch(attendEventAction(data))
+      }
+}
+
+export const unAttendEvent = (eventId) => async dispatch => {
+  const res  = await jwtFetch(`/api/events/${eventId}/unattend`, {
+    method: "PATCH", 
+});
+  if(res.ok){
+    const data = await res.json()
+    dispatch(unAttendEventAction(data))
+  }
+}
+
 export const deleteEvent = (eventId) => async dispatch => {
   const res = await jwtFetch(`/api/reviews/${eventId}`, {
     method: "DELETE"
@@ -173,6 +205,16 @@ const eventsReducer = (state = { all: {}, user: {}, new: undefined }, action) =>
     case REMOVE_EVENT:
       delete newState[action.eventId]
       return newState
+    case ATTEND_EVENT:
+      return {
+        ...state,
+        user: action.eventId
+      };
+    case UNATTEND_EVENT:
+      return {
+        ...state, 
+        user: delete action.eventId
+      }
     default:
       return state;
   }
