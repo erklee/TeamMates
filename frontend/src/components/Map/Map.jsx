@@ -17,7 +17,7 @@ const EventMap = () => {
   const [userLocation, setUserLocation] = useState(null);
   const [selectedMarker, setSelectedMarker] = useState("");
   const [selectedCategory, setSelectedCategory] = useState(sport ||"");
-  // const [selectedDifficulty, setSelectedDifficulty] = useState("");
+  const [selectedDifficulty, setSelectedDifficulty] = useState("");
   const [filterRange, setFilterRange] = useState(10);
   const dispatch = useDispatch();
 
@@ -198,7 +198,9 @@ const EventMap = () => {
             <option value="hockey">Hockey</option>
           </select>
 
-          {/* <select
+          
+
+          <select
             value={selectedDifficulty}
             onChange={(e) => setSelectedDifficulty(e.target.value)}
           >
@@ -206,7 +208,7 @@ const EventMap = () => {
             <option value="easy">Easy</option>
             <option value="medium">Medium</option>
             <option value="hard">Hard</option>
-          </select> */}
+          </select>
 
           <label>
             Filter Range:
