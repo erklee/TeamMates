@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {signup, clearSessionErrors } from '../../store/session';
 import { hideModal } from '../../store/modals';
-import closeIcon from "../../assets/icons/closeIcon.png";
+import closeIcon from "../../assets/icons/closeIcon2.png";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import "./SignUpModal.css";
@@ -127,30 +127,29 @@ export default function SignUpModal() {
           </label>
 
         </div>
-
-        <label>
-
-          <input type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Password"
-          />
-        </label>
-
-        <label className='birthdateInput'>
-
-          {/* <input type="date"
-            value={birthdate}
-            onChange={(e) => setBirthDate(e.target.value)}
-          /> */}
-          <DatePicker
-            selected={birthdate}
-            onChange={(date) => setBirthDate(date)}
-            placeholderText="Birthdate* MM/DD/YYYY"
-            dateFormat="MM/dd/yyyy"  // Customize date format if needed
-            // Add any other customization props here
-          />
-        </label>
+        
+        <div className='nameInput'>
+          <label className='passwordInput'>
+            <input type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Password*"
+            />
+          </label>
+          <label className='birthdateInput'>
+            {/* <input type="date"
+              value={birthdate}
+              onChange={(e) => setBirthDate(e.target.value)}
+            /> */}
+            <DatePicker
+              selected={birthdate}
+              onChange={(date) => setBirthDate(date)}
+              placeholderText="Birthdate* MM/DD/YYYY"
+              dateFormat="MM/dd/yyyy"  // Customize date format if needed
+              // Add any other customization props here
+            />
+          </label>
+        </div>
 
 
         <label className='streetInput'>
@@ -192,7 +191,7 @@ export default function SignUpModal() {
         </div>
         <button 
           className='signUpModalSubmit'
-          // disabled={!email || !username || !password || !birthdate}
+          disabled={!email || !username || !password || !birthdate || !fname || !lname}
         >
           Sign Up
         </button>
