@@ -53,7 +53,6 @@ function EventCarousel() {
   const handleIcons = e => {
     e.preventDefault();
     const sport = e.target.alt;
-    console.log(sport);
     navigate('/events', { state: { sport }});
   };
 

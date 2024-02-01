@@ -16,7 +16,7 @@ import { getCurrentUser } from '../../store/session';
 
 function NavBar() {
   const location = useLocation();
-  // console.log(location.pathname);
+
   const navigate = useNavigate();
   const [visible, setVisible] = useState(false);
   const currentUser = useSelector(state => state.session.user);
