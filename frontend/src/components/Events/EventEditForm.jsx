@@ -13,15 +13,14 @@ function Edit(){
     dispatch(fetchEvent(eventId));
   }, [dispatch,eventId]);
     
-  console.log(eventId);
-  const [attendeesMax, setAttendeesMax] = useState(event?.attendeesMax);
-  const [category, setCatrgory] = useState(event?.category);
-  const[date, setDate] = useState(event?.date);
-  const [description, setDescription] = useState(event?.description);
-  const [difficulty, setDifficulty] = useState(event?.difficulty);
-  const [address, setAddress] = useState(event?.location.address);
-  const [zipcode, setZipcode] = useState(event?.location.zipcode);
-  const [title,setTitle] = useState(event?.title);
+    const [attendeesMax, setAttendeesMax] = useState(event?.attendeesMax);
+    const [category, setCatrgory] = useState(event?.category)
+    const[date, setDate] = useState(event?.date)
+    const [description, setDescription] = useState(event?.description)
+    const [difficulty, setDifficulty] = useState(event?.difficulty)
+    const [address, setAddress] = useState(event?.location.address)
+    const [zipcode, setZipcode] = useState(event?.location.zipcode)
+    const [title,setTitle] = useState(event?.title)
 
   const handleSubmit = (e) => {
     e.preventDefault();
