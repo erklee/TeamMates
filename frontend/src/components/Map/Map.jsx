@@ -3,10 +3,9 @@ import { GoogleMap, Marker, InfoWindow, LoadScript, MarkerF } from "@react-googl
 import { useDispatch, useSelector } from "react-redux";
 import { fetchEvents } from "../../store/events";
 import { selectAlleventsArray } from "../../store/events";
-import location from "../../assets/images/location.png";
-import spinpin from "../../assets/images/spinning.gif"
-import animatedpin from "../../assets/images/animated-pin.gif"
+import location from "../../assets/images/location.png"
 import { useLocation } from 'react-router-dom';
+import spinIcon from "../../assets/images/spin-trans.gif"
 import './map.css';
 
 
@@ -17,12 +16,8 @@ const EventMap = () => {
   const [markers, setMarkers] = useState([]);
   const [userLocation, setUserLocation] = useState(null);
   const [selectedMarker, setSelectedMarker] = useState("");
-
-
-  const [selectedDifficulty, setSelectedDifficulty] = useState("");
-
   const [selectedCategory, setSelectedCategory] = useState(sport ||"");
-
+  // const [selectedDifficulty, setSelectedDifficulty] = useState("");
   const [filterRange, setFilterRange] = useState(10);
   const dispatch = useDispatch();
 
@@ -50,12 +45,8 @@ const EventMap = () => {
       try {
         const results = await Promise.allSettled(
           events
-            .filter((event) => 
-              (!selectedCategory || event.category === selectedCategory) && 
-              (!selectedDifficulty || event.difficulty === selectedDifficulty)
-            )
-          
-            // 
+            .filter((event) => !selectedCategory || event.category === selectedCategory )
+            // || (!selectedDifficulty || event.difficulty === selectedDifficulty)
             .map(async (event) => {
               try {
                 const response = await fetch(
@@ -104,7 +95,7 @@ const EventMap = () => {
     return () => {
       isMounted = false;
     };
-  }, [events, userLocation, selectedCategory, selectedDifficulty, filterRange, dispatch]);
+  }, [events, userLocation, selectedCategory, filterRange, dispatch]);
 
   useEffect(() => {
     const getUserLocation = () => {
@@ -135,9 +126,7 @@ const EventMap = () => {
         console.log("User denied geolocation access or not supported.");
         setUserLocation({ lat: 40.71679995490363, lng: -73.99771308650402 });
       }
-      
     };
-    
 
     getUserLocation();
   }, []);
@@ -171,19 +160,13 @@ const EventMap = () => {
         zoom = 11
     }if (distance === 25){
         zoom = 10.5
-    } if (distance === 50){
-        zoom = 9.5
     }
-    if (distance === 50){
-      zoom = 9.5
-  }
 
    
     return zoom;
   };
 
-  const filterRangeOptions = [1, 5, 10, 15, 25, 50];
-
+  const filterRangeOptions = [1, 5, 10, 15, 25];
 
   const closeInfoWindow = () => {
     setSelectedMarker(null);
@@ -195,12 +178,11 @@ const EventMap = () => {
   };
 
   const img = {
-    url: spinpin
+    url: spinIcon
 }
 
   return (
     <div className="eventMapWrapper">
-
       <div className="eventIndexSideBar">
         <div className="filters">
           <select
@@ -248,84 +230,6 @@ const EventMap = () => {
                 <p>{`Address: ${selectedMarker.event.location.address} ${selectedMarker.event.location.zipcode}`}</p>
                 <p>{`Date: ${formatDate(selectedMarker.event.date)}`}</p>
                 <p>{`Particpants: ${selectedMarker.event.attendees.length}`}</p>
-
-      <select
-        value={selectedCategory}
-        onChange={(e) => setSelectedCategory(e.target.value)}
-      >
-        <option value="">All Categories</option>
-        <option value="basketball">BasketBall</option>
-        <option value="football">Football</option>
-        <option value="baseball">Baseball</option>
-        <option value="tennis">Tennis</option>
-        <option value="soccer">Soccer</option>
-        <option value="hockey">Hockey</option>
-      </select>
-
-      <select
-        value={selectedDifficulty}
-        onChange={(e) => setSelectedDifficulty(e.target.value)}
-      >
-        <option value="">All Difficulty</option>
-        <option value="easy">Easy</option>
-        <option value="medium">Medium</option>
-        <option value="hard">Hard</option>
-      </select>
-
-      <label>
-        Filter Range:
-        <select value={filterRange} onChange={(e) => setFilterRange(parseInt(e.target.value))}>
-          {filterRangeOptions.map((option, index) => (
-            <option key={`${option?.id} ${index}`} value={option}>
-              {`${option} mile${option > 1 ? "s" : ""} away`}
-            </option>
-          ))}
-        </select>
-      </label>
-
-      <LoadScript
-        googleMapsApiKey={import.meta.env.VITE_APP_GOOGLE_MAPS_API_KEY}
-        
-      >
-        <GoogleMap
-          mapContainerStyle={containerStyle}
-          center={userLocation || { lat: 40.71679995490363, lng: -73.99771308650402 }}
-          zoom={calculateZoomLevel(filterRange)}
-          onLoad={() => console.log("Map is loaded")}
-        >
-          {userLocation && window.google && window.google.maps && (
-            <MarkerF
-              position={userLocation}
-              animation={window.google.maps.Animation.BOUNCE}
-              // icon={{
-              //   path: window.google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
-              //   scale: 10,
-              //   fillColor: "#0000ff",
-              //   fillOpacity: 1,
-              //   strokeColor: "#0000ff",
-              //   strokeWeight: 2
-              // }}
-            />
-          )}
-
-          {markers.map((marker, index) => (
-            <Marker
-              key={`${marker.id} ${index}`}
-              position={marker.position}
-              onClick={() => setSelectedMarker(marker)}
-            />
-          ))}
-          {selectedMarker && (
-            <InfoWindow
-              position={selectedMarker.position}
-              onCloseClick={closeInfoWindow}
-            >
-              <div>
-                <h6>{selectedMarker.event.title}</h6>
-                <p>{selectedMarker.event.description}</p>
-                <p>Difficulty: {selectedMarker.event.difficulty}</p>
-                <p>Distance: {selectedMarker.distance.toFixed(2)} miles</p>
-
               </div>
             </div>
           }
@@ -343,9 +247,19 @@ const EventMap = () => {
             onLoad={() => console.log("Map is loaded")}
           >
             {userLocation && window.google && window.google.maps && (
-              <MarkerF
-                position={userLocation}
-                icon={img}
+            <MarkerF
+              position={userLocation}
+              icon={img}
+              // animation={window.google.maps.Animation.BOUNCE}
+              // icon={{
+              //   path: window.google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
+              //   scale: 10,
+              //   fillColor: "#0000ff",
+              //   fillOpacity: 1,
+              //   strokeColor: "#0000ff",
+              //   strokeWeight: 2
+              // }}
+
               />
             )}
 
