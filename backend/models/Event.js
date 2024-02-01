@@ -62,7 +62,7 @@ const eventSchema = new Schema({
   },
   pictureUrl: {
     type: String,
-    required: true,
+    required: false,
     },
 
 
