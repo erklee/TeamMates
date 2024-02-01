@@ -38,6 +38,28 @@ if (!isProduction) {
   app.use(cors());
 }
 
+if (isProduction) {
+  const path = require('path');
+  // Serve the frontend's index.html file at the root route
+  app.get('/', (req, res) => {
+    res.cookie('CSRF-TOKEN', req.csrfToken());
+    res.sendFile(
+      path.resolve(__dirname, '../frontend', 'dist', 'index.html')
+    );
+  });
+
+  // Serve the static assets in the frontend's dist folder
+  app.use(express.static(path.resolve("../frontend/dist")));
+
+  // Serve the frontend's index.html file at all other routes NOT starting with /api
+  app.get(/^(?!\/?api).*/, (req, res) => {
+    res.cookie('CSRF-TOKEN', req.csrfToken());
+    res.sendFile(
+      path.resolve(__dirname, '../frontend', 'dist', 'index.html')
+    );
+  });
+}
+
 // Set the _csrf token and create req.csrfToken method to generate a hashed
 // CSRF token
 app.use(
@@ -55,12 +77,7 @@ app.use('/api/users', usersRouter);
 app.use('/api/csrf', csrfRouter);
 app.use('/api/events', eventsRouter);
 
-app.use((req, res, next) => {
-  const err = new Error('Not Found');
-  err.statusCode = 404;
-  next(err);
-});
-  
+
 const serverErrorLogger = debug('backend:error');
 
 // Express custom error handler that will be called whenever a route handler or
@@ -97,5 +114,12 @@ if (isProduction) {
     );
   });
 }
+
+app.use((req, res, next) => {
+  const err = new Error('Not Found');
+  err.statusCode = 404;
+  next(err);
+});
+  
 
 module.exports = app;
