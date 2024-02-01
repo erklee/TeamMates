@@ -1,6 +1,5 @@
-import jwtFetch from '../../store/jwt';
+
 import { useEffect } from 'react';
-import { selectEventById } from '../../store/events';
 import { fetchEvent } from '../../store/events';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
