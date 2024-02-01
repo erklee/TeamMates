@@ -6,6 +6,7 @@ import NavBar from './components/NavBar/NavBar';
 import MainPage from './components/MainPage/MainPage';
 import EventMap from './components/Map/Map';
 import { getCurrentUser } from './store/session';
+import Edit from './components/Events/EventEditForm';
 
 const Layout = () => {
   return (
@@ -15,6 +16,14 @@ const Layout = () => {
     </>
   );
 };
+
+const eventLoader = async({request , params}) => {
+  const res =await fetch(`/api/events/${params.eventId}`)
+  if(res.ok){
+    const data = await res.json()
+    return data
+  }
+}
 
 const router = createBrowserRouter([
   {
@@ -27,6 +36,11 @@ const router = createBrowserRouter([
       {
         path: "events",
         element: <ProtectedRoute component={EventMap} />
+      },
+      {
+        path: `edit/:eventId`,
+        loader: eventLoader,
+        element: <ProtectedRoute component={Edit} />,
       },
       // {
       //   path: "login",

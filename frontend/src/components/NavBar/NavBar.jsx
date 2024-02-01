@@ -13,7 +13,7 @@ function NavBar () {
   const currentUser = useSelector(state => state.session.user)
   const loggedIn = useSelector(state => !!state.session.user);
   const dispatch = useDispatch();
-  console.log(currentUser)
+ 
   
 
   const handleProfileDropdown = e => {
