@@ -38,10 +38,10 @@ const router = createBrowserRouter([
         path: "events",
         element: <EventMap />,
       },
-      // {
-      //   path: "events/:eventId",
-      //   element: <EventShowPage />
-      // },
+      {
+        path: "events/:eventId",
+        element: <EventShowPage />
+      },
       {
         path: `edit/:eventId`,
         loader: eventLoader,

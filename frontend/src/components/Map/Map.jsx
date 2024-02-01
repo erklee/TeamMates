@@ -4,8 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchEvents } from "../../store/events";
 import { selectAlleventsArray } from "../../store/events";
 import location from "../../assets/images/location.png"
+
 import { useLocation } from 'react-router-dom';
-import spinIcon from "../../assets/images/spin-trans.gif"
+
 import './map.css';
 
 
@@ -37,8 +38,7 @@ const EventMap = () => {
 
   useEffect(() => {
     dispatch(fetchEvents());
-    if (selectedMarker) console.log(selectedMarker)
-  }, [dispatch, selectedMarker]);
+  }, [dispatch]);
 
   // useEffect(() => {
   //   dispatch(fetchEvents())
@@ -49,8 +49,10 @@ const EventMap = () => {
       try {
         const results = await Promise.allSettled(
           events
-            .filter((event) => !selectedCategory || event.category === selectedCategory )
-            // || (!selectedDifficulty || event.difficulty === selectedDifficulty)
+          .filter((event) => 
+          (!selectedCategory || event.category === selectedCategory) && 
+          (!selectedDifficulty || event.difficulty === selectedDifficulty)
+        )
             .map(async (event) => {
               try {
                 const response = await fetch(
@@ -99,7 +101,7 @@ const EventMap = () => {
     return () => {
       isMounted = false;
     };
-  }, [events, userLocation, selectedCategory, filterRange, dispatch]);
+  }, [events, userLocation, selectedCategory, selectedDifficulty, filterRange, dispatch]);
 
   useEffect(() => {
     const getUserLocation = () => {
@@ -164,13 +166,15 @@ const EventMap = () => {
         zoom = 11
     }if (distance === 25){
         zoom = 10.5
-    }
+    }if (distance === 50){
+      zoom = 9.5
+  }
 
    
     return zoom;
   };
 
-  const filterRangeOptions = [1, 5, 10, 15, 25];
+  const filterRangeOptions = [1, 5, 10, 15, 25, 50];
 
   const closeInfoWindow = () => {
     setSelectedMarker(null);
@@ -182,7 +186,7 @@ const EventMap = () => {
   };
 
   const img = {
-    url: spinIcon
+    url: location
 }
 
   return (
@@ -255,19 +259,13 @@ const EventMap = () => {
             {userLocation && window.google && window.google.maps && (
             <MarkerF
               position={userLocation}
-              icon={img}
-              // animation={window.google.maps.Animation.BOUNCE}
-              // icon={{
-              //   path: window.google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
-              //   scale: 10,
-              //   fillColor: "#0000ff",
-              //   fillOpacity: 1,
-              //   strokeColor: "#0000ff",
-              //   strokeWeight: 2
-              // }}
 
-              />
-            )}
+              
+              animation={window.google.maps.Animation.BOUNCE}
+              icon={img}
+            />
+          )}
+
 
             {markers.map((marker, index) => (
               <Marker
@@ -285,6 +283,7 @@ const EventMap = () => {
                   <h6>{selectedMarker.event.title}</h6>
                   <p>{selectedMarker.event.description}</p>
                   <p>{selectedMarker.event.difficulty}</p>
+                  <p>Difficulty: {selectedMarker.event.difficulty}</p>
                   <p>Distance: {selectedMarker.distance.toFixed(2)} miles</p>
                 </div>
               </InfoWindow>
