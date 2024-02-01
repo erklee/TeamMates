@@ -56,6 +56,20 @@ export const fetchEvents = () => async dispatch => {
   }
 };
 
+
+export const fetchEvent = (eventId) => async dispatch => {
+  try {
+    const res = await jwtFetch (`/api/events/${eventId}`);
+    const event = await res.json();
+    dispatch(receiveNewEvent(event));
+  } catch (err) {
+    const resBody = await err.json();
+    if (resBody.statusCode === 400) {
+      dispatch(receiveErrors(resBody.errors));
+    }
+  }
+};
+
 export const fetchUserEvents = id => async dispatch => {
   try {
     const res = await jwtFetch(`/api/events/user/${id}`);
@@ -87,8 +101,8 @@ export const composeEvent = data => async dispatch => {
 
 export const updatedEvent = (updatedEvent) => async dispatch => {
   try{
-  const res  = await jwtFetch(`/api/events/${updatedEvent.id}`, {
-      method: "PUT", 
+  const res  = await jwtFetch(`/api/events/${updatedEvent._id}`, {
+      method: "PATCH", 
       body: JSON.stringify(updatedEvent), 
   });
       const event = await res.json()
@@ -123,7 +137,7 @@ export const selectUsereventsArray = createSelector (selectUserEvents,
 );
 
 export const selectEventById = (eventId) => (state) => {
-  return state?.events[eventId] || null
+  return state?.events.all[eventId] || null
 }
 
 // export const selectEventById = (state, eventId) => {

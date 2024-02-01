@@ -15,8 +15,12 @@ const EventMap = () => {
   const [markers, setMarkers] = useState([]);
   const [userLocation, setUserLocation] = useState(null);
   const [selectedMarker, setSelectedMarker] = useState("");
+
+
+  const [selectedDifficulty, setSelectedDifficulty] = useState("");
+
   const [selectedCategory, setSelectedCategory] = useState(sport ||"");
-  // const [selectedDifficulty, setSelectedDifficulty] = useState("");
+
   const [filterRange, setFilterRange] = useState(10);
   const dispatch = useDispatch();
 
@@ -29,8 +33,12 @@ const EventMap = () => {
       try {
         const results = await Promise.allSettled(
           events
-            .filter((event) => !selectedCategory || event.category === selectedCategory )
-            // || (!selectedDifficulty || event.difficulty === selectedDifficulty)
+            .filter((event) => 
+              (!selectedCategory || event.category === selectedCategory) && 
+              (!selectedDifficulty || event.difficulty === selectedDifficulty)
+            )
+          
+            // 
             .map(async (event) => {
               try {
                 const response = await fetch(
@@ -79,7 +87,7 @@ const EventMap = () => {
     return () => {
       isMounted = false;
     };
-  }, [events, userLocation, selectedCategory, filterRange, dispatch]);
+  }, [events, userLocation, selectedCategory, selectedDifficulty, filterRange, dispatch]);
 
   useEffect(() => {
     const getUserLocation = () => {
@@ -145,12 +153,15 @@ const EventMap = () => {
     }if (distance === 25){
         zoom = 10.5
     }
+    if (distance === 50){
+      zoom = 9.5
+  }
 
    
     return zoom;
   };
 
-  const filterRangeOptions = [1, 5, 10, 15, 25];
+  const filterRangeOptions = [1, 5, 10, 15, 25,50];
 
   const closeInfoWindow = () => {
     setSelectedMarker(null);
@@ -180,7 +191,7 @@ const EventMap = () => {
         <option value="hockey">Hockey</option>
       </select>
 
-      {/* <select
+      <select
         value={selectedDifficulty}
         onChange={(e) => setSelectedDifficulty(e.target.value)}
       >
@@ -188,7 +199,7 @@ const EventMap = () => {
         <option value="easy">Easy</option>
         <option value="medium">Medium</option>
         <option value="hard">Hard</option>
-      </select> */}
+      </select>
 
       <label>
         Filter Range:
@@ -233,7 +244,7 @@ const EventMap = () => {
               <div>
                 <h6>{selectedMarker.event.title}</h6>
                 <p>{selectedMarker.event.description}</p>
-                <p>{selectedMarker.event.difficulty}</p>
+                <p>Difficulty: {selectedMarker.event.difficulty}</p>
                 <p>Distance: {selectedMarker.distance.toFixed(2)} miles</p>
               </div>
             </InfoWindow>
