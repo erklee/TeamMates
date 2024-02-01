@@ -8,6 +8,7 @@ import EventMap from './components/Map/Map';
 import { getCurrentUser } from './store/session';
 import Edit from './components/Events/EventEditForm';
 import EventCreateForm from './components/Events/EventCreateForm';
+import EventShowPage from './components/Events/EventShow';
 
 const Layout = () => {
   return (

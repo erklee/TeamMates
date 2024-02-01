@@ -11,7 +11,6 @@ function EventShowPage() {
     const { eventId } = useParams(); 
     const dispatch = useDispatch();
     const event = useSelector(state => state.events.new);
-    console.log(event)
 
     useEffect(() => {
         dispatch(fetchEvent(eventId));
