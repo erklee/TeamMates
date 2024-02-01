@@ -3,7 +3,9 @@ import { GoogleMap, Marker, InfoWindow, LoadScript, MarkerF } from "@react-googl
 import { useDispatch, useSelector } from "react-redux";
 import { fetchEvents } from "../../store/events";
 import { selectAlleventsArray } from "../../store/events";
-import location from "../../assets/images/location.png"
+import location from "../../assets/images/location.png";
+import spinpin from "../../assets/images/spinning.gif"
+import animatedpin from "../../assets/images/animated-pin.gif"
 import { useLocation } from 'react-router-dom';
 
 
@@ -118,7 +120,9 @@ const EventMap = () => {
         console.log("User denied geolocation access or not supported.");
         setUserLocation({ lat: 40.71679995490363, lng: -73.99771308650402 });
       }
+      
     };
+    
 
     getUserLocation();
   }, []);
@@ -152,6 +156,8 @@ const EventMap = () => {
         zoom = 11
     }if (distance === 25){
         zoom = 10.5
+    } if (distance === 50){
+        zoom = 9.5
     }
     if (distance === 50){
       zoom = 9.5
@@ -161,7 +167,8 @@ const EventMap = () => {
     return zoom;
   };
 
-  const filterRangeOptions = [1, 5, 10, 15, 25,50];
+  const filterRangeOptions = [1, 5, 10, 15, 25, 50];
+
 
   const closeInfoWindow = () => {
     setSelectedMarker(null);
@@ -173,7 +180,7 @@ const EventMap = () => {
   };
 
   const img = {
-    url: location
+    url: spinpin
 }
 
   return (
@@ -225,7 +232,15 @@ const EventMap = () => {
           {userLocation && window.google && window.google.maps && (
             <MarkerF
               position={userLocation}
-              icon={img}
+              animation={window.google.maps.Animation.BOUNCE}
+              // icon={{
+              //   path: window.google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
+              //   scale: 10,
+              //   fillColor: "#0000ff",
+              //   fillOpacity: 1,
+              //   strokeColor: "#0000ff",
+              //   strokeWeight: 2
+              // }}
             />
           )}
 
