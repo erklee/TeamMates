@@ -4,8 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchEvents } from "../../store/events";
 import { selectAlleventsArray } from "../../store/events";
 import location from "../../assets/images/location.png"
+
 import { useLocation } from 'react-router-dom';
-import spinIcon from "../../assets/images/spin-trans.gif"
+
 import './map.css';
 
 
@@ -38,6 +39,10 @@ const EventMap = () => {
   useEffect(() => {
     dispatch(fetchEvents());
   }, [dispatch]);
+
+  // useEffect(() => {
+  //   dispatch(fetchEvents())
+  // }, []);
 
   useEffect(() => {
     const geocodeAddresses = async () => {
@@ -181,7 +186,7 @@ const EventMap = () => {
   };
 
   const img = {
-    url: spinIcon
+    url: location
 }
 
   return (
@@ -254,19 +259,13 @@ const EventMap = () => {
             {userLocation && window.google && window.google.maps && (
             <MarkerF
               position={userLocation}
-              icon={img}
-              // animation={window.google.maps.Animation.BOUNCE}
-              // icon={{
-              //   path: window.google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
-              //   scale: 10,
-              //   fillColor: "#0000ff",
-              //   fillOpacity: 1,
-              //   strokeColor: "#0000ff",
-              //   strokeWeight: 2
-              // }}
 
-              />
-            )}
+              
+              animation={window.google.maps.Animation.BOUNCE}
+              icon={img}
+            />
+          )}
+
 
             {markers.map((marker, index) => (
               <Marker

@@ -6,12 +6,14 @@ import "./MainPage.css"
 
 function MainPage() {
   return (
+
     <div className="mainPageWrapper">
       {/* <video src={video} autoPlay muted loop height={500}></video> */}
       <SignUpModal  />
       <LoginModal />
       <VideoPlayer />
       <EventCarousel />
+     
     </div >
   );
 }
