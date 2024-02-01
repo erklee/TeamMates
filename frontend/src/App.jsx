@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
-import { AuthRoute, ProtectedRoute } from './components/Routes/Routes';
+import { ProtectedRoute } from './components/Routes/Routes';
 import NavBar from './components/NavBar/NavBar';
 import MainPage from './components/MainPage/MainPage';
 import EventMap from './components/Map/Map';
@@ -20,7 +20,7 @@ const Layout = () => {
   );
 };
 
-const eventLoader = async({request , params}) => {
+const eventLoader = async({ params}) => {
   const res =await fetch(`/api/events/${params.eventId}`)
   if(res.ok){
     const data = await res.json()

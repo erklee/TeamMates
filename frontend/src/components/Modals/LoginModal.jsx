@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import {login, clearSessionErrors } from '../../store/session';
 import { hideModal } from '../../store/modals';
 import closeIcon from "../../assets/icons/closeIcon2.png";
@@ -9,7 +8,6 @@ import "./LoginModal.css";
 
 
 export default function LoginModal() {
-  const navigate = useNavigate();
   const showModal = useSelector(state => state.modals["LoginModal"]);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

@@ -1,9 +1,9 @@
 
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux"
-import jwtFetch from '../../store/jwt';
+
 import { useEffect } from 'react';
-import { selectEventById } from '../../store/events';
+
 import { fetchEvent } from '../../store/events';
 
 
