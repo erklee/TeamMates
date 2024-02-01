@@ -16,6 +16,7 @@ function NavBar() {
   const loggedIn = useSelector(state => !!state.session.user);
   const dispatch = useDispatch();
 
+
   const handleMainPage = e => {
     e.preventDefault()
     navigate("/")
