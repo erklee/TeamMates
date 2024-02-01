@@ -1,17 +1,4 @@
-const SPORTS = [
-    "basketball",
-    "football",
-    "baseball",
-    "tennis",
-    "soccer",
-    "hockey"
-]
-
-const DIFFICULTIES = [
-    "easy",
-    "medium",
-    "hard"
-]
+const { eventConstants } = require('./constants');
 
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
@@ -28,7 +15,7 @@ const eventSchema = new Schema({
     description: String,
     category: {
         type: String,
-        enum: { values: SPORTS, message: '{VALUE} is not supported'},
+        enum: { values: eventConstants.SPORTS, message: '{VALUE} is not supported'},
         required: true
     },
     date: Date,
@@ -53,7 +40,7 @@ const eventSchema = new Schema({
     },
     difficulty: {
         type: String,
-        enum: { values: DIFFICULTIES, message: '{VALUE} is not supported'},
+        enum: { values: eventConstants.DIFFICULTIES, message: '{VALUE} is not supported'},
         required: true
     }
 },

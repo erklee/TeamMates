@@ -1,15 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
 .slideImage {
   height: 500px;
   width: 100%;
 }
+
+
+
+.carouselWrapper {
+  background-color: rgb(255, 255, 255);
+  height: 100vh;
+
+}
+
+
+
 .carouselContainer {
   position: relative;
   min-height: 100px;
   width: 700px;
+  /* top: -200px; */
   left: 50%;
   transform: translateX(-50%);
-  
+  border-style: solid;
+  border-width: 10px;
+  border-color: white;
+
 }
 
 .carousel-control-next-icon:hover {
@@ -18,3 +34,61 @@
   /* Set the desired color */
 }
 
+.carouselWrapper h1 {
+  font-family: 'Roboto', sans-serif;
+  text-align: center;
+  color: black;
+  margin-bottom: 20px;
+}
+
+.sportsIconContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-left: 50px;
+  margin-bottom: 5px;
+}
+
+.sportsIconInfoContainer {
+  margin-right: 40px;
+}
+
+
+
+.sportsIconInfoContainer img {
+  width: 70px;
+  height: 70px;
+  padding: 10px;
+  border-style: solid;
+  border-width: 2px;
+  /* margin-right:60px; */
+  border-radius: 15px;
+  transition: 0.2s;
+  text-align: center;
+}
+
+.sportsIconInfoContainer img:hover {
+  filter: invert(1);
+  /* invert blue to yellow */
+  /* background-color: rgb(0, 0, 145); */
+  background-color: rgb(255, 255, 110);
+
+  border-style: none;
+  /* border-radius: 10px; */
+}
+
+.sportsIconInfoContainer img:not(:hover) {
+  transition: 0.2s;
+}
+
+.sportsIconInfoContainer {
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  /* justify-content: center; */
+}
+
+.sportsIconInfoContainer p {
+  position: relative;
+  text-align: center;
+}

@@ -4,32 +4,39 @@ import { useState  } from 'react';
 import './NavBar.css';
 
 import { showModal } from '../../store/modals';
-import jerseyIcon from '../../assets/icons/jerseyIcon.png'
+import jerseyIcon from '../../assets/icons/jerseyIcon.png';
 import ProfileDropdown from './ProfileDropdown';
+import {useNavigate} from 'react-router-dom'
 
 
-function NavBar () {
+function NavBar() {
+  const navigate = useNavigate()
   const [visible, setVisible] = useState(false);
-  const currentUser = useSelector(state => state.session.user)
+  const currentUser = useSelector(state => state.session.user);
   const loggedIn = useSelector(state => !!state.session.user);
   const dispatch = useDispatch();
- 
-  
+
+
+  const handleMainPage = e => {
+    e.preventDefault()
+    navigate("/")
+  }
 
   const handleProfileDropdown = e => {
-    e.preventDefault()
-    setVisible(!visible)
-  }
+    e.preventDefault();
+    setVisible(!visible);
+    console.log('clicked');
+  };
 
   const handleShowModal = e => {
-    e.preventDefault()
+    e.preventDefault();
     if(e.target.id === 'navBarLogin'){
-      dispatch(showModal('LoginModal'))
+      dispatch(showModal('LoginModal'));
     } 
     if(e.target.id === 'navBarSignUp'){
-      dispatch(showModal('SignUpModal'))
+      dispatch(showModal('SignUpModal'));
     } 
-  }
+  };
 
 
 
@@ -42,7 +49,7 @@ function NavBar () {
             <img src={currentUser.profileImageUrl}  height='25' width='25' alt="profile icon" />
             <p>{currentUser.fname}</p>
           </div>
-          {visible && <ProfileDropdown className="profileDropdownWrapper" />}
+          {visible && <ProfileDropdown className="profileDropdownWrapper" visible={visible} setVisible={setVisible}/>}
 
         </div>
           
@@ -59,7 +66,7 @@ function NavBar () {
 
   return (
     <div className='navBarContainer'>
-      <h1>TeamMates</h1>
+      <h1 onClick={handleMainPage}>Team<span>Mates</span></h1>
       { getLinks() }
     </div>
   );
