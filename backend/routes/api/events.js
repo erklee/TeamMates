@@ -77,36 +77,35 @@ router.patch("/:id/unattend", requireUser, validateEventUpdate, async function (
 });
 
 
-router.post("/", requireUser, validateEventCreation, async function (req, res, next) {
-  // let user
-  // try {
-  //     user = await fetch('/api/users/current');
-  // }
-  // catch(err) {
-  //     return res.json("Must be logged in to create an event")
-  // }
-  try {
-    const newEvent = new Event({
-      coordinator: req.user._id,
-      title: req.body.title,
-      description: req.body.description,
-      category: req.body.category.toLowerCase(),
-      date: typeof req.body.date === "Date" ? req.body.date : new Date(req.body.date),
-      attendeesMax: parseInt(req.body.attendeesMax),
-      attendees: [req.user._id],
-      location: {
-        address: req.body.location.address,
-        zipcode: req.body.location.zipcode,
-      },
-      profileUrl: req.body.profileUrl,
-    });
-    const event = await newEvent.save();
-    return res.json(event);
-  } 
-  catch(err) {
-    if (event.errors) err.errors = event.errors;
-    next(err);
-  }
+router.post("/", requireUser, validateEventCreation, async function(req, res, next) {
+    // let user
+    // try {
+    //     user = await fetch('/api/users/current');
+    // }
+    // catch(err) {
+    //     return res.json("Must be logged in to create an event")
+    // }
+    try {
+        const newEvent = new Event({
+            coordinator: req.user._id,
+            title: req.body.title,
+            description: req.body.description,
+            category: req.body.category.toLowerCase(),
+            date: (typeof req.body.date === "Date" ? req.body.date : new Date(req.body.date)),
+            difficulty: req.body.difficulty,
+            attendeesMax: parseInt(req.body.attendeesMax),
+            attendees: [req.user._id],
+            location: {
+                address: req.body.location.address,
+                zipcode: req.body.location.zipcode
+            }
+        });
+        const event = await newEvent.save();
+        return res.json(event);
+    } 
+    catch(err) {
+        next(err)
+    }
 });
 
 router.patch("/:id", requireUser, validateEventUpdate, async function (req, res, next) {
