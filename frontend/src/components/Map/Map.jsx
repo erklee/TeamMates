@@ -37,16 +37,17 @@ const EventMap = () => {
 
   useEffect(() => {
     dispatch(fetchEvents());
-    if (selectedMarker) console.log(selectedMarker)
-  }, [dispatch, selectedMarker]);
+  }, [dispatch]);
 
   useEffect(() => {
     const geocodeAddresses = async () => {
       try {
         const results = await Promise.allSettled(
           events
-            .filter((event) => !selectedCategory || event.category === selectedCategory )
-            // || (!selectedDifficulty || event.difficulty === selectedDifficulty)
+          .filter((event) => 
+          (!selectedCategory || event.category === selectedCategory) && 
+          (!selectedDifficulty || event.difficulty === selectedDifficulty)
+        )
             .map(async (event) => {
               try {
                 const response = await fetch(
@@ -95,7 +96,7 @@ const EventMap = () => {
     return () => {
       isMounted = false;
     };
-  }, [events, userLocation, selectedCategory, filterRange, dispatch]);
+  }, [events, userLocation, selectedCategory, selectedDifficulty, filterRange, dispatch]);
 
   useEffect(() => {
     const getUserLocation = () => {
@@ -160,13 +161,15 @@ const EventMap = () => {
         zoom = 11
     }if (distance === 25){
         zoom = 10.5
-    }
+    }if (distance === 50){
+      zoom = 9.5
+  }
 
    
     return zoom;
   };
 
-  const filterRangeOptions = [1, 5, 10, 15, 25];
+  const filterRangeOptions = [1, 5, 10, 15, 25, 50];
 
   const closeInfoWindow = () => {
     setSelectedMarker(null);
@@ -281,6 +284,7 @@ const EventMap = () => {
                   <h6>{selectedMarker.event.title}</h6>
                   <p>{selectedMarker.event.description}</p>
                   <p>{selectedMarker.event.difficulty}</p>
+                  <p>Difficulty: {selectedMarker.event.difficulty}</p>
                   <p>Distance: {selectedMarker.distance.toFixed(2)} miles</p>
                 </div>
               </InfoWindow>
