@@ -7,9 +7,11 @@ import './NavBar.css';
 import { useEffect } from 'react';
 import { showModal } from '../../store/modals';
 import jerseyIcon from '../../assets/icons/jerseyIcon.png';
+
 import ProfileDropdown from './profileDropdown';
 import {useNavigate} from 'react-router-dom';
 import { getCurrentUser } from '../../store/session';
+
 
 
 function NavBar() {
@@ -20,6 +22,7 @@ function NavBar() {
   const currentUser = useSelector(state => state.session.user);
   const loggedIn = useSelector(state => !!state.session.user);
   const dispatch = useDispatch();
+
 
   useEffect(() => {
     dispatch(getCurrentUser());

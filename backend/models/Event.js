@@ -1,17 +1,21 @@
-const SPORTS = [
-  "basketball",
-  "football",
-  "baseball",
-  "tennis",
-  "soccer",
-  "hockey",
-];
+// <<<<<<< eventsIndex
+// const SPORTS = [
+//   "basketball",
+//   "football",
+//   "baseball",
+//   "tennis",
+//   "soccer",
+//   "hockey",
+// ];
 
-const DIFFICULTIES = [
-  "easy",
-  "medium",
-  "hard",
-];
+// const DIFFICULTIES = [
+//   "easy",
+//   "medium",
+//   "hard",
+// ];
+
+const { eventConstants } = require('./constants');
+
 
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
@@ -50,16 +54,50 @@ const eventSchema = new Schema({
       type: String,
       required: true,
     },
+
   },
   difficulty: {
     type: String,
-    enum: { values: DIFFICULTIES, message: '{VALUE} is not supported'},
+    enum: { values: event, message: '{VALUE} is not supported'},
     required: true,
   },
   pictureUrl: {
     type: String,
     required: true,
     },
+
+
+    description: String,
+    category: {
+        type: String,
+        enum: { values: eventConstants.SPORTS, message: '{VALUE} is not supported'},
+        required: true
+    },
+    date: Date,
+    attendeesMax: {
+        type: Number,
+        default: 10,
+        min: [2, 'Must have more than one attendee at maximum']
+    },
+    attendees: [{
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    }],
+    location: {
+        address: {
+            type: String,
+            required: true
+        },
+        zipcode: {
+            type: String,
+            required: true
+        },
+    },
+    difficulty: {
+        type: String,
+        enum: { values: eventConstants.DIFFICULTIES, message: '{VALUE} is not supported'},
+        required: true
+    }
 
 },
 {

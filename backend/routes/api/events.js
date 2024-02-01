@@ -118,9 +118,11 @@ router.patch("/:id", requireUser, validateEventUpdate, async function (req, res,
     return res.json({ errors: ["Event does not exist"] });
   }
 
-  try {
-    const { title, description, category, date, attendeesMax, attendees, location } = req.body;
-    let newAttrs = { title, description, category, date, attendeesMax, attendees, location };
+
+    try {
+        const { title, description, category, date, attendeesMax, attendees, location, difficulty } = req.body
+        let newAttrs = { title, description, category, date, attendeesMax, attendees, location, difficulty }
+
         
     Object.keys(newAttrs).forEach((key, idx) => {
       if (!!newAttrs[key]) event[key] = newAttrs[key];
