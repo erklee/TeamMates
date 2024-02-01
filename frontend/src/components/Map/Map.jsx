@@ -4,8 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchEvents } from "../../store/events";
 import { selectAlleventsArray } from "../../store/events";
 import location from "../../assets/images/location.png";
-import spinpin from "../../assets/images/spinning.gif"
-import animatedpin from "../../assets/images/animated-pin.gif"
 import { useLocation } from 'react-router-dom';
 
 
@@ -180,7 +178,7 @@ const EventMap = () => {
   };
 
   const img = {
-    url: spinpin
+    url: location
 }
 
   return (
@@ -232,15 +230,9 @@ const EventMap = () => {
           {userLocation && window.google && window.google.maps && (
             <MarkerF
               position={userLocation}
+              
               animation={window.google.maps.Animation.BOUNCE}
-              // icon={{
-              //   path: window.google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
-              //   scale: 10,
-              //   fillColor: "#0000ff",
-              //   fillOpacity: 1,
-              //   strokeColor: "#0000ff",
-              //   strokeWeight: 2
-              // }}
+              icon={img}
             />
           )}
 

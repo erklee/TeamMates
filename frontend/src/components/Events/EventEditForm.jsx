@@ -68,7 +68,7 @@ function Edit(){
         <label > Attendees Max
             <input 
             className="editAttendeesMax"
-            type="text" 
+            type="number" 
             defaultValue={attendeesMax}
             // placeholder="Value must be greater than 1"
             onChange={(e) => setAttendeesMax(e.target.value)}
