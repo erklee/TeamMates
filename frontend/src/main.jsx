@@ -6,7 +6,7 @@ import './index.css';
 import configureStore from './store/store';
 import * as sessionActions from './store/session'
 import * as modalActions from './store/modals'
-
+import * as userActions from './store/users'
 import * as eventActions from './store/events'
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -20,6 +20,7 @@ if (import.meta.env.MODE !== 'production') {
   window.sessionActions = sessionActions;
   window.modalActions = modalActions;
   window.eventActions = eventActions
+  window.userActions = userActions
 
 }
 

@@ -47,7 +47,7 @@ const usersReducer = (state = { all: {}, user: {}, new: undefined }, action) => 
 
     switch(action.type) {
     case RECEIVE_USER:
-        newState.all[action.user.id] = action.user;
+        newState.user = action.user;
         return newState;
 
     case RECEIVE_USERS:

@@ -85,18 +85,7 @@
   border-color: rgb(255, 255, 255);
 }
 
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  /* background-color: rgba(229, 229, 229, 0.5); */
-  /* Adjust the color and opacity as needed */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+
 
 .birthdateInput {
   align-items: last baseline;
