@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux';
 
 
 
+
 function EventShowPage() {
     const { eventId } = useParams(); 
     const dispatch = useDispatch();
