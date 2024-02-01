@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import {login, clearSessionErrors } from '../../store/session';
 import { hideModal } from '../../store/modals';
-import closeIcon from "../../assets/icons/closeIcon.png";
+import closeIcon from "../../assets/icons/closeIcon2.png";
 import "./LoginModal.css";
 
 

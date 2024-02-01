@@ -5,12 +5,12 @@ import { fetchEvents } from "../../store/events";
 import { selectAlleventsArray } from "../../store/events";
 import location from "../../assets/images/location.png"
 import { useLocation } from 'react-router-dom';
+import './map.css';
 
 
 const EventMap = () => {
   const {state} =  useLocation()
   const { sport } = state || {};
-
   const events = useSelector(selectAlleventsArray);
   const [markers, setMarkers] = useState([]);
   const [userLocation, setUserLocation] = useState(null);
@@ -20,9 +20,24 @@ const EventMap = () => {
   const [filterRange, setFilterRange] = useState(10);
   const dispatch = useDispatch();
 
+  function formatDate(inputDateString) {
+    const dateObject = new Date(inputDateString);
+    const monthNames = [
+      "January", "February", "March", "April",
+      "May", "June", "July", "August",
+      "September", "October", "November", "December"
+    ];
+    const monthName = monthNames[dateObject.getMonth()];
+    const day = dateObject.getDate();
+    const year = dateObject.getFullYear();
+    const formattedDate = `${monthName} ${day}, ${year}`.trim();
+    return formattedDate;
+  }
+
   useEffect(() => {
     dispatch(fetchEvents());
-  }, [dispatch]);
+    if (selectedMarker) console.log(selectedMarker)
+  }, [dispatch, selectedMarker]);
 
   useEffect(() => {
     const geocodeAddresses = async () => {
@@ -167,79 +182,99 @@ const EventMap = () => {
 
   return (
     <div className="eventMapWrapper">
-      <select
-        value={selectedCategory}
-        onChange={(e) => setSelectedCategory(e.target.value)}
-      >
-        <option value="">All Categories</option>
-        <option value="basketball">BasketBall</option>
-        <option value="football">Football</option>
-        <option value="baseball">Baseball</option>
-        <option value="tennis">Tennis</option>
-        <option value="soccer">Soccer</option>
-        <option value="hockey">Hockey</option>
-      </select>
+      <div className="eventIndexSideBar">
+        <div className="filters">
+          <select
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+          >
+            <option value="">All Categories</option>
+            <option value="basketball">Basketball</option>
+            <option value="football">Football</option>
+            <option value="baseball">Baseball</option>
+            <option value="tennis">Tennis</option>
+            <option value="soccer">Soccer</option>
+            <option value="hockey">Hockey</option>
+          </select>
 
-      {/* <select
-        value={selectedDifficulty}
-        onChange={(e) => setSelectedDifficulty(e.target.value)}
-      >
-        <option value="">All Difficulty</option>
-        <option value="easy">Easy</option>
-        <option value="medium">Medium</option>
-        <option value="hard">Hard</option>
-      </select> */}
+          {/* <select
+            value={selectedDifficulty}
+            onChange={(e) => setSelectedDifficulty(e.target.value)}
+          >
+            <option value="">All Difficulty</option>
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+          </select> */}
 
-      <label>
-        Filter Range:
-        <select value={filterRange} onChange={(e) => setFilterRange(parseInt(e.target.value))}>
-          {filterRangeOptions.map((option, index) => (
-            <option key={`${option?.id} ${index}`} value={option}>
-              {`${option} mile${option > 1 ? "s" : ""} away`}
-            </option>
-          ))}
-        </select>
-      </label>
-
-      <LoadScript
-        googleMapsApiKey={import.meta.env.VITE_APP_GOOGLE_MAPS_API_KEY}
-        
-      >
-        <GoogleMap
-          mapContainerStyle={containerStyle}
-          center={userLocation || { lat: 40.71679995490363, lng: -73.99771308650402 }}
-          zoom={calculateZoomLevel(filterRange)}
-          onLoad={() => console.log("Map is loaded")}
-        >
-          {userLocation && window.google && window.google.maps && (
-            <MarkerF
-              position={userLocation}
-              icon={img}
-            />
-          )}
-
-          {markers.map((marker, index) => (
-            <Marker
-              key={`${marker.id} ${index}`}
-              position={marker.position}
-              onClick={() => setSelectedMarker(marker)}
-            />
-          ))}
-          {selectedMarker && (
-            <InfoWindow
-              position={selectedMarker.position}
-              onCloseClick={closeInfoWindow}
-            >
-              <div>
-                <h6>{selectedMarker.event.title}</h6>
-                <p>{selectedMarker.event.description}</p>
-                <p>{selectedMarker.event.difficulty}</p>
-                <p>Distance: {selectedMarker.distance.toFixed(2)} miles</p>
+          <label>
+            Filter Range:
+            <select value={filterRange} onChange={(e) => setFilterRange(parseInt(e.target.value))}>
+              {filterRangeOptions.map((option, index) => (
+                <option key={`${option?.id} ${index}`} value={option}>
+                  {`${option} mile${option > 1 ? "s" : ""} away`}
+                </option>
+              ))}
+            </select>
+          </label>
+        </div>
+        <div className="eventInfoWrapper">
+          {selectedMarker && 
+            <div className="eventInfo">
+              <img src={selectedMarker.event.pictureUrl} alt="picture"/>
+              <div className="eventInfoDetails">
+                <p>{selectedMarker.event.title.slice(0,1).toUpperCase() + selectedMarker.event.title.slice(1)}</p>
+                <p>{`Description: ${selectedMarker.event.description}`}</p>
+                <p>{`Sport: ${selectedMarker.event.category.slice(0,1).toUpperCase()}${selectedMarker.event.category.slice(1)}`}</p>
+                <p>{`Address: ${selectedMarker.event.location.address} ${selectedMarker.event.location.zipcode}`}</p>
+                <p>{`Date: ${formatDate(selectedMarker.event.date)}`}</p>
+                <p>{`Particpants: ${selectedMarker.event.attendees.length}`}</p>
               </div>
-            </InfoWindow>
-          )}
-        </GoogleMap>
-      </LoadScript>
+            </div>
+          }
+        </div>
+      </div>
+      <div>
+        <LoadScript
+          googleMapsApiKey={import.meta.env.VITE_APP_GOOGLE_MAPS_API_KEY}
+          
+        >
+          <GoogleMap
+            mapContainerStyle={containerStyle}
+            center={userLocation || { lat: 40.71679995490363, lng: -73.99771308650402 }}
+            zoom={calculateZoomLevel(filterRange)}
+            onLoad={() => console.log("Map is loaded")}
+          >
+            {userLocation && window.google && window.google.maps && (
+              <MarkerF
+                position={userLocation}
+                icon={img}
+              />
+            )}
+
+            {markers.map((marker, index) => (
+              <Marker
+                key={`${marker.id} ${index}`}
+                position={marker.position}
+                onClick={() => setSelectedMarker(marker)}
+              />
+            ))}
+            {selectedMarker && (
+              <InfoWindow
+                position={selectedMarker.position}
+                onCloseClick={closeInfoWindow}
+              >
+                <div>
+                  <h6>{selectedMarker.event.title}</h6>
+                  <p>{selectedMarker.event.description}</p>
+                  <p>{selectedMarker.event.difficulty}</p>
+                  <p>Distance: {selectedMarker.distance.toFixed(2)} miles</p>
+                </div>
+              </InfoWindow>
+            )}
+          </GoogleMap>
+        </LoadScript>
+      </div>
     </div>
   );
 };

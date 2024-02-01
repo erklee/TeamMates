@@ -11,139 +11,140 @@ const { requireUser } = require('../../config/passport');
 
 
 
-router.get("/", async function(req, res, next) {
-    try {
-        const events = await Event.find({})
-                            .populate("coordinator", "_id username")
-                            .populate("attendees", "_id username");
-        return res.json(events);
-    } 
-    catch(err) {
-        return res.json([])
-    }
-})
-
-router.get("/:id", async function(req, res, next) {
-    try {
-        const event = await Event.findById(req.params.id)
-                                 .populate("coordinator", "_id username")
-                                 .populate("attendees", "_id username");
-        return res.json(event);
-    }
-    catch(err) {
-        return res.json({ errors: ["Could not find this event"] })
-    }
-})
-
-router.patch("/:id/attend", requireUser, async function(req, res, next) {
-    let event;
-    try {
-        event = await Event.findById(req.params.id)
-    }
-    catch(err) {
-        return res.json({ errors: [`Could not find this event`]})
-    }
-    try {
-        if (event.attendees.includes(req.user._id)) return res.json({ errors: ["You are already attending this event"] })
-        if (event.attendees.length === event.attendeesMax) return res.json({ errors: [`This event is at max attendance: ${event.attendeesMax} attendees`] })
-        event.attendees.push(req.user._id);
-        event.save();
-        return res.json(event);
-    }
-    catch(err) {
-        next(err)
-    }
-})
-
-router.patch("/:id/unattend", requireUser, validateEventUpdate, async function(req, res, next) {
-    let event;
-    try {
-        event = await Event.findById(req.params.id)
-    }
-    catch(err) {
-        return res.json({ errors: ["Could not find this event"]})
-    }
-    try {
-        if (!event.attendees.some(attendeeId => attendeeId.equals(req.user._id))) return res.json({ errors: "You are not attending this event yet" });
-        event.attendees = event.attendees.filter(attendeeId => {
-            return !attendeeId.equals(req.user._id)
-        });
-        const patchedEvent = await event.save();
-        return res.json(patchedEvent);
-    }
-    catch(err) {
-        next(err)
-    }
-})
-
-
-router.post("/", requireUser, validateEventCreation, async function(req, res, next) {
-    // let user
-    // try {
-    //     user = await fetch('/api/users/current');
-    // }
-    // catch(err) {
-    //     return res.json("Must be logged in to create an event")
-    // }
-    try {
-        const newEvent = new Event({
-            coordinator: req.user._id,
-            title: req.body.title,
-            description: req.body.description,
-            category: req.body.category.toLowerCase(),
-            date: typeof req.body.date === "Date" ? req.body.date : new Date(req.body.date),
-            attendeesMax: parseInt(req.body.attendeesMax),
-            attendees: [req.user._id],
-            location: {
-                address: req.body.location.address,
-                zipcode: req.body.location.zipcode
-            }
-        });
-        const event = await newEvent.save();
-        return res.json(event);
-    } 
-    catch(err) {
-        if (event.errors) err.errors = event.errors
-        next(err)
-    }
+router.get("/", async function (req, res, next) {
+  try {
+    const events = await Event.find({})
+      .populate("coordinator", "_id username")
+      .populate("attendees", "_id username");
+    return res.json(events);
+  } 
+  catch(err) {
+    return res.json([]);
+  }
 });
 
-router.patch("/:id", requireUser, validateEventUpdate, async function(req, res, next) {
-    let event;
-    try {
-        event = await Event.findById(req.params.id);
-    }
-    catch {
-        return res.json({ errors: ["Event does not exist"] })
-    }
+router.get("/:id", async function (req, res, next) {
+  try {
+    const event = await Event.findById(req.params.id)
+      .populate("coordinator", "_id username")
+      .populate("attendees", "_id username");
+    return res.json(event);
+  }
+  catch(err) {
+    return res.json({ errors: ["Could not find this event"] });
+  }
+});
 
-    try {
-        const { title, description, category, date, attendeesMax, attendees, location } = req.body
-        let newAttrs = { title, description, category, date, attendeesMax, attendees, location }
+router.patch("/:id/attend", requireUser, async function (req, res, next) {
+  let event;
+  try {
+    event = await Event.findById(req.params.id);
+  }
+  catch(err) {
+    return res.json({ errors: [`Could not find this event`]});
+  }
+  try {
+    if (event.attendees.includes(req.user._id)) return res.json({ errors: ["You are already attending this event"] });
+    if (event.attendees.length === event.attendeesMax) return res.json({ errors: [`This event is at max attendance: ${event.attendeesMax} attendees`] });
+    event.attendees.push(req.user._id);
+    event.save();
+    return res.json(event);
+  }
+  catch(err) {
+    next(err);
+  }
+});
+
+router.patch("/:id/unattend", requireUser, validateEventUpdate, async function (req, res, next) {
+  let event;
+  try {
+    event = await Event.findById(req.params.id);
+  }
+  catch(err) {
+    return res.json({ errors: ["Could not find this event"]});
+  }
+  try {
+    if (!event.attendees.some(attendeeId => attendeeId.equals(req.user._id))) return res.json({ errors: "You are not attending this event yet" });
+    event.attendees = event.attendees.filter(attendeeId => {
+      return !attendeeId.equals(req.user._id);
+    });
+    const patchedEvent = await event.save();
+    return res.json(patchedEvent);
+  }
+  catch(err) {
+    next(err);
+  }
+});
+
+
+router.post("/", requireUser, validateEventCreation, async function (req, res, next) {
+  // let user
+  // try {
+  //     user = await fetch('/api/users/current');
+  // }
+  // catch(err) {
+  //     return res.json("Must be logged in to create an event")
+  // }
+  try {
+    const newEvent = new Event({
+      coordinator: req.user._id,
+      title: req.body.title,
+      description: req.body.description,
+      category: req.body.category.toLowerCase(),
+      date: typeof req.body.date === "Date" ? req.body.date : new Date(req.body.date),
+      attendeesMax: parseInt(req.body.attendeesMax),
+      attendees: [req.user._id],
+      location: {
+        address: req.body.location.address,
+        zipcode: req.body.location.zipcode,
+      },
+      profileUrl: req.body.profileUrl,
+    });
+    const event = await newEvent.save();
+    return res.json(event);
+  } 
+  catch(err) {
+    if (event.errors) err.errors = event.errors;
+    next(err);
+  }
+});
+
+router.patch("/:id", requireUser, validateEventUpdate, async function (req, res, next) {
+  let event;
+  try {
+    event = await Event.findById(req.params.id);
+  }
+  catch {
+    return res.json({ errors: ["Event does not exist"] });
+  }
+
+  try {
+    const { title, description, category, date, attendeesMax, attendees, location } = req.body;
+    let newAttrs = { title, description, category, date, attendeesMax, attendees, location };
         
-        Object.keys(newAttrs).forEach((key, idx) => {
-            if (!!newAttrs[key]) event[key] = newAttrs[key];
-        })
+    Object.keys(newAttrs).forEach((key, idx) => {
+      if (!!newAttrs[key]) event[key] = newAttrs[key];
+    });
     
-        const updatedEvent = await event.save();
-        return res.json(updatedEvent)
-    }
-    catch(err) {
-        next(err);
-    }
-})
+    const updatedEvent = await event.save();
+    return res.json(updatedEvent);
+  }
+  catch(err) {
+    next(err);
+  }
+});
 
-router.delete("/:id", requireUser, validateEventDestroy, async function(req, res, next) {
-    try {
-        const event = Event.findByIdAndDelete(req.params.id).exec()
-        if(event) return res.json("Success!");
+router.delete("/:id", requireUser, validateEventDestroy, async function (req, res, next) {
+  try {
+    const event = Event.findByIdAndDelete(req.params.id).exec();
+    if(event) return res.json("Success!");
+  }
+  catch(err) {
+    if(event.errors) {
+      err.errors = event.errors;
     }
-    catch(err) {
-        if(event.errors) {
-            err.errors = event.errors
-        }
-        return res.json(err)
-    }
-})
+    return res.json(err);
+  }
+});
 
 module.exports = router;
