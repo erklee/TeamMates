@@ -1,0 +1,8 @@
+.UserEventsIndexTitle {
+  text-align: center;
+}
+
+.userEventsIndexItemWrapper {
+  display: flex;
+  flex-direction: row;
+}

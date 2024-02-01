@@ -9,6 +9,7 @@ import { getCurrentUser } from './store/session';
 import Edit from './components/Events/EventEditForm';
 import EventCreateForm from './components/Events/EventCreateForm';
 import ProfilePage from './components/Profile/ProfilePage';
+import EventShowPage from "./components/Events/EventShow"
 
 const Layout = () => {
   return (
@@ -39,10 +40,10 @@ const router = createBrowserRouter([
         path: "events",
         element: <EventMap />,
       },
-      // {
-      //   path: "events/:eventId",
-      //   element: <EventShowPage />
-      // },
+      {
+        path: "events/:eventId",
+        element: <EventShowPage />
+      },
       {
         path: `edit/:eventId`,
         loader: eventLoader,

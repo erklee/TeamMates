@@ -4,8 +4,8 @@
 }
 
 .profilePageContainer {
-  position: absolute;
-  top: 59px;
+  position: relative;
+  top: 40px;
   /* You may adjust this based on your design */
   left: 50%;
   transform: translateX(-50%);
@@ -40,8 +40,21 @@
 
 .profileInfoWrapper {
   border-style: solid;
-  height: 1000px;
-  background-color: blue;
+  height: 800px;
+  background-color: rgb(241, 241, 241);
+  overflow: scroll;
+  scrollbar-width: thin;
+}
 
+.profilePageWrapper {
+  position: relative;
+  top: 0px;
+  /* You may adjust this based on your design */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  min-height: 160vh;
+  /* min-height: 900px; */
+  background-color: rgba(121, 121, 121, 0.4);
 }
 
