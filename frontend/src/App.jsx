@@ -7,6 +7,7 @@ import MainPage from './components/MainPage/MainPage';
 import EventMap from './components/Map/Map';
 import { getCurrentUser } from './store/session';
 import Edit from './components/Events/EventEditForm';
+import EventShowPage from './components/ShowPage/ShowPage';
 
 const Layout = () => {
   return (
@@ -35,13 +36,18 @@ const router = createBrowserRouter([
       },
       {
         path: "events",
-        element: <ProtectedRoute component={EventMap} />
+        element: <EventMap />,
+      },
+      {
+        path: "events/:eventId",
+        element: <EventShowPage />
       },
       {
         path: `edit/:eventId`,
         loader: eventLoader,
         element: <ProtectedRoute component={Edit} />,
       },
+
       // {
       //   path: "login",
       //   element: <AuthRoute component={LoginForm} />
