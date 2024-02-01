@@ -8,7 +8,7 @@ import { useEffect } from 'react';
 import { showModal } from '../../store/modals';
 import jerseyIcon from '../../assets/icons/jerseyIcon.png';
 
-import ProfileDropdown from './profileDropdown';
+import ProfileDropdown from './ProfileDropdown';
 import {useNavigate} from 'react-router-dom';
 import { getCurrentUser } from '../../store/session';
 
