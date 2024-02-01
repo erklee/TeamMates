@@ -13,7 +13,7 @@ const DIFFICULTIES = [
     "hard"
 ]
 
-exports.eventConstants = {
+export const eventConstants = {
     SPORTS,
     DIFFICULTIES
 }

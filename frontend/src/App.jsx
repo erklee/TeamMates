@@ -7,7 +7,7 @@ import MainPage from './components/MainPage/MainPage';
 import EventMap from './components/Map/Map';
 import { getCurrentUser } from './store/session';
 import Edit from './components/Events/EventEditForm';
-import EventShowPage from './components/ShowPage/ShowPage';
+import EventCreateForm from './components/Events/EventCreateForm';
 
 const Layout = () => {
   return (
@@ -47,7 +47,10 @@ const router = createBrowserRouter([
         loader: eventLoader,
         element: <ProtectedRoute component={Edit} />,
       },
-
+      {
+        path: 'new',
+        element: <EventCreateForm />
+      }
       // {
       //   path: "login",
       //   element: <AuthRoute component={LoginForm} />

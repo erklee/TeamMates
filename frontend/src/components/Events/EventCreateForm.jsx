@@ -3,20 +3,37 @@ import { useParams } from "react-router-dom";
 import jwtFetch from "../../store/jwt";
 import { useDispatch } from "react-redux";
 import { composeEvent } from "../../store/events";
-import { eventConstants } from "../../../../backend/models/constants";
+
+const SPORTS = [
+    "basketball",
+    "football",
+    "baseball",
+    "tennis",
+    "soccer",
+    "hockey"
+]
+
+const DIFFICULTIES = [
+    "easy",
+    "medium",
+    "hard"
+]
+
+
 
 export default function EventCreateForm() {
 
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [eventDate, setEventDate] = useState('');
-    const [category, setCategory] = useState(eventConstants.SPORTS[0]);
-    const [attendeesMax, setAttendeesMax] = useState(0);
+    const [category, setCategory] = useState(SPORTS[0]);
+    const [attendeesMax, setAttendeesMax] = useState(10);
     const [address1, setAddress1] = useState('');
     const [address2, setAddress2] = useState('');
     const [state, setState] = useState('');
     const [zipcode, setZipcode] = useState('');
-
+    const [difficulty, setDifficulty] = useState(DIFFICULTIES[0])
+ 
     const dispatch = useDispatch();
 
     const handleSubmit = async e => {
@@ -25,10 +42,12 @@ export default function EventCreateForm() {
         dispatch(composeEvent({
             title,
             description,
-            eventDate,
+            date: eventDate,
             attendeesMax,
-            address: {
-                location: `${address1} ${address2}, ${state}`,
+            difficulty,
+            category,
+            location: {
+                address: `${address1} ${address2}, ${state}`,
                 zipcode
             }
         }))
@@ -71,17 +90,7 @@ export default function EventCreateForm() {
                         setEventDate(e.target.value);
                     }}/>
             </label>
-            <label htmlFor="max-attendees">Max Attendees:
-                    <input 
-                        type="number" 
-                        className="event-max-attendees input"
-                        value={attendeesMax}
-                        onChange={e => {
-                            e.preventDefault();
-                            setAttendeesMax(e.target.value);
-                        }}/>
-            </label>
-            <label htmlFor="category">
+            <label htmlFor="category">Category:
                 <select 
                     className="category input" 
                     id="category-select" 
@@ -91,9 +100,30 @@ export default function EventCreateForm() {
                         setCategory(e.target.value);
                     }}>
                     {
-                        eventConstants.SPORTS.map((sport, index) => <option key={`sport-${index}`} value={sport}>{sport[0].toUpperCase() + sport.slice(1)}</option>)
+                        SPORTS.map((sport, index) => <option key={`sport-${index}`} value={sport}>{sport[0].toUpperCase() + sport.slice(1)}</option>)
                     }
                 </select>
+            </label>
+            <label htmlFor="difficulty">Difficulty:
+                <select
+                    defaultValue={difficulty}
+                    onChange={(e) => setDifficulty(e.target.value)}
+                    className="editDifficulty"
+                >
+                    <option value="easy">Easy</option>
+                    <option value="medium">Medium</option>
+                    <option value="hard">Hard</option>
+                </select>
+            </label>
+            <label htmlFor="max-attendees">Max Attendees:
+                    <input 
+                        type="number" 
+                        className="event-max-attendees input"
+                        value={attendeesMax}
+                        onChange={e => {
+                            e.preventDefault();
+                            setAttendeesMax(e.target.value);
+                        }}/>
             </label>
             <div id="address-input wrapper">
                 <label htmlFor="address-line-1">Address Line 1:

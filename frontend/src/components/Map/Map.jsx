@@ -40,6 +40,10 @@ const EventMap = () => {
     if (selectedMarker) console.log(selectedMarker)
   }, [dispatch, selectedMarker]);
 
+  // useEffect(() => {
+  //   dispatch(fetchEvents())
+  // }, []);
+
   useEffect(() => {
     const geocodeAddresses = async () => {
       try {
