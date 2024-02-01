@@ -226,6 +226,7 @@ const EventMap = () => {
             <MarkerF
               position={userLocation}
               icon={img}
+              
             />
           )}
 
