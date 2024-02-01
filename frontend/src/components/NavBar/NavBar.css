@@ -87,4 +87,5 @@
   color: rgb(255, 85, 0);
   font-size: 50px;
   font-weight: 600;
+  z-index: 2;
 }

@@ -1,0 +1,60 @@
+.backgoundImg {
+  width: 100%;
+  height: 400px;
+}
+
+.profilePageContainer {
+  position: relative;
+  top: 40px;
+  /* You may adjust this based on your design */
+  left: 50%;
+  transform: translateX(-50%);
+  height: 100%;
+  width: 1000px;
+  height: 100%;
+  width: 1000px;
+}
+
+.profilePic {
+  position: absolute;
+  top: 125px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 100px;
+  border-style: solid;
+  border-width: 5px;
+  border-color: white;
+  border-radius: 50px;
+}
+
+.firstLastName {
+
+  position: absolute;
+  color: white;
+  top: 240px;
+  text-align: center;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.profileInfoWrapper {
+  border-style: solid;
+  height: 800px;
+  background-color: rgb(241, 241, 241);
+  overflow: scroll;
+  scrollbar-width: thin;
+}
+
+.profilePageWrapper {
+  position: relative;
+  top: 0px;
+  /* You may adjust this based on your design */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  min-height: 160vh;
+  /* min-height: 900px; */
+  background-color: rgba(121, 121, 121, 0.4);
+}
+

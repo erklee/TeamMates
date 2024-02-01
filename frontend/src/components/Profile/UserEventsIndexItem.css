@@ -1,0 +1,28 @@
+.userEventsIndexItemContainter {
+  padding: 20px;
+  min-width: 100%;
+}
+
+.userEventsItemWrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+.userEventItemInfoWrapper {
+  color: rgb(0, 0, 0);
+  border-style: none;
+  border-left: 0px;
+  border-width: 4px;
+  background-color: white;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  width: 100%;
+}
+
+.userEventItemTitle {
+  text-align: center;
+}
+
+.userEventItemInfo {
+  padding: 20px;
+}
