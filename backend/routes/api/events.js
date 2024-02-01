@@ -91,7 +91,8 @@ router.post("/", requireUser, validateEventCreation, async function(req, res, ne
             title: req.body.title,
             description: req.body.description,
             category: req.body.category.toLowerCase(),
-            date: typeof req.body.date === "Date" ? req.body.date : new Date(req.body.date),
+            date: (typeof req.body.date === "Date" ? req.body.date : new Date(req.body.date)),
+            difficulty: req.body.difficulty,
             attendeesMax: parseInt(req.body.attendeesMax),
             attendees: [req.user._id],
             location: {
@@ -103,7 +104,6 @@ router.post("/", requireUser, validateEventCreation, async function(req, res, ne
         return res.json(event);
     } 
     catch(err) {
-        if (event.errors) err.errors = event.errors
         next(err)
     }
 });
