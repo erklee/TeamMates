@@ -5,6 +5,7 @@ import VideoPlayer from "./VideoPlayer";
 import "./MainPage.css"
 
 function MainPage() {
+
   return (
 
     <div className="mainPageWrapper">

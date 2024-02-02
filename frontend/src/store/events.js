@@ -149,7 +149,7 @@ export const unAttendEvent = (eventId) => async dispatch => {
 }
 
 export const deleteEvent = (eventId) => async dispatch => {
-  const res = await jwtFetch(`/api/reviews/${eventId}`, {
+  const res = await jwtFetch(`/api/events/${eventId}`, {
     method: "DELETE"
   })
   if(res.ok){

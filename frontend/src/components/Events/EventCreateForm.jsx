@@ -1,9 +1,10 @@
 import { useState } from "react";
 // import { useParams } from "react-router-dom";
 // import jwtFetch from "../../store/jwt";
-import { useDispatch } from "react-redux";
+import { useDispatch , useSelector} from "react-redux";
 import { composeEvent } from "../../store/events";
-import "./EventCreateForm.css"
+import {useNavigate} from "react-router-dom";
+import "./EventCreateForm.css";
 
 const SPORTS = [
   "basketball",
@@ -14,7 +15,7 @@ const SPORTS = [
   "hockey",
 ];
 
-const DIFFICULTIES = [
+const DIFFICULTIES = [  
   "easy",
   "medium",
   "hard",
@@ -23,7 +24,9 @@ const DIFFICULTIES = [
 
 
 export default function EventCreateForm() {
-
+  const navigate = useNavigate();
+  const event = useSelector(state => state.events.new)
+  const currentUser = useSelector(state => state.session.user);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [eventDate, setEventDate] = useState('');
@@ -31,6 +34,7 @@ export default function EventCreateForm() {
   const [attendeesMax, setAttendeesMax] = useState(10);
   const [address1, setAddress1] = useState('');
   const [address2, setAddress2] = useState('');
+  const [city, setCity] = useState('');
   const [state, setState] = useState('');
   const [zipcode, setZipcode] = useState('');
   const [difficulty, setDifficulty] = useState(DIFFICULTIES[0]);
@@ -48,23 +52,27 @@ export default function EventCreateForm() {
       difficulty,
       category,
       location: {
-        address: `${address1} ${address2}, ${state}`,
+        address: `${address1} ${address2}, ${city}, ${state}`,
         zipcode,
       },
     }));
+    navigate(`/profile/${currentUser["_id"]}`)
   };
+
+
+
 
 
   return (
     <div className="createEventPage">
-        <div className="createEventTilte">
+      <div className="createEventTilte">
             Event Details
-        </div>
+      </div>
       <form 
         htmlFor="event-create"
         onSubmit={handleSubmit}
         className="eventCreateForm"
-        >
+      >
         <label htmlFor="title">Title:
           <input 
             type="text"
@@ -151,6 +159,16 @@ export default function EventCreateForm() {
               onChange={e => {
                 e.preventDefault();
                 setAddress2(e.target.value);
+              }} />
+          </label>
+          <label htmlFor="address-city">City:
+            <input 
+              type="text" 
+              className="address-city input"
+              value={city}
+              onChange={e => {
+                e.preventDefault();
+                setCity(e.target.value);
               }} />
           </label>
           <label htmlFor="address-state">State:

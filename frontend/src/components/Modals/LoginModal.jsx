@@ -33,21 +33,42 @@ export default function LoginModal() {
     setPassword('');
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const result = await dispatch(login({ email, password }));
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   const result = await dispatch(login({ email, password }));
     
-    if (result && result.success) {
-      console.log("Before hiding modal");
-      setEmail('');
-      setPassword('');
+  //   if (result && result.success) {
+  //     console.log("Before hiding modal");
+  //     setEmail('');
+  //     setPassword('');
       
-      dispatch(hideModal("LoginModal"));
-      console.log("After hiding modal");
-    } else{
-      console.log('didnt work')
-    }
-  };
+  //     dispatch(hideModal("LoginModal"));
+  //     console.log("After hiding modal");
+  //   } else{
+  //     console.log('didnt work')
+  //   }
+  // };
+
+  const handleSubmit = (e) => {
+  e.preventDefault();
+
+  dispatch(login({ email, password }))
+    .then((result) => {
+      if (result && result.success) {
+        // console.log("Before hiding modal");
+        setEmail('');
+        setPassword('');
+        
+        dispatch(hideModal("LoginModal"));
+        // console.log("After hiding modal");
+      } else {
+        // console.log('didnt work');
+      }
+    })
+    .catch((error) => {
+      console.error('An error occurred:', error);
+    });
+};
 
   const handleDemo = (e) => {
     e.preventDefault();
