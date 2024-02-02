@@ -23,6 +23,15 @@
   text-align: center;
 }
 
+.userEventItemTitle:hover {
+  cursor: pointer;
+  color: rgb(255,85,0);
+}
+
+.userEventsItemPic:hover {
+  cursor: pointer;
+}
+
 .userEventItemInfo {
   padding: 20px;
 }

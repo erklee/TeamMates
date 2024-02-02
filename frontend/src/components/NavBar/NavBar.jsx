@@ -65,7 +65,7 @@ function NavBar() {
             <img src={currentUser?.profileImageUrl}  height='25' width='25' alt="profile icon" />
             <p>{currentUser.fname}</p>
           </div>
-          {visible && <ProfileDropdown className="profileDropdownWrapper" visible={visible} setVisible={setVisible}/>}
+          {visible && <ProfileDropdown className="profileDropdownWrapper" currentUser={currentUser} visible={visible} setVisible={setVisible}/>}
 
         </div>
           

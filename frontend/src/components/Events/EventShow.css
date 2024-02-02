@@ -1,0 +1,109 @@
+.eventShowPageWrapper {
+  position: relative;
+  top: 0px;
+  /* You may adjust this based on your design */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  min-height: 120vh;
+  /* min-height: 900px; */
+  background-color: rgba(121, 121, 121, 0.4);
+}
+
+.event-wrapper-info {
+  position: relative;
+  top: 40px;
+  /* You may adjust this based on your design */
+  left: 50%;
+  transform: translateX(-50%);
+  height: 100%;
+  width: 1000px;
+  height: 100%;
+  width: 1000px;
+
+}
+
+.eventShowPic {
+  width: 100%;
+  height: 400px;
+}
+
+.eventShowInfoWrapper {
+  position: relative;
+  top: -7px;
+  min-height: 400px;
+  width: 100%;
+  background-color: white;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+
+}
+
+.eventShowInfoWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.eventShowDetails {
+  width: 500px;
+}
+
+.eventShowAttendanceWrapper {
+  border-bottom-right-radius: 10px;
+  width: 50%;
+  overflow: scroll;
+  background-color: black;
+  color: white;
+}
+
+.eventShowAttendanceWrapper h2 {
+  text-align: center;
+}
+
+.eventShowAttendee:hover {
+  cursor: pointer;
+  color: rgb(255, 85, 0)
+}
+
+.unattendBtn, .attendBtn {
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  height: 40px;
+  border-radius: 3px;
+  transition: 0.3s;
+  border-style: none;
+  padding: 10px;
+}
+
+.unattendBtn {
+  background-color: black;
+  color: rgb(255, 85, 0);
+}
+
+.attendBtn {
+  background-color: rgb(255, 85, 0);
+  color: white;
+}
+
+.deleteBtn {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  background-color: rgb(255, 85, 0);
+  border-style: none;
+  height: 40px;
+  border-radius: 3px;
+  color: white;
+  transition: 0.3s;
+  padding: 10px 10px;
+  /* bottom: 500px;  */
+}
+
+.unattendBtn:hover, .deleteBtn:hover {
+  background-color: white;
+  color: rgb(255, 85, 0);;
+
+}
+

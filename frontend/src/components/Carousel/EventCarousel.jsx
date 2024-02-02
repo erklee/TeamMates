@@ -37,6 +37,11 @@ function EventCarousel() {
     navigate('/events', { state: { sport }});
   };
 
+  const handleEventShow = e => {
+    e.preventDefault()
+    navigate(`events/${(events[index])._id}`)
+  }
+
   return (
     <section className="carouselWrapper">
       <h1>Events</h1>
@@ -78,10 +83,11 @@ function EventCarousel() {
                 className="slideImage"
                 src={slide.image || allSports}
                 alt="slider image"
+                onClick={handleEventShow}
               />
               <Carousel.Caption>
-                <h3>{slide.category[0].toUpperCase() + slide.category.slice(1)}</h3>
-                <p>{slide.description[0].toUpperCase() + slide.description.slice(1)}</p>
+                <h3 className='eventCarouselDetails'>{slide.category[0].toUpperCase() + slide.category.slice(1)}</h3>
+                <p className='eventCarouselDetails'>{slide.description[0].toUpperCase() + slide.description.slice(1)}</p>
               </Carousel.Caption>
             </Carousel.Item>
           );

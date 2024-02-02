@@ -45,13 +45,14 @@ const router = createBrowserRouter([
         element: <EventShowPage />
       },
       {
-        path: `edit/:eventId`,
+        path: `/events/edit/:eventId`,
         loader: eventLoader,
         element: <ProtectedRoute component={Edit} />,
       },
       {
         path: 'events/new',
-        element: <EventCreateForm />
+        element: <ProtectedRoute component={EventCreateForm} />,
+        // element: <EventCreateForm />
       },
       {
         path: 'profile/:id',

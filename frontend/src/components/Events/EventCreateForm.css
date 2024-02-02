@@ -5,16 +5,8 @@
 .eventCreateForm {
   display: flex;
   flex-direction: column;
-  border-style: solid;
-  border-color: blue;
-  margin: auto;
-  border-width: 5px;
-  color: black;
-  background-color: transparent;
-  backdrop-filter: blur(20px);
-  width: 200px;
-  height: 500px;
-  /* justify-content: center; */
+  justify-content: center;
+  width: 100px;
 }
 
 /* .createEventPage {
@@ -23,17 +15,17 @@
   background-color: black;
 } */
 
-.createEventPage {
-  /* position: fixed; */
+/* .createEventPage {
+  
     top: 60px;
     left: 0;
     width: 100%;
     height: 100vh;
     background-color: rgba(167, 7, 7, 0.7);
     background-image: linear-gradient(to right, rgb(255, 255, 255), grey);
-    /* Adjust the color and opacity as needed */
+    
     display: flex;
     justify-content: center;
     align-items: center;
-    /* z-index: 3; */
-}
+    
+} */

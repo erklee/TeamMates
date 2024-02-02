@@ -4,7 +4,7 @@ import { logout  } from "../../store/session";
 import {useNavigate} from "react-router-dom"
 
 
-export default function ProfileDropdown({className, setVisible}){
+export default function ProfileDropdown({className, setVisible, currentUser}){
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
@@ -17,9 +17,14 @@ export default function ProfileDropdown({className, setVisible}){
     setVisible(false)
     dispatch(logout());
   };
+
+  const handleUserProfile = (e) => {
+    e.preventDefault();
+    navigate(`/profile/${currentUser["_id"]}`);
+  };
   return (
     <div className={className}>
-      <button>Profile</button>
+      <button onClick={handleUserProfile}>Profile</button>
       <button onClick={handleEvents}>Events</button>
       <button onClick={logoutUser}>Logout</button>
     </div>

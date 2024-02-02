@@ -27,7 +27,7 @@ router.get("/:id", async function (req, res, next) {
   try {
     const event = await Event.findById(req.params.id)
       .populate("coordinator", "_id username")
-      .populate("attendees", "_id username");
+      .populate("attendees", "_id username fname lname");
     return res.json(event);
   }
   catch(err) {

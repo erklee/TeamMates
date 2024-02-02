@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
 .slideImage {
-  height: 500px;
+  height: 80vh;
   width: 100%;
 }
 
@@ -17,8 +17,8 @@
 
 .carouselContainer {
   position: relative;
-  min-height: 100px;
-  width: 700px;
+  min-height: 200px;
+  width: 100vw;
   /* top: -200px; */
   left: 50%;
   transform: translateX(-50%);
@@ -26,6 +26,12 @@
   border-width: 10px;
   border-color: rgb(0, 0, 0);
 
+}
+
+.eventCarouselDetails {
+  font-size: xx-large;
+  color: white;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 }
 
 .carousel-control-next-icon:hover {
@@ -47,11 +53,13 @@
   justify-content: center;
   margin-left: 50px;
   margin-bottom: 5px;
+  height: 12vh;
 }
 
 .sportsIconInfoContainer {
   margin-right: 40px;
 }
+
 
 
 
