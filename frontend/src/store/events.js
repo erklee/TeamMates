@@ -128,25 +128,68 @@ export const updatedEvent = (updatedEvent) => async dispatch => {
   }
 }
 
-export const attendEvent = (eventId) => async dispatch => {
-    const res  = await jwtFetch(`/api/events/${eventId}/attend`, {
-        method: "PATCH", 
-    });
-      if(res.ok){
-        const data = await res.json()
-        dispatch(attendEventAction(data))
-      }
-}
+// export const attendEvent = (eventId) => async dispatch => {
+//     const res  = await jwtFetch(`/api/events/${eventId}/attend`, {
+//         method: "PATCH", 
+//     });
+//       if(res.ok){
+//         const data = await res.json()
+//         dispatch(attendEventAction(data))
+//       }
+// }
 
-export const unAttendEvent = (eventId) => async dispatch => {
-  const res  = await jwtFetch(`/api/events/${eventId}/unattend`, {
-    method: "PATCH", 
-});
-  if(res.ok){
-    const data = await res.json()
-    dispatch(unAttendEventAction(data))
+// export const unAttendEvent = (eventId) => async dispatch => {
+//   const res  = await jwtFetch(`/api/events/${eventId}/unattend`, {
+//     method: "PATCH", 
+// });
+//   if(res.ok){
+//     const data = await res.json()
+//     dispatch(unAttendEventAction(data))
+//   }
+// }
+
+export const attendEvent = (eventId) => async (dispatch) => {
+  try {
+    const res = await jwtFetch(`/api/events/${eventId}/attend`, {
+      method: "PATCH",
+    });
+    if (res.ok) {
+      const updatedEvent = await res.json();
+      dispatch({
+        type: ATTEND_EVENT,
+        payload: updatedEvent, // Send the updated event object
+      });
+    } else {
+      const error = await res.json();
+      dispatch(receiveErrors(error.errors || ["Could not attend the event"]));
+    }
+  } catch (error) {
+    console.error("Attend event error:", error);
+    dispatch(receiveErrors(["An error occurred while trying to attend the event"]));
   }
-}
+};
+
+export const unAttendEvent = (eventId) => async (dispatch) => {
+  try {
+    const res = await jwtFetch(`/api/events/${eventId}/unattend`, {
+      method: "PATCH",
+    });
+    if (res.ok) {
+      const updatedEvent = await res.json();
+      dispatch({
+        type: UNATTEND_EVENT,
+        payload: updatedEvent, // Send the updated event object
+      });
+    } else {
+      const error = await res.json();
+      dispatch(receiveErrors(error.errors || ["Could not unattend the event"]));
+    }
+  } catch (error) {
+    console.error("Unattend event error:", error);
+    dispatch(receiveErrors(["An error occurred while trying to unattend the event"]));
+  }
+};
+
 
 export const deleteEvent = (eventId) => async dispatch => {
   const res = await jwtFetch(`/api/reviews/${eventId}`, {
@@ -206,16 +249,35 @@ const eventsReducer = (state = { all: {}, user: {}, new: undefined }, action) =>
     case REMOVE_EVENT:
       delete newState[action.eventId]
       return newState
+    // case ATTEND_EVENT:
+    //   return {
+    //     ...state,
+    //     user: action.eventId
+    //   };
+    // case UNATTEND_EVENT:
+    //   return {
+    //     ...state, 
+    //     user: delete action.eventId
+    //   }
     case ATTEND_EVENT:
+      // Update the specific event with the new attendees list
       return {
         ...state,
-        user: action.eventId
+        all: {
+          ...state.all,
+          [action.payload._id]: action.payload, // Update the event with the new data
+        },
       };
+
     case UNATTEND_EVENT:
+      // Update the specific event to remove the attendee
       return {
-        ...state, 
-        user: delete action.eventId
-      }
+        ...state,
+        all: {
+          ...state.all,
+          [action.payload._id]: action.payload, // Update the event with the new data
+        },
+      };
     default:
       return state;
   }
