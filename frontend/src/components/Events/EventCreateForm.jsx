@@ -25,7 +25,7 @@ const DIFFICULTIES = [
 
 export default function EventCreateForm() {
   const navigate = useNavigate();
-  const event = useSelector(state => state.events.new)
+  const event = useSelector(state => state.events.new);
   const currentUser = useSelector(state => state.session.user);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -38,16 +38,24 @@ export default function EventCreateForm() {
   const [state, setState] = useState('');
   const [zipcode, setZipcode] = useState('');
   const [difficulty, setDifficulty] = useState(DIFFICULTIES[0]);
-  const [pictureUrl, setPictureUrl] = useState()
-  const basketballUrl = 'https://mern-teammates-seeds.s3.amazonaws.com/public/basketball.jpeg'
- 
+  const [pictureUrl, setPictureUrl] = useState();
+  const basketballUrl = 'https://mern-teammates-seeds.s3.amazonaws.com/public/basketball.jpeg';
+  const footballUrl = 'https://s3.console.aws.amazon.com/s3/object/mern-teammates-seeds?region=us-east-1&bucketType=general&prefix=public/football.jpeg';
+  const hockeyUrl =  'https://mern-teammates-seeds.s3.amazonaws.com/public/hockey.jpeg';
+  const soccerlUrl = 'https://mern-teammates-seeds.s3.amazonaws.com/public/soccer.jpeg';
+  const tennisUrl = 'https://mern-teammates-seeds.s3.amazonaws.com/public/tennis.jpeg';
+  const baseballUrl = 'https://mern-teammates-seeds.s3.amazonaws.com/public/baseball.jpeg';
   const dispatch = useDispatch();
 
   const handleSubmit = async e => {
     e.preventDefault();
   
-    if (category === "Basketball") setPictureUrl(basketballUrl)
-    
+    if (category === "Basketball") setPictureUrl(basketballUrl);
+    if (category === 'Baseball') setPictureUrl(baseballUrl);
+    if (category === 'Football') setPictureUrl(footballUrl);
+    if (category === 'Tennis') setPictureUrl(tennisUrl);
+    if (category === 'Soccer') setPictureUrl(soccerlUrl);
+    if (category === 'Hockey') setPictureUrl(hockeyUrl);
     dispatch(composeEvent({
       title,
       description,
