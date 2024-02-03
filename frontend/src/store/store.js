@@ -7,13 +7,15 @@ import errors from "./errors";
 import modals from './modals';
 import events from './events'
 import users from './users'
+import friends from './friends'
 
 const rootReducer = combineReducers({
   session, 
   errors,
   modals,
   events,
-  users
+  users,
+  friends
 });
 
 let enhancer;
