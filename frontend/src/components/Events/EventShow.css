@@ -101,6 +101,20 @@
   /* bottom: 500px;  */
 }
 
+.editBtn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: rgb(255, 85, 0);
+  border-style: none;
+  height: 40px;
+  border-radius: 3px;
+  color: white;
+  transition: 0.3s;
+  padding: 10px 10px;
+  /* bottom: 500px;  */
+}
+
 .unattendBtn:hover, .deleteBtn:hover {
   background-color: white;
   color: rgb(255, 85, 0);;

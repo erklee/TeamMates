@@ -54,14 +54,30 @@ function NavBar() {
     }
   };
 
+  const handleCreateEvent = () => {
+    if (loggedIn){
+    navigate("/events/new");
+    } else {
+      dispatch(showModal('SignUpModal'));
+    }
+  };
+
+
+
 
 
   const getLinks = () => {
+
+    const createEventButton = (
+      <button onClick={handleCreateEvent} id='create-button'>Create Event</button>
+    );
+  
     if (loggedIn) {
       return (
         <div className="links-nav">
-
           <div className='userIconContainer' onClick={handleProfileDropdown}>
+          {createEventButton}
+          {/* <button onClick={handleCreateEvent} id='create-button'>Create Event</button> //this shows only for when the user is logged in  */}
             <img src={currentUser?.profileImageUrl}  height='25' width='25' alt="profile icon" />
             <p>{currentUser.fname}</p>
           </div>
@@ -73,6 +89,7 @@ function NavBar() {
     } else {
       return (
         <div className="links-auth">
+          {createEventButton} 
           <button id="navBarSignUp" onClick={handleShowModal} to={'/signup'}>Sign Up</button>
           <button onClick={handleShowModal} id="navBarLogin"to={'/login'}>Login</button>
         </div>

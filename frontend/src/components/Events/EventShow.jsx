@@ -5,8 +5,6 @@ import { useParams, useNavigate} from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { getCurrentUser } from '../../store/session';
-
-
 import "./EventShow.css";
 
 
@@ -19,13 +17,6 @@ function EventShowPage() {
   const currentUser = useSelector(state => state.session.user);
   const currentUserId = useSelector(state => state.session.user?._id);
 
-
-  
-  
-
-
-
-    
   useEffect(() => {
     dispatch(fetchEvent(eventId));
   }, [dispatch, eventId]);
@@ -34,9 +25,6 @@ function EventShowPage() {
     dispatch(getCurrentUser());
   }, [dispatch]);
   // const state = useSelector(state => state);
-
-
-
 
   const isUserAttending = event?.attendees?.some(attendee => attendee._id === currentUserId);
   const isCoordinator = event?.coordinator?.["_id"] === currentUserId
@@ -72,6 +60,10 @@ function EventShowPage() {
       console.log("shit");
     }
   };
+
+  const handleEditClick = () => {
+    navigate(`/events/edit/${eventId}`);
+  }
 
   // const handleDelete = async () => {
   //   try {
@@ -118,7 +110,12 @@ function EventShowPage() {
           <img className="eventShowPic" src={event.pictureUrl} alt="eventPicture" height={300} width={300}/>
           
           {isCoordinator && 
+          <>
             <button className='deleteBtn' onClick={handleDelete}>Delete</button>
+            <button className='editBtn' onClick={handleEditClick}>Edit Event</button>
+          </>
+            
+
           }
           {(isUserAttending) ? (
             <button className="unattendBtn"onClick={handleUnattendClick}>Unattend</button>
