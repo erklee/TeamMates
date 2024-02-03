@@ -87,7 +87,7 @@ export const sendFriendRequest = (friend) => ({
       case SEND_FRIEND_REQUEST:
         return {
           ...state,
-          friendRequests: [...state.friendRequests, action.payload],
+          friendRequests: [...state.friendRequests, action.payload].filter((val, idx, arr) => arr.indexOf(val) === idx), // unique filter
         };
   
       case ACCEPT_FRIEND_REQUEST:
