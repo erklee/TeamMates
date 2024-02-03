@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import {login, clearSessionErrors } from '../../store/session';
 import { hideModal } from '../../store/modals';
 import closeIcon from "../../assets/icons/closeIcon2.png";
+import lockIcon from "../../assets/icons/lockIconWhite.png"
+import emailIcon from "../../assets/icons/emailIconWhite.png"
 import "./LoginModal.css";
 
 
@@ -89,6 +91,7 @@ export default function LoginModal() {
             onChange={update('email')}
             placeholder='Email'
           />
+          <img src={emailIcon} className="loginFormIcons" alt="closeIcon" />
         </label> 
         { errors?.password && <li className="errors">{errors?.password}</li> }
         <label>
@@ -99,6 +102,7 @@ export default function LoginModal() {
             placeholder='Password'
 
           />
+          <img src={lockIcon} className="loginFormIcons" alt="closeIcon" />
         </label>
         <div className='loginButtonsWrapper'>
           <input
@@ -107,6 +111,7 @@ export default function LoginModal() {
             value="Log In"
             disabled={!email || !password}
           />
+          
           <button className='loginModalSubmit' onClick={handleDemo}>Demo</button>
         </div>
 

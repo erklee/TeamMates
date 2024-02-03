@@ -38,11 +38,15 @@ export default function EventCreateForm() {
   const [state, setState] = useState('');
   const [zipcode, setZipcode] = useState('');
   const [difficulty, setDifficulty] = useState(DIFFICULTIES[0]);
+  const [pictureUrl, setPictureUrl] = useState()
+  const basketballUrl = 'https://mern-teammates-seeds.s3.amazonaws.com/public/basketball.jpeg'
  
   const dispatch = useDispatch();
 
   const handleSubmit = async e => {
     e.preventDefault();
+  
+    if (category === "Basketball") setPictureUrl(basketballUrl)
     
     dispatch(composeEvent({
       title,
@@ -55,8 +59,9 @@ export default function EventCreateForm() {
         address: `${address1} ${address2}, ${city}, ${state}`,
         zipcode,
       },
+      pictureUrl,
     }));
-    navigate(`/profile/${currentUser["_id"]}`)
+    // navigate(`/profile/${currentUser["_id"]}`)
   };
 
 

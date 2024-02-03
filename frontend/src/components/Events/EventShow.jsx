@@ -18,7 +18,7 @@ function EventShowPage() {
   const event = useSelector(state => state.events.new);
   const currentUser = useSelector(state => state.session.user);
   const currentUserId = useSelector(state => state.session.user?._id);
-
+  console.log(event)
 
   
   
