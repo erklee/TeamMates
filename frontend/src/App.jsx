@@ -9,7 +9,8 @@ import { getCurrentUser } from './store/session';
 import Edit from './components/Events/EventEditForm';
 import EventCreateForm from './components/Events/EventCreateForm';
 import ProfilePage from './components/Profile/ProfilePage';
-import EventShowPage from "./components/Events/EventShow"
+import EventShowPage from "./components/Events/EventShow";
+import UserIndexPage from './components/UserIndexPage/UserIndex';
 
 const Layout = () => {
   return (
@@ -57,7 +58,8 @@ const router = createBrowserRouter([
       {
         path: 'profile/:id',
         element: <ProfilePage />
-      }
+      },
+      { path: "users", element: <UserIndexPage /> }
       // {
       //   path: "login",
       //   element: <AuthRoute component={LoginForm} />
