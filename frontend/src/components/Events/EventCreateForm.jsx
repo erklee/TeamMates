@@ -6,6 +6,7 @@ import { composeEvent } from "../../store/events";
 import {useNavigate} from "react-router-dom";
 import "./EventCreateForm.css";
 
+
 const SPORTS = [
   "basketball",
   "football",
@@ -24,8 +25,8 @@ const DIFFICULTIES = [
 
 
 export default function EventCreateForm() {
-  const navigate = useNavigate();
-  const event = useSelector(state => state.events.new)
+  // const navigate = useNavigate();
+  const event = useSelector(state => state.events.new);
   const currentUser = useSelector(state => state.session.user);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -35,16 +36,101 @@ export default function EventCreateForm() {
   const [address1, setAddress1] = useState('');
   const [address2, setAddress2] = useState('');
   const [city, setCity] = useState('');
-  const [state, setState] = useState('');
+  const [state, setState] = useState('NY');
   const [zipcode, setZipcode] = useState('');
   const [difficulty, setDifficulty] = useState(DIFFICULTIES[0]);
+  const [pictureUrl, setPictureUrl] = useState('');
+  const basketballUrl = 'https://mern-teammates-seeds.s3.amazonaws.com/public/basketball.jpeg';
+  const footballUrl = 'https://mern-teammates-seeds.s3.amazonaws.com/public/football.jpeg';
+  const hockeyUrl =  'https://mern-teammates-seeds.s3.amazonaws.com/public/hockey.jpeg';
+  const soccerlUrl = 'https://mern-teammates-seeds.s3.amazonaws.com/public/soccer.jpeg';
+  const tennisUrl = 'https://mern-teammates-seeds.s3.amazonaws.com/public/tennis.jpeg';
+  const baseballUrl = 'https://mern-teammates-seeds.s3.amazonaws.com/public/baseball.jpeg';
  
   const dispatch = useDispatch();
 
+  // const handleSubmit = async e => {
+  //   e.preventDefault();
+
+  //   if (category === "basketball") setPictureUrl(basketballUrl);
+  //   if (category === 'baseball') setPictureUrl(baseballUrl);
+  //   if (category === 'football') setPictureUrl(footballUrl);
+  //   if (category === 'tennis') setPictureUrl(tennisUrl);
+  //   if (category === 'soccer') setPictureUrl(soccerlUrl);
+  //   if (category === 'hockey') setPictureUrl(hockeyUrl);
+    
+  //   await dispatch(composeEvent({
+  //     title,
+  //     description,
+  //     date: eventDate,
+  //     attendeesMax,
+  //     difficulty,
+  //     category,
+  //     location: {
+  //       address: `${address1} ${address2}, ${city}, ${state}`,
+  //       zipcode,
+  //     },
+  //     pictureUrl,
+      
+  //   }));
+  //   await setTitle("");
+  //   await setDescription("");
+  //   await setEventDate("");
+  //   await setCategory("");
+  //   await setAttendeesMax("10");
+  //   await setAddress1("");
+  //   await setAddress2("");
+  //   await setCity("");
+  //   await setState("NY");
+  //   await setZipcode("");
+  //   await setDifficulty("easy");
+  //   await setPictureUrl("");
+  // };
+
   const handleSubmit = async e => {
     e.preventDefault();
-    
-    dispatch(composeEvent({
+
+    // Set pictureUrl based on the selected category
+    let categoryPictureUrl;
+    switch (category) {
+    case "basketball":
+      categoryPictureUrl = basketballUrl;
+      break;
+    case "baseball":
+      categoryPictureUrl = baseballUrl;
+      break;
+    case "football":
+      categoryPictureUrl = footballUrl;
+      break;
+    case "tennis":
+      categoryPictureUrl = tennisUrl;
+      break;
+    case "soccer":
+      categoryPictureUrl = soccerlUrl;
+      break;
+    case "hockey":
+      categoryPictureUrl = hockeyUrl;
+      break;
+    default:
+      categoryPictureUrl = '';
+    }
+
+    // Set the state values and pictureUrl
+    await setTitle("");
+    await setDescription("");
+    await setEventDate("");
+    await setCategory("");
+    await setAttendeesMax("10");
+    await setAddress1("");
+    await setAddress2("");
+    await setCity("");
+    await setState("NY");
+    await setZipcode("");
+    await setDifficulty("easy");
+    await setPictureUrl(categoryPictureUrl);
+
+    // Dispatch the composeEvent action
+    await dispatch(composeEvent({
       title,
       description,
       date: eventDate,
@@ -55,9 +141,10 @@ export default function EventCreateForm() {
         address: `${address1} ${address2}, ${city}, ${state}`,
         zipcode,
       },
+      pictureUrl: categoryPictureUrl, // Use the category-specific pictureUrl
     }));
-    navigate(`/profile/${currentUser["_id"]}`)
   };
+
 
 
 
@@ -81,7 +168,9 @@ export default function EventCreateForm() {
             onChange={e => {
               e.preventDefault();
               setTitle(e.target.value);
-            }}/>
+            }}
+            required
+            />
         </label>
         <label htmlFor="description">Description:
           <textarea 
@@ -93,7 +182,9 @@ export default function EventCreateForm() {
             onChange={e => {
               e.preventDefault();
               setDescription(e.target.value);
-            }}></textarea>
+            }}
+            required
+            ></textarea>
         </label>
         <label htmlFor="date">Date:
           <input 
@@ -103,7 +194,9 @@ export default function EventCreateForm() {
             onChange={e => {
               e.preventDefault();
               setEventDate(e.target.value);
-            }}/>
+            }}
+            required
+            />
         </label>
         <label htmlFor="category">Category:
           <select 
@@ -117,6 +210,7 @@ export default function EventCreateForm() {
             {
               SPORTS.map((sport, index) => <option key={`sport-${index}`} value={sport}>{sport[0].toUpperCase() + sport.slice(1)}</option>)
             }
+            required
           </select>
         </label>
         <label htmlFor="difficulty">Difficulty:
@@ -138,7 +232,9 @@ export default function EventCreateForm() {
             onChange={e => {
               e.preventDefault();
               setAttendeesMax(e.target.value);
-            }}/>
+            }}
+            required
+            />
         </label>
         <div id="address-input wrapper">
           <label htmlFor="address-line-1">Address Line 1:
@@ -149,7 +245,10 @@ export default function EventCreateForm() {
               onChange={e => {
                 e.preventDefault();
                 setAddress1(e.target.value);
-              }}/>
+              }}
+              required
+              />
+            r
           </label>
           <label htmlFor="address-line-2">Address Line 2:
             <input 
@@ -228,7 +327,9 @@ export default function EventCreateForm() {
               <option value="WV">West Virginia</option>
               <option value="WI">Wisconsin</option>
               <option value="WY">Wyoming</option>
+              required
             </select>
+
           </label>
         </div>
         <label htmlFor="zipcode">Zipcode:
@@ -239,7 +340,10 @@ export default function EventCreateForm() {
             onChange={e => {
               e.preventDefault();
               setZipcode(e.target.value);
-            }} />
+            }} 
+            required
+            />
+            
         </label>
         <button type="submit">Submit</button>
       </form>

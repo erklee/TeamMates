@@ -36,16 +36,16 @@ router.get("/:id", async function (req, res, next) {
 });
 
 router.get('/user/:id', async function (req, res, next) {
-    try {
-        const event = await Event.find( { attendees: `${req.params.id}` })
-            .populate("coordinator", "_id username")
-            .populate("attendees", "_id username");
-        return res.json(event)
-    }
-    catch(err) {
-        return res.json({ errors: "Could not complete this request" })
-    }
-})
+  try {
+    const event = await Event.find( { attendees: `${req.params.id}` })
+      .populate("coordinator", "_id username")
+      .populate("attendees", "_id username");
+    return res.json(event);
+  }
+  catch(err) {
+    return res.json({ errors: "Could not complete this request" });
+  }
+});
 
 router.patch("/:id/attend", requireUser, async function (req, res, next) {
   let event;
@@ -89,28 +89,30 @@ router.patch("/:id/unattend", requireUser, async function (req, res, next) {
 });
 
 
-router.post("/", requireUser, validateEventCreation, async function(req, res, next) {
-    try {
-        const newEvent = new Event({
-            coordinator: req.user._id,
-            title: req.body.title,
-            description: req.body.description,
-            category: req.body.category.toLowerCase(),
-            date: (typeof req.body.date === "Date" ? req.body.date : new Date(req.body.date)),
-            difficulty: req.body.difficulty,
-            attendeesMax: parseInt(req.body.attendeesMax),
-            attendees: [req.user._id],
-            location: {
-                address: req.body.location.address,
-                zipcode: req.body.location.zipcode
-            }
-        });
-        const event = await newEvent.save();
-        return res.json(event);
-    } 
-    catch(err) {
-        next(err)
-    }
+router.post("/", requireUser, validateEventCreation, async function (req, res, next) {
+  try {
+    const newEvent = new Event({
+      coordinator: req.user._id,
+      title: req.body.title,
+      description: req.body.description,
+      category: req.body.category.toLowerCase(),
+      date: (typeof req.body.date === "Date" ? req.body.date : new Date(req.body.date)),
+      difficulty: req.body.difficulty,
+      attendeesMax: parseInt(req.body.attendeesMax),
+      attendees: [req.user._id],
+      location: {
+        address: req.body.location.address,
+        zipcode: req.body.location.zipcode,
+      },
+      pictureUrl: req.body.pictureUrl || "https://mern-teammates-seeds.s3.amazonaws.com/public/allSports.jpeg"
+    });
+    
+    const event = await newEvent.save();
+    return res.json(event);
+  } 
+  catch(err) {
+    next(err);
+  }
 });
 
 router.patch("/:id", requireUser, validateEventUpdate, async function (req, res, next) {
@@ -123,9 +125,9 @@ router.patch("/:id", requireUser, validateEventUpdate, async function (req, res,
   }
 
 
-    try {
-        const { title, description, category, date, attendeesMax, attendees, location, difficulty } = req.body
-        let newAttrs = { title, description, category, date, attendeesMax, attendees, location, difficulty }
+  try {
+    const { title, description, category, date, attendeesMax, attendees, location, difficulty } = req.body;
+    let newAttrs = { title, description, category, date, attendeesMax, attendees, location, difficulty };
 
         
     Object.keys(newAttrs).forEach((key, idx) => {
