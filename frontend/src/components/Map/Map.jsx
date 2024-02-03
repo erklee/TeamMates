@@ -279,7 +279,6 @@ const EventMap = () => {
                 <div>
                   <h6>{selectedMarker.event.title}</h6>
                   <p>{selectedMarker.event.description}</p>
-                  <p>{selectedMarker.event.difficulty}</p>
                   <p>Difficulty: {selectedMarker.event.difficulty}</p>
                   <p>Distance: {selectedMarker.distance.toFixed(2)} miles</p>
                 </div>
