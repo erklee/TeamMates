@@ -201,6 +201,60 @@ router.patch('/:id/friend', requireUser, async (req, res) => {
 
 })
 
+router.patch('/:id/accept', async (req, res, next) => {
+  try {
+    const friendUser = await User.findById(req.params.id);
+    const youUser = await User.findById(req.user._id);
+
+    if (youUser.requestIds.some(requestId => requestId.equals(friendUser._id))) {
+      friendUser.friendIds.push(youUser._id);
+      friendUser.requestIds = friendUser.requestIds.filter(requestId => !requestId.equals(youUser._id));
+      youUser.friendIds.push(friendUser._id);
+      youUser.requestIds = youUser.requestIds.filter(requestId => !requestId.equals(friendUser._id));
+
+      await friendUser.save();
+      await youUser.save();
+
+      return res.json({
+        youUser,
+        friendUser
+      });
+    } else {
+      return res.status(400).json({ errors: ["Friend request not found"] });
+    }
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.patch('/:id/reject', async (req, res, next) => {
+  try {
+    const friendUser = await User.findById(req.params.id);
+    const youUser = await User.findById(req.user._id);
+
+    // Check if the friend request exists in the requestIds of the current user
+    if (youUser.requestIds.some(requestId => requestId.equals(friendUser._id))) {
+      friendUser.requestIds = friendUser.requestIds.filter(requestId => !requestId.equals(youUser._id));
+      youUser.requestIds = youUser.requestIds.filter(requestId => !requestId.equals(friendUser._id));
+
+      await friendUser.save();
+      await youUser.save();
+
+      return res.json({
+        youUser,
+        friendUser
+      });
+    } else {
+      return res.status(400).json({ errors: ["Friend request not found"] });
+    }
+  } catch (err) {
+    next(err);
+  }
+});
+
+
+
+
 router.patch('/:id/unfriend', requireUser, async (req, res) => {
   try {
     const friendUser = await User.findById(req.params.id);
