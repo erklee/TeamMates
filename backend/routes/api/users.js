@@ -235,86 +235,130 @@ router.patch('/:id/friend', requireUser, async (req, res, next) => {
 
 
 
-router.patch('/:id/accept', async (req, res, next) => {
+// Thunk action to accept a friend request
+router.patch('/:id/accept', requireUser, async (req, res, next) => {
   try {
-    const friendUser = await User.findById(req.params.id);
-    const youUser = await User.findById(req.user._id);
+    const friendUserId = req.params.id;
+    const youUserId = req.user?._id;
+
+    // Validate if youUserId is valid
+    if (!youUserId || !ObjectId.isValid(youUserId)) {
+      return res.status(400).json({ errors: ['Invalid user ID'] });
+    }
+
+    const friendUser = await User.findById(new ObjectId(friendUserId));
+    const youUser = await User.findById(new ObjectId(youUserId));
+
+    if (!youUser) {
+      return res.status(400).json({ errors: ['You are not a valid user'] });
+    }
 
     if (
       youUser.requestIds &&
-      youUser.requestIds.some(requestId => requestId.equals(friendUser._id))
+      youUser.requestIds.some((requestId) => requestId.equals(friendUser._id))
     ) {
       friendUser.friendIds.push(youUser._id);
-      friendUser.requestIds = friendUser.requestIds.filter(requestId => !requestId.equals(youUser._id));
+      friendUser.requestIds = friendUser.requestIds.filter((requestId) => !requestId.equals(youUser._id));
       youUser.friendIds.push(friendUser._id);
-      youUser.requestIds = youUser.requestIds.filter(requestId => !requestId.equals(friendUser._id));
+      youUser.requestIds = youUser.requestIds.filter((requestId) => !requestId.equals(friendUser._id));
 
-      await friendUser.save();
       await youUser.save();
+      await friendUser.save();
 
+      // Respond with the sender's data
       return res.json({
         youUser,
-        friendUser
+        friendUser,
+        sender: youUser, // Include the sender's data in the response
       });
     } else {
-      return res.status(400).json({ errors: ["Friend request not found"] });
+      return res.status(400).json({ errors: ['Friend request not found'] });
     }
   } catch (err) {
     next(err);
   }
 });
 
-router.patch('/:id/reject', async (req, res, next) => {
+// Thunk action to reject a friend request
+router.patch('/:id/reject', requireUser, async (req, res, next) => {
   try {
-    const friendUser = await User.findById(req.params.id);
-    const youUser = await User.findById(req.user._id);
+    const friendUserId = req.params.id;
+    const youUserId = req.user?._id;
+
+    // Validate if youUserId is valid
+    if (!youUserId || !ObjectId.isValid(youUserId)) {
+      return res.status(400).json({ errors: ['Invalid user ID'] });
+    }
+
+    const friendUser = await User.findById(new ObjectId(friendUserId));
+    const youUser = await User.findById(new ObjectId(youUserId));
+
+    if (!youUser) {
+      return res.status(400).json({ errors: ['You are not a valid user'] });
+    }
 
     if (
       youUser.requestIds &&
-      youUser.requestIds.some(requestId => requestId.equals(friendUser._id))
+      youUser.requestIds.some((requestId) => requestId.equals(friendUser._id))
     ) {
-      friendUser.requestIds = friendUser.requestIds.filter(requestId => !requestId.equals(youUser._id));
-      youUser.requestIds = youUser.requestIds.filter(requestId => !requestId.equals(friendUser._id));
+      friendUser.requestIds = friendUser.requestIds.filter((requestId) => !requestId.equals(youUser._id));
+      youUser.requestIds = youUser.requestIds.filter((requestId) => !requestId.equals(friendUser._id));
 
       await friendUser.save();
       await youUser.save();
 
+      // Respond with the sender's data
       return res.json({
         youUser,
-        friendUser
+        friendUser,
+        sender: youUser, // Include the sender's data in the response
       });
     } else {
-      return res.status(400).json({ errors: ["Friend request not found"] });
+      return res.status(400).json({ errors: ['Friend request not found'] });
     }
   } catch (err) {
     next(err);
   }
 });
 
-router.patch('/:id/unfriend', requireUser, async (req, res) => {
+// Thunk action to unfriend
+router.patch('/:id/unfriend', requireUser, async (req, res, next) => {
   try {
-    const friendUser = await User.findById(req.params.id);
-    const youUser = await User.findById(req.user._id);
+    const friendUserId = req.params.id;
+    const youUserId = req.user?._id;
+
+    // Validate if youUserId is valid
+    if (!youUserId || !ObjectId.isValid(youUserId)) {
+      return res.status(400).json({ errors: ['Invalid user ID'] });
+    }
+
+    const friendUser = await User.findById(new ObjectId(friendUserId));
+    const youUser = await User.findById(new ObjectId(youUserId));
+
+    if (!youUser) {
+      return res.status(400).json({ errors: ['You are not a valid user'] });
+    }
 
     if (
       youUser.friendIds &&
       youUser.requestIds &&
-      youUser.friendIds.every(id => !id.equals(friendUser._id)) &&
-      youUser.requestIds.every(id => !id.equals(friendUser._id))
+      youUser.friendIds.every((id) => !id.equals(friendUser._id)) &&
+      youUser.requestIds.every((id) => !id.equals(friendUser._id))
     ) {
-      return res.json({ errors: ["You are not friends with this user"] });
+      return res.json({ errors: ['You are not friends with this user'] });
     }
 
-    friendUser.friendIds = friendUser.friendIds.filter(id => !id.equals(youUser._id));
-    friendUser.requestIds = friendUser.requestIds.filter(id => !id.equals(youUser._id));
+    friendUser.friendIds = friendUser.friendIds.filter((id) => !id.equals(youUser._id));
+    friendUser.requestIds = friendUser.requestIds.filter((id) => !id.equals(youUser._id));
     const fUser = await friendUser.save();
-    youUser.friendIds = youUser.friendIds.filter(id => !id.equals(friendUser._id));
-    youUser.requestIds = youUser.friendIds.filter(id => !id.equals(friendUser._id));
+    youUser.friendIds = youUser.friendIds.filter((id) => !id.equals(friendUser._id));
+    youUser.requestIds = youUser.requestIds.filter((id) => !id.equals(friendUser._id));
     const yUser = await youUser.save();
-    return res.json([yUser, fUser]);
+    return res.json({ youUser: yUser, friendUser: fUser });
   } catch (err) {
     next(err);
   }
 });
+
 
 module.exports = router;
