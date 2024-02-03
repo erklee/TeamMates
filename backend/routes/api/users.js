@@ -204,7 +204,7 @@ router.patch('/:id/friend', requireUser, async (req, res) => {
 router.patch('/:id/accept', async (req, res, next) => {
   try {
     const friendUser = await User.findById(req.params.id);
-    const youUser = await User.findById(req.user._id);
+    const youUser = await User.findById(req.user);
 
     if (youUser.requestIds.some(requestId => requestId.equals(friendUser._id))) {
       friendUser.friendIds.push(youUser._id);
