@@ -106,6 +106,7 @@ router.post("/", requireUser, validateEventCreation, async function (req, res, n
       },
       pictureUrl: req.body.pictureUrl || "https://mern-teammates-seeds.s3.amazonaws.com/public/allSports.jpeg"
     });
+    
     const event = await newEvent.save();
     return res.json(event);
   } 
