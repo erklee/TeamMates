@@ -8,6 +8,7 @@ import * as sessionActions from './store/session'
 import * as modalActions from './store/modals'
 import * as userActions from './store/users'
 import * as eventActions from './store/events'
+import * as friendActions from './store/friends'
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -21,6 +22,7 @@ if (import.meta.env.MODE !== 'production') {
   window.modalActions = modalActions;
   window.eventActions = eventActions
   window.userActions = userActions
+  window.friendActions = friendActions
 
 }
 
