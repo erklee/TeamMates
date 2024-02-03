@@ -5,9 +5,9 @@ const ACCEPT_FRIEND_REQUEST = "friends/ACCEPT_FRIEND_REQUEST"
 const REJECT_FRIEND_REQUEST = "friends/REJECT_FRIEND_REQUEST"
 const UNFRIEND = "friends/UNFRIEND"
 
-export const sendFriendRequest = (friend) => ({
+export const sendFriendRequest = (friend,senderId) => ({
     type: SEND_FRIEND_REQUEST,
-    payload: friend,
+    payload:{friend,senderId}
   });
   
   export const acceptFriendRequest = (friend) => ({
@@ -25,14 +25,14 @@ export const sendFriendRequest = (friend) => ({
     payload: friend,
   })
 
-  export const sendFriendRequestThunk = (friendId) => async (dispatch) => {
+  export const sendFriendRequestThunk = (friendId, senderId) => async (dispatch) => {
     try {
       const response = await jwtFetch(`api/users/${friendId}/friend`, {
         method: 'PATCH',
       });
   
       const data  = await response.json();
-      dispatch(sendFriendRequest(data));
+      dispatch(sendFriendRequest(data, senderId));
     } catch (error) {
       console.error('Error sending friend request:', error);
     }
@@ -87,13 +87,13 @@ export const sendFriendRequest = (friend) => ({
       case SEND_FRIEND_REQUEST:
         return {
           ...state,
-          friendRequests: [...state.friendRequests, action.payload],
+          friendRequests: [...state.friendRequests,action.payload.senderId],
         };
   
       case ACCEPT_FRIEND_REQUEST:
         return {
           ...state,
-          friendRequests: state.friendRequests.filter((friend) => friend._id !== action.payload._id),
+          friendRequests: state.friendRequests.filter((friend) => friend !== action.payload._id),
           friends: [...state.friends, action.payload],
         };
   
