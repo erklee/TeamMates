@@ -142,7 +142,6 @@ const friendReducer = (state = initialState, action) => {
     default:
       return state
 
-    // ... other cases
   }
 };
   
