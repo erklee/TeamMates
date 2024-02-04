@@ -271,7 +271,7 @@ router.patch('/:id/accept', requireUser, async (req, res, next) => {
       return res.json({
         youUser,
         friendUser,
-        sender: youUser, 
+        sender: friendUser, 
       });
     }
 
