@@ -11,6 +11,7 @@ import EventCreateForm from './components/Events/EventCreateForm';
 import ProfilePage from './components/Profile/ProfilePage';
 import EventShowPage from "./components/Events/EventShow";
 import UserIndexPage from './components/UserIndexPage/UserIndex';
+import FriendsPage from './components/FriendsPage/FriendsPage';
 
 const Layout = () => {
   return (
@@ -59,7 +60,11 @@ const router = createBrowserRouter([
         path: 'profile/:id',
         element: <ProfilePage />
       },
-      { path: "users", element: <UserIndexPage /> }
+      { path: "users", element: <UserIndexPage /> },
+      {
+        path: "friends", element: <FriendsPage />
+      }
+  
       // {
       //   path: "login",
       //   element: <AuthRoute component={LoginForm} />

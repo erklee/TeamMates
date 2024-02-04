@@ -16,6 +16,7 @@ const UserIndexPage = () => {
           <h1>Users</h1>
           <ul>
           {Object.values(users).map(user => (
+            
                 <UserItem key={user._id} user={user} />
             ))}
           </ul>
