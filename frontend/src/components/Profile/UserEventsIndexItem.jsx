@@ -34,10 +34,10 @@ export default function UserEventsIndexItem({event}) {
           <div className='userEventItemInfo'>
 
             <p>{`Description: ${event.description}`}</p>
-            <p>{`Sport: ${event.category.slice(0,1).toUpperCase()}${event.category.slice(1)}`}</p>
-            <p>{`Address: ${event.location.address} ${event.location.zipcode}`}</p>
-            <p>{`Date: ${formatDate(event.date)}`}</p>
-            <p>{`Particpants: ${event.attendees.length}`}</p>
+            <p>{`Sport: ${event.category?.slice(0,1).toUpperCase()}${event.category?.slice(1)}`}</p>
+            <p>{`Address: ${event.location?.address} ${event.location?.zipcode}`}</p>
+            <p>{`Date: ${formatDate(event?.date)}`}</p>
+            <p>{`Particpants: ${event.attendees?.length}`}</p>
           </div>
         </div>
       </div>

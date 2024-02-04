@@ -10,7 +10,8 @@ import "./SignUpModal.css";
 
 
 export default function SignUpModal() {
-  const showModal = useSelector(state => state.modals["SignUpModal"]);
+  const modalVisible = useSelector(state => state.modals["SignUpModal"]);
+  const currentUser = useSelector(state => state.session.user);
 
   const [email, setEmail] = useState('');
   const [fname, setFname] = useState('');
@@ -74,7 +75,7 @@ export default function SignUpModal() {
   };
 
   return (
-    showModal &&
+    (modalVisible && !currentUser) &&
     <div className="modal-overlay">
       <form className="signUpModal" action="submit" onSubmit={handleSubmit}>
         <h1 className="signUpModalTitle">Sign Up</h1>

@@ -1,16 +1,23 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {login, clearSessionErrors } from '../../store/session';
-import { hideModal } from '../../store/modals';
+// import { hideModal, showModal } from '../../store/modals';
+import { showModal, hideModal} from '../../store/modals';
 import closeIcon from "../../assets/icons/closeIcon2.png";
-import lockIcon from "../../assets/icons/lockIconWhite.png"
-import emailIcon from "../../assets/icons/emailIconWhite.png"
+import lockIcon from "../../assets/icons/lockIconWhite.png";
+import emailIcon from "../../assets/icons/emailIconWhite.png";
+import { getCurrentUser } from '../../store/session';
 import "./LoginModal.css";
+// import {useNavigate} from 'react-router-dom';
 
 
 
 export default function LoginModal() {
-  const showModal = useSelector(state => state.modals["LoginModal"]);
+  // const navigate = useNavigate();
+  const modalVisible = useSelector(state => state.modals["LoginModal"]);
+  // console.log('showModal:', showModal);
+  const currentUser = useSelector(state => state.session.user);
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const errors = useSelector(state => state.errors.session);
@@ -18,6 +25,8 @@ export default function LoginModal() {
 
   useEffect(() => {
     return () => {
+      
+      dispatch(getCurrentUser());
       dispatch(clearSessionErrors());
     };
   }, [dispatch]);
@@ -29,48 +38,52 @@ export default function LoginModal() {
 
   const handleHideModal = (e) => {
     e.preventDefault();
-    dispatch(hideModal("LoginModal"));
+    dispatch(hideModal());
     dispatch(clearSessionErrors());
     setEmail('');
     setPassword('');
   };
 
-  // const handleSubmit = async (e) => {
+
+
+  // const handleSubmit =  async (e) => {
   //   e.preventDefault();
-  //   const result = await dispatch(login({ email, password }));
-    
-  //   if (result && result.success) {
-  //     console.log("Before hiding modal");
-  //     setEmail('');
-  //     setPassword('');
-      
-  //     dispatch(hideModal("LoginModal"));
-  //     console.log("After hiding modal");
-  //   } else{
-  //     console.log('didnt work')
+
+  //   try {
+  //     if  (dispatch(login({ email, password })));
+  //      dispatch(hideModal());
+  //   } catch (error) {
+  //     dispatch(showModal('LoginModal'));
+  //     // Handle error if the login dispatch fails
+  //     console.error("Login failed:", error);
+  //     // You might want to show an error message or perform other actions here
   //   }
   // };
-
   const handleSubmit = (e) => {
-  e.preventDefault();
+    e.preventDefault();
+    dispatch(login({ email, password })); 
+    setEmail('');
+    setPassword('');
+  }
 
-  dispatch(login({ email, password }))
-    .then((result) => {
-      if (result && result.success) {
-        // console.log("Before hiding modal");
-        setEmail('');
-        setPassword('');
-        
-        dispatch(hideModal("LoginModal"));
-        // console.log("After hiding modal");
-      } else {
-        // console.log('didnt work');
-      }
-    })
-    .catch((error) => {
-      console.error('An error occurred:', error);
-    });
-};
+
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+
+  //   dispatch(login({ email, password }))
+  //     .then(() => {
+  //       dispatch(hideModal());
+  //     })
+  //     .catch((error) => {
+  //       dispatch(showModal('LoginModal'));
+  //       console.error("Login failed:", error);
+  //       // Handle error if the login dispatch fails
+  //       // You might want to show an error message or perform other actions here
+  //     });
+  // };
+
+
+
 
   const handleDemo = (e) => {
     e.preventDefault();
@@ -79,7 +92,7 @@ export default function LoginModal() {
   };
 
   return (
-    showModal &&
+    (modalVisible && !currentUser) &&
     <div className="modal-overlay">
       <form className="loginModal" action="submit" onSubmit={handleSubmit}>
         <h1 className="loginModalTitle">Login</h1>
