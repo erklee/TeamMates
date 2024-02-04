@@ -68,22 +68,30 @@ export const acceptFriendRequestThunk = (friendId) => async (dispatch) => {
   
 
   
-  // Thunk action to reject a friend request
-  export const rejectFriendRequestThunk = (friendId) => async (dispatch) => {
-    try {
-      const response = await jwtFetch(`api/users/${friendId}/reject`, {
-        method: 'PATCH',
-        headers:{
-          'Content-Type': 'application/json'
-        }
-      });
-  
-      const data = await response.json();
-      dispatch(rejectFriendRequest(data.sender));
-    } catch (error) {
-      console.error('Error rejecting friend request:', error);
+export const rejectFriendRequestThunk = (friendId) => async (dispatch) => {
+  try {
+    const response = await jwtFetch(`api/users/${friendId}/reject`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      if (data.sender) {
+        dispatch(rejectFriendRequest(data.sender));
+      } else {
+        console.error('Error rejecting friend request: Sender data not found in the response');
+      }
+    } else {
+      console.error('Error rejecting friend request:', data.message);
     }
-  };
+  } catch (error) {
+    console.error('Error rejecting friend request:', error);
+  }
+};
 
  
 const initialState = {

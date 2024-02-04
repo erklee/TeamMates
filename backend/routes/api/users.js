@@ -294,11 +294,7 @@ router.patch('/:id/accept', requireUser, async (req, res, next) => {
   }
 });
 
-
-
-
-
-router.patch('/:id/reject', async (req, res, next) => {
+router.patch('/:id/reject', requireUser, async (req, res, next) => {
   try {
     const friendUserId = req.params.id;
     const youUserId = req.user?._id;
@@ -316,44 +312,28 @@ router.patch('/:id/reject', async (req, res, next) => {
     }
 
     if (
-      youUser.friendIds &&
-      youUser.friendIds.some((friendId) => friendId.equals(friendUser._id))
-    ) {
-      return res.json({ errors: ['You are already friends with this user'] });
-    }
-
-    if (
       youUser.requestIds &&
       youUser.requestIds.some((requestId) => requestId.equals(friendUser._id))
     ) {
-      friendUser.friendIds.push(youUser._id);
-      friendUser.requestIds = friendUser.requestIds.filter((requestId) => !requestId.equals(youUser._id));
-      youUser.friendIds.push(friendUser._id);
+      // Remove friendUser from your requestIds
       youUser.requestIds = youUser.requestIds.filter((requestId) => !requestId.equals(friendUser._id));
 
       await youUser.save();
-      await friendUser.save();
 
       // Respond with the sender's data
       return res.json({
         youUser,
         friendUser,
-        sender: youUser, // Include the sender's data in the response
+        sender: youUser,
       });
+    } else {
+      return res.status(400).json({ errors: ['Friend request not found'] });
     }
-
-    friendUser.requestIds.push(youUser._id);
-    await friendUser.save();
-
-    // Respond with the sender's data
-    return res.json({
-      friendUser,
-      sender: youUser, // Include the sender's data in the response
-    });
   } catch (err) {
     next(err);
   }
 });
+
 
 router.patch('/:id/unfriend', requireUser, async (req, res) => {
   try {
