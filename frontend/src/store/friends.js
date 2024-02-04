@@ -32,18 +32,13 @@ export const rejectFriendRequest = (senderId) => ({
       });
   
       const data = await response.json();
-      dispatch(sendFriendRequest(data.sender)); // Assuming your server returns sender data in the response
+      dispatch(sendFriendRequest(data.sender));
     } catch (error) {
       console.error('Error sending friend request:', error);
     }
   };
   
   
-  
-  // Thunk action to accept a friend request
-  // actions.js
-
- // actions/friends.js
 
 export const acceptFriendRequestThunk = (friendId) => async (dispatch) => {
   try {
@@ -53,7 +48,7 @@ export const acceptFriendRequestThunk = (friendId) => async (dispatch) => {
 
     if (response.ok) {
       const data = await response.json();
-      const senderData = data.sender || {}; // Default to empty object if sender is not present
+      const senderData = data.sender || {}; 
       dispatch(acceptFriendRequest(senderData));
     } else {
       const data = await response.json();
@@ -93,6 +88,27 @@ export const rejectFriendRequestThunk = (friendId) => async (dispatch) => {
   }
 };
 
+export const unfriendThunk = (friendId) => async (dispatch) => {
+  try {
+    const response = await jwtFetch(`api/users/${friendId}/unfriend`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      dispatch(unFriend(data));
+    } else {
+      console.error('Error unfriending user:', data.message);
+    }
+  } catch (error) {
+    console.error('Error unfriending user:', error);
+  }
+};
+
  
 const initialState = {
   friendRequests: [],
@@ -117,6 +133,11 @@ const friendReducer = (state = initialState, action) => {
       return {
         ...state,
         friendRequests: state.friendRequests.filter((friendId) => friendId !== action.payload),
+      };
+    case UNFRIEND:
+      return {
+        ...state,
+        friendRequests: state.friends.filter((friendId) => friendId !== action.payload),
       };
     default:
       return state
