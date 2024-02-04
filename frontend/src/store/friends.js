@@ -41,28 +41,45 @@ export const rejectFriendRequest = (senderId) => ({
   
   
   // Thunk action to accept a friend request
-  export const acceptFriendRequestThunk = (friendId) => async (dispatch) => {
-    try {
-      const response = await jwtFetch(`api/users/${friendId}/accept`, {
-        method: 'PATCH',
-      });
-  
+  // actions.js
+
+ // actions/friends.js
+
+export const acceptFriendRequestThunk = (friendId) => async (dispatch) => {
+  try {
+    const response = await jwtFetch(`/api/users/${friendId}/accept`, {
+      method: 'PATCH',
+    });
+
+    if (response.ok) {
       const data = await response.json();
-      dispatch(acceptFriendRequest(data.senderId));
-    } catch (error) {
-      console.error('Error accepting friend request:', error);
+      const senderData = data.sender || {}; // Default to empty object if sender is not present
+      dispatch(acceptFriendRequest(senderData));
+    } else {
+      const data = await response.json();
+      console.error('Error accepting friend request:', data.errors || 'Unknown error');
     }
-  };
+  } catch (error) {
+    console.error('Error accepting friend request:', error.message || 'Unknown error');
+  }
+};
+
+  
+  
+
   
   // Thunk action to reject a friend request
   export const rejectFriendRequestThunk = (friendId) => async (dispatch) => {
     try {
       const response = await jwtFetch(`api/users/${friendId}/reject`, {
         method: 'PATCH',
+        headers:{
+          'Content-Type': 'application/json'
+        }
       });
   
       const data = await response.json();
-      dispatch(rejectFriendRequest(data.senderId));
+      dispatch(rejectFriendRequest(data.sender));
     } catch (error) {
       console.error('Error rejecting friend request:', error);
     }
@@ -81,13 +98,12 @@ const friendReducer = (state = initialState, action) => {
         ...state,
         friendRequests: [...state.friendRequests, action.payload],
       };
-
-    case ACCEPT_FRIEND_REQUEST:
-      return {
-        ...state,
-        friendRequests: state.friendRequests.filter((friendId) => friendId !== action.payload),
-        friends: [...state.friends, action.payload],
-      };
+      case ACCEPT_FRIEND_REQUEST:
+        return {
+          ...state,
+          friendRequests: state.friendRequests.filter((friend) => friend?._id !== action.payload._id),
+          friends: [...state.friends, action.payload],
+        };
 
     case REJECT_FRIEND_REQUEST:
       return {
