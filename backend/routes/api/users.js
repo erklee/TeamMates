@@ -173,14 +173,12 @@ router.get('/:id', async (req, res, next) => {
 });
 
 
-// ...
 
 router.patch('/:id/friend', requireUser, async (req, res, next) => {
   try {
     const friendUserId = req.params.id;
     const youUserId = req.user?._id;
 
-    // Validate if youUserId is valid
     if (!youUserId || !ObjectId.isValid(youUserId)) {
       return res.status(400).json({ errors: ['Invalid user ID'] });
     }
@@ -211,38 +209,34 @@ router.patch('/:id/friend', requireUser, async (req, res, next) => {
       await youUser.save();
       await friendUser.save();
 
-      // Respond with the sender's data
+      
       return res.json({
         youUser,
         friendUser,
-        sender: youUser, // Include the sender's data in the response
+        sender: youUser, 
       });
     }
 
     friendUser.requestIds.push(youUser._id);
     await friendUser.save();
 
-    // Respond with the sender's data
+    
     return res.json({
       friendUser,
-      sender: youUser, // Include the sender's data in the response
+      sender: youUser, 
     });
   } catch (err) {
     next(err);
   }
 });
 
-// routes/api/users.js
 
-// routes/api/users.js
-
-// Assuming the logic for adding friend requests is correct
 router.patch('/:id/accept', requireUser, async (req, res, next) => {
   try {
     const friendUserId = req.params.id;
     const youUserId = req.user?._id;
 
-    // Validate if youUserId is valid
+    
     if (!youUserId || !ObjectId.isValid(youUserId)) {
       return res.status(400).json({ errors: ['Invalid user ID'] });
     }
@@ -273,21 +267,21 @@ router.patch('/:id/accept', requireUser, async (req, res, next) => {
       await youUser.save();
       await friendUser.save();
 
-      // Respond with the sender's data
+      
       return res.json({
         youUser,
         friendUser,
-        sender: youUser, // Include the sender's data in the response
+        sender: youUser, 
       });
     }
 
     friendUser.requestIds.push(youUser._id);
     await friendUser.save();
 
-    // Respond with the sender's data
+    
     return res.json({
       sender: friendUser,
-      youUser, // Include the sender's data in the response
+      youUser, 
     });
   } catch (err) {
     next(err);
@@ -299,7 +293,7 @@ router.patch('/:id/reject', requireUser, async (req, res, next) => {
     const friendUserId = req.params.id;
     const youUserId = req.user?._id;
 
-    // Validate if youUserId is valid
+    
     if (!youUserId || !ObjectId.isValid(youUserId)) {
       return res.status(400).json({ errors: ['Invalid user ID'] });
     }
@@ -320,7 +314,7 @@ router.patch('/:id/reject', requireUser, async (req, res, next) => {
 
       await youUser.save();
 
-      // Respond with the sender's data
+      
       return res.json({
         youUser,
         friendUser,
