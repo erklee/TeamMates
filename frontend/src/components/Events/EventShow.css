@@ -67,7 +67,13 @@
   font-size: 16px;
   font-family: sans-serif;
   margin-bottom: 5px;
+  padding-right: 10px;
 }
+
+.eventShowDetails a {
+  padding-right: 10px;
+}
+
 
 
 .eventShowAttendanceWrapper {

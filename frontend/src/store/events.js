@@ -113,6 +113,7 @@ export const composeEvent = data => async dispatch => {
 };
 
 export const updatedEvent = (updatedEvent) => async dispatch => {
+  debugger
   try{
   const res  = await jwtFetch(`/api/events/${updatedEvent._id}`, {
       method: "PATCH", 

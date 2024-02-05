@@ -32,7 +32,7 @@ function EventShowPage() {
 
   useEffect(() => {
     dispatch(getCurrentUser());
-  });
+  }, [dispatch]);
   // const state = useSelector(state => state);
 
   const isUserAttending = event?.attendees?.some(attendee => attendee._id === currentUserId);
@@ -106,6 +106,7 @@ function EventShowPage() {
       };
       return(
 
+        
         <li className="eventShowAttendee" onClick={handleUserProfile}key={index}>
           {attendee.fname?.slice(0,1).toUpperCase() + attendee.fname?.slice(1) + " " + attendee.lname?.slice(0,1).toUpperCase() + attendee.lname?.slice(1)}
         </li>

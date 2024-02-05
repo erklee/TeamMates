@@ -62,6 +62,7 @@ function Edit(){
         zipcode,
       },
     };
+    debugger
     // dispatch(updatedEvent(editedEvent));
     dispatch(updatedEvent(editedEvent))
       .then(() => {
