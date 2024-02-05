@@ -3,6 +3,12 @@
   flex-direction: row;
 }
 
+.links-auth button {
+  font-family: sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+}
+
 .links-nav {
   display: flex;
   flex-direction: row;
@@ -11,10 +17,13 @@
 }
 
 
+
+
 #create-button {
   margin-right: 50px;
   font-size: 20px;
-  font-weight: 400;
+  font-weight: 500;
+  font-family: sans-serif;
   color: white;
   background-color: rgb(255, 85, 0);
   border-color: white;
@@ -61,6 +70,10 @@
 .userIconContainer img {
   border-style: none;
   border-radius: 20px;
+}
+
+.userIconContainer {
+  font-family: sans-serif;
 }
 
 #navBarSignUp {
@@ -137,6 +150,7 @@
   color: white;
   font-size: 50px;
   font-weight: 600;
+  /* padding: 500px 0px; */
 }
 
 .navBarContainer h1:hover {

@@ -1,6 +1,5 @@
 
 import './Footer.css';
-import {NavLink} from 'react-router-dom';
 import githubIcon from '../../assets/icons/github.png'
 import linkedInIcom from '../../assets/icons/linkedin.png'
 export default function Footer() {

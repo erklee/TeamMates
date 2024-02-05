@@ -23,7 +23,8 @@
   border-bottom-color: rgb(255, 85, 0);
   
   background-color: white;
-
+  font-family: sans-serif;
+  font-size: 16px;
 }
 .firstButton {
   border-bottom-style: solid;

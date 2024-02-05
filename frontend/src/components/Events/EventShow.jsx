@@ -5,6 +5,7 @@ import { useParams, useNavigate} from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { getCurrentUser } from '../../store/session';
+import allSports from "../../assets/images/allSports.jpeg"
 import "./EventShow.css";
 
 
@@ -18,6 +19,13 @@ function EventShowPage() {
   console.log(currentUser)
   const currentUserId = useSelector(state => state.session.user?._id);
 
+  function capitalizeEveryWord(str) {
+    const words = str.split(' ');
+    for (let i = 0; i < words.length; i++) {
+      words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1);
+    }
+    return words.join(' ');
+  }
   useEffect(() => {
     dispatch(fetchEvent(eventId));
   }, [dispatch, eventId]);
@@ -109,7 +117,7 @@ function EventShowPage() {
     return (
       <div className='eventShowPageWrapper'>
         <div className='event-wrapper-info'>
-          <img className="eventShowPic" src={event.pictureUrl} alt="eventPicture" height={300} width={300}/>
+          <img className="eventShowPic" src={event.pictureUrl || allSports} alt="eventPicture" height={300} width={300}/>
           
           {isCoordinator && 
           <>
@@ -127,11 +135,12 @@ function EventShowPage() {
           <div className='eventShowInfoWrapper'>
             
             <div className='eventShowDetails'>
-              <h2>{event.title}</h2>
-              <p>Date: {formattedDate}</p>
-              <p>Description: {event.description}</p>
-              <p>Category: {event.category}</p>
-              <p>{`Address: ${event.location.address} ${event.location.zipcode}`} </p>
+              <h2>{capitalizeEveryWord(event.title)}</h2>
+              <p><span>Date:</span> {formattedDate}</p>
+              <p><span>Description:</span> {event.description}</p>
+              <p><span>Category:</span> {event.category}</p>
+              <p><span>Difficulty:</span> {event.difficulty}</p>
+              <p><span>Address:</span> {`${event.location.address} ${event.location.zipcode}`} </p>
               <a target="_blank" href={`https://maps.google.com/?q=${event.location.address}, ${event.location.zipcode}`} rel="noreferrer">Directions</a>
             </div>
             <div className='eventShowAttendanceWrapper'>

@@ -25,6 +25,8 @@
   border-style: solid;
   border-width: 10px;
   border-color: rgb(0, 0, 0);
+  border-right-style: none;
+  border-left-style: none;
 
 }
 
@@ -99,4 +101,10 @@
 .sportsIconInfoContainer p {
   position: relative;
   text-align: center;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  /* Add your styles here */
+  color: #007bff;
 }

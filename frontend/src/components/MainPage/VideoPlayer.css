@@ -7,8 +7,11 @@
   left: 50%;
   transform: translateX(-50%);
   border-style: solid;
-    border-width: 10px;
-    border-color: rgb(0, 0, 0);
+  border-width: 10px;
+  border-color: rgb(0, 0, 0);
+  border-right-style: none;
+  border-left-style: none;
+  margin-top: 10px;
 }
 
 #video-player::-internal-media-controls-overlay-cast-button {

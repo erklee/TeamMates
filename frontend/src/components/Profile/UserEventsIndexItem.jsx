@@ -6,6 +6,13 @@ import { useSelector } from 'react-redux';
 export default function UserEventsIndexItem({event}) {
   const currentUser = useSelector(state => state.session.user);
   const isCoordinator = event?.coordinator?.["_id"] === currentUser["_id"]
+  function capitalizeEveryWord(str) {
+    const words = str.split(' ');
+    for (let i = 0; i < words.length; i++) {
+      words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1);
+    }
+    return words.join(' ');
+  }
 
   const navigate = useNavigate();
   function formatDate(inputDateString) {
@@ -46,11 +53,12 @@ export default function UserEventsIndexItem({event}) {
           <button className='userEventsItemEditButton' onClick={handleEdit}>Edit</button>
         } 
         <div className='userEventItemInfoWrapper'>
-          <h1 className='userEventItemTitle' onClick={handleEventShow}>{event.title}</h1>
+          <h1 className='userEventItemTitle' onClick={handleEventShow}>{capitalizeEveryWord(event.title)}</h1>
           <div className='userEventItemInfo'>
 
             <p><span>Description:</span> {`${event.description}`}</p>
             <p><span>Sport:</span> {`${event.category?.slice(0,1).toUpperCase()}${event.category?.slice(1)}`}</p>
+            <p><span>Difficulty:</span> {`${event.difficulty?.slice(0,1).toUpperCase()}${event.difficulty?.slice(1)}`}</p>
             <p><span>Address:</span> {`${event.location?.address} ${event.location?.zipcode}`}</p>
             <p><span>Date:</span> {`${formatDate(event?.date)}`}</p>
             <p><span>Particpants:</span> {`${event.attendees?.length}`}</p>
