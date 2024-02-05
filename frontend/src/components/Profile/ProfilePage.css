@@ -56,7 +56,7 @@
   left: 50%;
   transform: translateX(-50%);
   width: 100vw;
-  min-height: 160vh;
+  /* min-height: 100vh; */
   /* min-height: 900px; */
   background-color: rgba(121, 121, 121, 0.4);
 }

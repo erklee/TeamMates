@@ -1,16 +1,23 @@
 .aboutUsWrapers {
   background-color: black;
   display: flex;
+  width: 100vw;
   flex-direction: row;
   justify-content: space-evenly;
-  height: 200px;
+  min-height: 100px;
   margin-top: 150px;
   align-items: first baseline;
+  position: relative;
+  bottom: 0px;
 }
 
 .aboutUsWrapers h2 {
   color: white;
   padding: 20px;
+}
+
+.aboutUsWrapers h2 span {
+  color: rgb(255, 85, 0)
 }
 
 .developerInfo {

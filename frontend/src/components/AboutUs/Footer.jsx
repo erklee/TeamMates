@@ -8,7 +8,7 @@ export default function Footer() {
 
   return(
     <footer className='aboutUsWrapers'>
-      <h2>The Developers</h2>
+      <h2>The <span>Developers</span></h2>
       <div className="developerInfo">
         <p>Eric Lee</p>
         <div className='bioIconsWrapper'>
@@ -49,7 +49,7 @@ export default function Footer() {
         <a href="https://github.com/ShaunJhingoor"  target="_blank" rel="noopener noreferrer">
           <img src={githubIcon}  className="githubIcon" alt="Description of the image" />
         </a>
-        <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer">
+        <a href="https://www.linkedin.com/in/shaun-jhingoor-10a50328a/" target="_blank" rel="noopener noreferrer">
           <img src={linkedInIcom} className="linkedInIcon" alt="Description of the image" />
         </a>
         </div>
