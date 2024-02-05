@@ -9,7 +9,6 @@ import { hideModal} from '../../store/modals';
 export default function ProfileDropdown({className, setVisible, currentUser}){
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  console.log(currentUser)
   const handleEvents = (e) =>  {
     e.preventDefault();
     setVisible(false)

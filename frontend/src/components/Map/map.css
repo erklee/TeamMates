@@ -8,8 +8,8 @@
 .filters {
     display: flex;
     flex-direction: column;
-    
-    height: 50%;
+    padding: 10px;
+    height: 30%;
 }
 
 .eventMapWrapper {
@@ -21,13 +21,72 @@
 
 }
 
+.filterCategoryButtonWrapper {
+    display: flex;
+    flex-direction: row;;
+    min-height: 50px;
+    align-items: start;
+        margin-bottom: 10px;
+}
+
+.filterCategoryButtonWrapper p {
+    display: inline-block
+}
+
+.filterCategoryButtonsContainer {
+    display: flex;
+    flex-direction: column;
+    margin-left: 0px;
+
+}
+
+.filterCategoryButtons {
+    height: 40px;
+    width: 100px;
+    border-radius: 4px;
+    background-color: rgb(255, 85, 0);
+    color: white;
+    border-style: none;
+    transition: 0.3s;;
+}
+
+.filterCategoryButtons:hover{
+    background-color: white;
+    color: rgb(255, 85, 0);
+    border-style: solid;
+    border-width: 2px;
+}
+
+
+
+
+.filterCategoryButtons.selected {
+    background-color: black;
+}
+
+.categoryButtonRow {
+    display: flex;
+    min-width: 350px;
+    justify-content: space-evenly;
+    margin-bottom: 10px;
+}
+
+.filterRange {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 225px;
+}
+
+
+
 
 .eventInfoWrapper {
     position: relative;
     top: 0%;
     left: 0;
     background-color: rgb(0, 0, 0);
-    min-height: 50%;
+    min-height: 70%;
     width: 30vw;
     text-wrap: wrap;
 
@@ -83,3 +142,14 @@
     opacity: 1;
 }
 
+
+
+
+
+
+/* .gm-style-iw-close {
+    color: #333333;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+} */

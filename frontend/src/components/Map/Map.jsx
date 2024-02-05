@@ -42,6 +42,24 @@ const EventMap = () => {
     navigate(`/events/${selectedMarker.event["_id"]}`)
   }
 
+  const handleCategoryButton = e => {
+    e.preventDefault();
+    if (selectedCategory === e.target.name) {
+      setSelectedCategory("")
+    } else {
+      setSelectedCategory(e.target.name)
+    }
+  }
+
+  const handleDifficultyButton = e => {
+    e.preventDefault();
+    if (selectedDifficulty === e.target.name) {
+      setSelectedDifficulty("")
+    } else {
+      setSelectedDifficulty(e.target.name)
+    }
+  }
+
   useEffect(() => {
     dispatch(fetchEvents());
   }, [dispatch]);
@@ -197,7 +215,7 @@ const EventMap = () => {
     <div className="eventMapWrapper">
       <div className="eventIndexSideBar">
         <div className="filters">
-          <select
+          {/* <select
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
           >
@@ -208,11 +226,40 @@ const EventMap = () => {
             <option value="tennis">Tennis</option>
             <option value="soccer">Soccer</option>
             <option value="hockey">Hockey</option>
-          </select>
+          </select> */}
 
-          
+          <div className="filterCategoryButtonWrapper">
+            <p>Category:</p>
+            <div className="filterCategoryButtonsContainer">
+              <div className="categoryButtonRow">
+                <button name="basketball" onClick={handleCategoryButton} className={`filterCategoryButtons ${selectedCategory === "basketball" ? "selected" : ""}`}>Basketball</button>
+                <button name="football" onClick={handleCategoryButton} className={`filterCategoryButtons ${selectedCategory === "football" ? "selected" : ""}`}>Football</button>
+                <button name="hockey" onClick={handleCategoryButton} className={`filterCategoryButtons ${selectedCategory === "hockey" ? "selected" : ""}`}>Hockey</button>
 
-          <select
+              </div>
+              <div className="categoryButtonRow">
+                <button name="baseball" onClick={handleCategoryButton} className={`filterCategoryButtons ${selectedCategory === "baseball" ? "selected" : ""}`}>Baseball</button>
+                <button name="tennis" onClick={handleCategoryButton} className={`filterCategoryButtons ${selectedCategory === "tennis" ? "selected" : ""}`}>Tennis</button>
+                <button name="soccer" onClick={handleCategoryButton} className={`filterCategoryButtons ${selectedCategory === "soccer" ? "selected" : ""}`}>Soccer</button>
+              </div>
+              {/* <div className="categoryButtonRow">
+                
+              </div> */}
+            </div>
+          </div>
+
+           <div className="filterCategoryButtonWrapper">
+            <p>Difficulty:</p>
+            <div className="filterCategoryButtonsContainer">
+              <div className="categoryButtonRow">
+                <button name="easy" onClick={handleDifficultyButton} className={`filterCategoryButtons ${selectedDifficulty === "easy" ? "selected" : ""}`}>Easy</button>
+                <button name="medium" onClick={handleDifficultyButton} className={`filterCategoryButtons ${selectedDifficulty === "medium" ? "selected" : ""}`}>Medium</button>
+                <button name="hard" onClick={handleDifficultyButton} className={`filterCategoryButtons ${selectedDifficulty === "hard" ? "selected" : ""}`}>Hard</button>
+              </div>
+            </div>
+          </div>
+
+          {/* <select
             value={selectedDifficulty}
             onChange={(e) => setSelectedDifficulty(e.target.value)}
           >
@@ -220,10 +267,10 @@ const EventMap = () => {
             <option value="easy">Easy</option>
             <option value="medium">Medium</option>
             <option value="hard">Hard</option>
-          </select>
+          </select> */}
 
-          <label>
-            Filter Range:
+          <div className="filterRange">
+            <p>Filter Range:</p>
             <select value={filterRange} onChange={(e) => setFilterRange(parseInt(e.target.value))}>
               {filterRangeOptions.map((option, index) => (
                 <option key={`${option?.id} ${index}`} value={option}>
@@ -231,7 +278,7 @@ const EventMap = () => {
                 </option>
               ))}
             </select>
-          </label>
+          </div>
         </div>
         <div className="eventInfoWrapper">
           {selectedMarker && 
@@ -279,7 +326,9 @@ const EventMap = () => {
               <Marker
                 key={`${marker.id} ${index}`}
                 position={marker.position}
-                onClick={() => setSelectedMarker(marker)}
+                onClick={() => {
+                  setSelectedMarker(marker) 
+                  console.log(marker)}}
               />
             ))}
             {selectedMarker && (
@@ -287,11 +336,13 @@ const EventMap = () => {
                 position={selectedMarker.position}
                 onCloseClick={closeInfoWindow}
               >
-                <div>
+                <div >
                   <h6>{selectedMarker.event.title}</h6>
                   <p>{selectedMarker.event.description}</p>
                   <p>Difficulty: {selectedMarker.event.difficulty}</p>
                   <p>Distance: {selectedMarker.distance.toFixed(2)} miles</p>
+                  <a target="_blank" href={`https://maps.google.com/?q=${selectedMarker.event.location.address}, ${selectedMarker.event.location.zipcode}`} rel="noreferrer">Directions</a>
+
                 </div>
               </InfoWindow>
             )}

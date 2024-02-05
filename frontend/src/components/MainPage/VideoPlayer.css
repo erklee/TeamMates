@@ -6,7 +6,9 @@
   position: relative;
   left: 50%;
   transform: translateX(-50%);
-
+  border-style: solid;
+    border-width: 10px;
+    border-color: rgb(0, 0, 0);
 }
 
 #video-player::-internal-media-controls-overlay-cast-button {

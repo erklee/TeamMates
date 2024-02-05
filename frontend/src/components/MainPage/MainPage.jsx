@@ -2,6 +2,7 @@ import LoginModal from "../Modals/LoginModal";
 import SignUpModal from "../Modals/SignUpModal";
 import EventCarousel from "../Carousel/EventCarousel";
 import VideoPlayer from "./VideoPlayer";
+
 import "./MainPage.css"
 
 function MainPage() {

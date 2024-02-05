@@ -15,7 +15,6 @@ function EventShowPage() {
   const dispatch = useDispatch();
   const event = useSelector(state => state.events.new);
   const currentUser = useSelector(state => state.session.user);
-  console.log(currentUser)
   const currentUserId = useSelector(state => state.session.user?._id);
 
   useEffect(() => {
@@ -118,7 +117,7 @@ function EventShowPage() {
             
 
           }
-          {(isUserAttending && !!currentUser) ? (
+          {(isUserAttending && !currentUser) ? (
             <button className="unattendBtn"onClick={handleUnattendClick}>Unattend</button>
           ) : (
             <button className="attendBtn"onClick={handleAttendClick}>Attend</button>

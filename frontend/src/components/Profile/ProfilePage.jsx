@@ -16,7 +16,7 @@ function ProfilePage() {
   const {id} = useParams();
   const {user} = useSelector(state => state.users)
   const userEvents = useSelector(state => state.events.user)
-  console.log(userEvents)
+
   
     
   useEffect(() =>{

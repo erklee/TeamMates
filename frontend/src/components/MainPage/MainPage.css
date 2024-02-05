@@ -1,1 +1,8 @@
- 
+.mainPageWrapper {
+  /* scroll-snap-type: y mandatory;
+  overflow-y: scroll; */
+}
+
+.mainPageWrapper section {
+  /* scroll-snap-align: start end; */
+}
