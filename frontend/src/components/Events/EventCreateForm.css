@@ -19,7 +19,6 @@
 .eventCreateFormWrapper {
   position: relative;
   top: 40px;
-  /* You may adjust this based on your design */
   left: 50%;
   transform: translateX(-50%);
   height: 100%;
