@@ -47,6 +47,8 @@
 
 .eventShowDetails {
   width: 500px;
+  padding-top: 5px;
+  padding-left: 20px;
 }
 
 .eventShowAttendanceWrapper {
@@ -55,6 +57,7 @@
   overflow: scroll;
   background-color: black;
   color: white;
+  padding-top: 5px;
 }
 
 .eventShowAttendanceWrapper h2 {
@@ -103,8 +106,8 @@
 
 .editBtn {
   position: absolute;
-  top: 20px;
-  right: 20px;
+  top: 10px;
+  right: 100px;
   background-color: rgb(255, 85, 0);
   border-style: none;
   height: 40px;
@@ -115,9 +118,9 @@
   /* bottom: 500px;  */
 }
 
-.unattendBtn:hover, .deleteBtn:hover {
+.unattendBtn:hover, .deleteBtn:hover, .editBtn:hover {
   background-color: white;
-  color: rgb(255, 85, 0);;
+  color: rgb(255, 85, 0);
 
 }
 

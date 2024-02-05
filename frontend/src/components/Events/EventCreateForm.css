@@ -1,31 +1,92 @@
-.createEventTilte {
+/* .createEventTilte {
   
+} */
+
+
+
+.eventCreateForm {
+  border-style: solid;
+  min-height: 500px;
+  padding: 20px;
+  background-color: rgb(241, 241, 241);
+  overflow: scroll;
+  scrollbar-width: thin;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.eventcreatFormPic {
+  width: 100%;
+  height: 400px;
+}
+
+.eventCreateFormWrapper {
+  position: relative;
+  top: 40px;
+  /* You may adjust this based on your design */
+  left: 50%;
+  transform: translateX(-50%);
+  height: 100%;
+  width: 1000px;
+  height: 100%;
+  width: 1000px;
 }
 
 .eventCreateForm {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  width: 100px;
 }
 
-/* .createEventPage {
-  height: 100vh;
-  width: 100vw;
-  background-color: black;
-} */
+.eventCreateForm label{
+  position: flex;
+  flex-direction: column;
+}
 
-/* .createEventPage {
-  
-    top: 60px;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    background-color: rgba(167, 7, 7, 0.7);
-    background-image: linear-gradient(to right, rgb(255, 255, 255), grey);
-    
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
-} */
+.eventCreateForm label input {
+  position: relative;
+  width: 100%;
+  bottom: 10px;
+}
+
+.eventCreateForm label select {
+  position: relative;
+  width: 100%;
+  height: 30px;
+  bottom: 10px;
+}
+
+.eventCreateForm label textarea {
+  position: relative;
+  bottom: 10px;
+  width: 100%;
+  height: 200px;
+}
+
+#address-input-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#address-input-wrapper input {
+  width: 475px;
+}
+
+.eventCreateCityStateZip {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.eventCreateCityStateZip label input{
+  /* margin-right: 50px; */
+  width: 300px;
+}
+.eventCreateCityStateZip label select{
+  /* margin-right: 50px; */
+  width: 300px;
+}
+
+.eventCreateButton {
+  margin-top: 20px;
+}

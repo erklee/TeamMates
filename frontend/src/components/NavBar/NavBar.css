@@ -4,9 +4,29 @@
 }
 
 .links-nav {
+  display: flex;
+  flex-direction: row;
   z-index: 2;
 }
 
+
+#create-button {
+  position: relative;
+  margin-right: 20px;
+  height: 30px;
+  color: white;
+  background-color: black;
+  border-color: white;
+  border-style: solid;
+  transition: 0.3s;
+  border-radius: 2px;
+  top: 20px;
+}
+
+#create-button:hover {
+  background-color: white;
+  color: black;
+}
 
 
 .userIconContainer {
@@ -40,7 +60,7 @@
 
 #navBarSignUp:hover {
   background-color: white;
-  color: blue;
+  color: black;
 }
 
 #navBarLogin {
@@ -55,7 +75,7 @@
 
 #navBarLogin:hover {
   background-color: white;
-  color: blue;
+  color: black;
 }
 
 .navBarWrapper {
