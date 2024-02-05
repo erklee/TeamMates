@@ -36,9 +36,12 @@ export default function UserEventsIndexItem({event}) {
     <div className="userEventsIndexItemContainter">
       <div className='userEventsItemWrapper'>
 
-        {<img src={event.pictureUrl || allSports} alt="Event Picture" 
-          height={400} width={400} className="userEventsItemPic"onClick={handleEventShow}
-        />}
+        <div className='userEventsImageContainer'>
+          <div className="userEventsImageOverlayText" onClick={handleEventShow} >Go To Event</div>
+          <img src={event.pictureUrl || allSports} alt="Event Picture"
+            height={400} width={400} className="userEventsItemPic"onClick={handleEventShow}
+          />
+        </div>
         {isCoordinator &&
           <button className='userEventsItemEditButton' onClick={handleEdit}>Edit</button>
         } 

@@ -55,3 +55,35 @@
   background-color: white;
   color: rgb(255, 85, 0); 
 }
+
+.userEventsImageContainer {
+  position: relative;
+  display: inline-block;
+  min-width: 400px;
+
+}
+
+.userEventsImageOverlayText {
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  font-size: 50px;
+  font-weight: 400;
+  transform: translate(-50%, -50%);
+  color: black;
+  /* font-size: 1.5rem; */
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.userEventsImageContainer img:hover {
+  cursor: pointer;
+  opacity: 0.4;
+  transition: 0.5s;
+}
+
+.userEventsImageContainer:hover .userEventsImageOverlayText {
+  opacity: 1;
+}

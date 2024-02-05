@@ -15,6 +15,7 @@ function EventShowPage() {
   const dispatch = useDispatch();
   const event = useSelector(state => state.events.new);
   const currentUser = useSelector(state => state.session.user);
+  console.log(currentUser)
   const currentUserId = useSelector(state => state.session.user?._id);
 
   useEffect(() => {
@@ -23,7 +24,7 @@ function EventShowPage() {
 
   useEffect(() => {
     dispatch(getCurrentUser());
-  }, [dispatch]);
+  });
   // const state = useSelector(state => state);
 
   const isUserAttending = event?.attendees?.some(attendee => attendee._id === currentUserId);
@@ -78,6 +79,7 @@ function EventShowPage() {
   const handleDelete = e => {
     e.preventDefault();
     dispatch(deleteEvent(eventId));
+    navigate(`/profile/${currentUserId}`)
   }
 
   if (!event) {
@@ -117,7 +119,7 @@ function EventShowPage() {
             
 
           }
-          {(isUserAttending && !currentUser) ? (
+          {(isUserAttending && currentUser) ? (
             <button className="unattendBtn"onClick={handleUnattendClick}>Unattend</button>
           ) : (
             <button className="attendBtn"onClick={handleAttendClick}>Attend</button>

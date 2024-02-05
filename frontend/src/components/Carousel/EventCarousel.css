@@ -10,6 +10,7 @@
 .carouselWrapper {
   background-color: rgb(251, 251, 251);
   height: 100vh;
+  margin-bottom: 125px;
 }
 
 
@@ -85,7 +86,7 @@
 }
 
 .sportsIconInfoContainer img:not(:hover) {
-  transition: 0.2s;
+  transition: 1s;
 }
 
 .sportsIconInfoContainer {
