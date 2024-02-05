@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import {  useDispatch } from "react-redux";
-import { useLoaderData, useParams } from 'react-router-dom';
+import { useLoaderData, useParams, useNavigate } from 'react-router-dom';
 import { fetchEvent, updatedEvent } from "../../store/events";
 import eventFormPic from '../../assets/images/sports/allSports2.jpeg';
 import './EventEditForm.css';
@@ -14,32 +14,27 @@ const SPORTS = [
   "hockey",
 ];
 
-const DIFFICULTIES = [  
-  "easy",
-  "medium",
-  "hard",
-];
-
 function Edit(){
   const { eventId } = useParams();  
   const dispatch= useDispatch();
+  const navigate = useNavigate();
   
   const event = useLoaderData();
   useEffect(() => {
     dispatch(fetchEvent(eventId));
   }, [dispatch,eventId]);
     
-  console.log(event);
+  
   const [attendeesMax, setAttendeesMax] = useState(event?.attendeesMax);
   const [category, setCategory] = useState(event?.category);
   // const [eventDate, setEventDate] = useState(event?.date);
   const [eventDate, setEventDate] = useState(() => {
-    const parsedDate = new Date(event?.date)
+    const parsedDate = new Date(event?.date);
     const year = parsedDate.getFullYear();
     const month = parsedDate.getMonth() + 1; // Months are zero-based, so add 1
     const date = parsedDate.getDate();
     const formattedDate = `${year}-${month.toString().padStart(2, '0')}-${date.toString().padStart(2, '0')}`;
-    return formattedDate
+    return formattedDate;
   });
   const [description, setDescription] = useState(event?.description);
   const [difficulty, setDifficulty] = useState(event?.difficulty);
@@ -66,7 +61,14 @@ function Edit(){
         zipcode,
       },
     };
-    dispatch(updatedEvent(editedEvent));
+    // dispatch(updatedEvent(editedEvent));
+    dispatch(updatedEvent(editedEvent))
+      .then(() => {
+        navigate(`/events/${event?._id}`);
+      })
+      .catch((error) => {
+        console.error("Error updating event:", error);
+      });
   };
   // return(
   //   <div className="editEventPage">

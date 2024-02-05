@@ -20,6 +20,7 @@ export default function ProfileDropdown({className, setVisible, currentUser}){
     setVisible(false)
     dispatch(logout());
     dispatch(hideModal());
+    navigate("/")
   };
 
   const handleUserProfile = (e) => {

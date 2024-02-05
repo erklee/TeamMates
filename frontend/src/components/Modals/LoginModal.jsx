@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {login, clearSessionErrors } from '../../store/session';
 // import { hideModal, showModal } from '../../store/modals';
-import { showModal, hideModal} from '../../store/modals';
+import { hideModal} from '../../store/modals';
 import closeIcon from "../../assets/icons/closeIcon2.png";
 import lockIcon from "../../assets/icons/lockIconWhite.png";
 import emailIcon from "../../assets/icons/emailIconWhite.png";

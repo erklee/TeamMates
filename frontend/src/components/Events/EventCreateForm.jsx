@@ -1,9 +1,9 @@
 import { useState } from "react";
 // import { useParams } from "react-router-dom";
 // import jwtFetch from "../../store/jwt";
-import { useDispatch , useSelector} from "react-redux";
+import { useDispatch } from "react-redux";
 import { composeEvent } from "../../store/events";
-import {useNavigate} from "react-router-dom";
+// import {useNavigate} from "react-router-dom";
 import "./EventCreateForm.css";
 import eventFormPic from '../../assets/images/sports/allSports2.jpeg';
 
@@ -27,8 +27,8 @@ const DIFFICULTIES = [
 
 export default function EventCreateForm() {
   // const navigate = useNavigate();
-  const event = useSelector(state => state.events.new);
-  const currentUser = useSelector(state => state.session.user);
+  // const event = useSelector(state => state.events.new);
+  // const currentUser = useSelector(state => state.session.user);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [eventDate, setEventDate] = useState('');
@@ -40,7 +40,7 @@ export default function EventCreateForm() {
   const [state, setState] = useState('NY');
   const [zipcode, setZipcode] = useState('');
   const [difficulty, setDifficulty] = useState(DIFFICULTIES[0]);
-  const [pictureUrl, setPictureUrl] = useState('');
+  const [, setPictureUrl] = useState('');
   const basketballUrl = 'https://mern-teammates-seeds.s3.amazonaws.com/public/basketball.jpeg';
   const footballUrl = 'https://mern-teammates-seeds.s3.amazonaws.com/public/football.jpeg';
   const hockeyUrl =  'https://mern-teammates-seeds.s3.amazonaws.com/public/hockey.jpeg';
@@ -49,44 +49,6 @@ export default function EventCreateForm() {
   const baseballUrl = 'https://mern-teammates-seeds.s3.amazonaws.com/public/baseball.jpeg';
  
   const dispatch = useDispatch();
-
-  // const handleSubmit = async e => {
-  //   e.preventDefault();
-
-  //   if (category === "basketball") setPictureUrl(basketballUrl);
-  //   if (category === 'baseball') setPictureUrl(baseballUrl);
-  //   if (category === 'football') setPictureUrl(footballUrl);
-  //   if (category === 'tennis') setPictureUrl(tennisUrl);
-  //   if (category === 'soccer') setPictureUrl(soccerlUrl);
-  //   if (category === 'hockey') setPictureUrl(hockeyUrl);
-    
-  //   await dispatch(composeEvent({
-  //     title,
-  //     description,
-  //     date: eventDate,
-  //     attendeesMax,
-  //     difficulty,
-  //     category,
-  //     location: {
-  //       address: `${address1} ${address2}, ${city}, ${state}`,
-  //       zipcode,
-  //     },
-  //     pictureUrl,
-      
-  //   }));
-  //   await setTitle("");
-  //   await setDescription("");
-  //   await setEventDate("");
-  //   await setCategory("");
-  //   await setAttendeesMax("10");
-  //   await setAddress1("");
-  //   await setAddress2("");
-  //   await setCity("");
-  //   await setState("NY");
-  //   await setZipcode("");
-  //   await setDifficulty("easy");
-  //   await setPictureUrl("");
-  // };
 
   const handleSubmit = async e => {
     e.preventDefault();
