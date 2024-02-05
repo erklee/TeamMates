@@ -37,6 +37,17 @@
   padding: 20px;
 }
 
+.userEventItemInfo p span {
+  font-size: 20px;
+  font-weight: 700;
+  font-family: sans-serif;
+}
+
+.userEventItemInfo p {
+  font-size: 20px;
+  font-family: sans-serif;
+  margin-bottom: 5px;
+}
 .userEventsItemEditButton {
   position: absolute;
   top: 10px;
@@ -62,7 +73,9 @@
   min-width: 400px;
 
 }
-
+.userEventsImageContainer img {
+  height: 100%;
+}
 .userEventsImageOverlayText {
   position: absolute;
   text-align: center;

@@ -49,11 +49,11 @@ export default function UserEventsIndexItem({event}) {
           <h1 className='userEventItemTitle' onClick={handleEventShow}>{event.title}</h1>
           <div className='userEventItemInfo'>
 
-            <p>{`Description: ${event.description}`}</p>
-            <p>{`Sport: ${event.category?.slice(0,1).toUpperCase()}${event.category?.slice(1)}`}</p>
-            <p>{`Address: ${event.location?.address} ${event.location?.zipcode}`}</p>
-            <p>{`Date: ${formatDate(event?.date)}`}</p>
-            <p>{`Particpants: ${event.attendees?.length}`}</p>
+            <p><span>Description:</span> {`${event.description}`}</p>
+            <p><span>Sport:</span> {`${event.category?.slice(0,1).toUpperCase()}${event.category?.slice(1)}`}</p>
+            <p><span>Address:</span> {`${event.location?.address} ${event.location?.zipcode}`}</p>
+            <p><span>Date:</span> {`${formatDate(event?.date)}`}</p>
+            <p><span>Particpants:</span> {`${event.attendees?.length}`}</p>
             <a target="_blank" href={`https://maps.google.com/?q=${event.location.address}, ${event.location.zipcode}`} rel="noreferrer">Directions</a>
           </div>
         </div>

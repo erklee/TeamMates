@@ -6,7 +6,7 @@ import { fetchUser } from "../../store/users";
 import { fetchUserEvents } from "../../store/events";
 import UserEventsIndex from "./UserEventsIndex";
 import backgroundImg from "../../assets/images/footballField.jpeg"
-
+import Footer from "../AboutUs/Footer";
 
 
 
@@ -41,6 +41,7 @@ function ProfilePage() {
             <UserEventsIndex userEvents={userEvents}/>
           </div>
         </div>
+        <Footer />
       </div>
       
 

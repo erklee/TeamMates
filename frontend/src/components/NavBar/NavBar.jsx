@@ -69,7 +69,7 @@ function NavBar() {
   const getLinks = () => {
 
     const createEventButton = (
-      <button onClick={handleCreateEvent} id='create-button'>Create Event</button>
+      <button onClick={handleCreateEvent} id='create-button'><span>+</span> Event</button>
     );
   
     if (loggedIn) {

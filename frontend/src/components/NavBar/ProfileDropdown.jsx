@@ -29,9 +29,9 @@ export default function ProfileDropdown({className, setVisible, currentUser}){
   };
   return (
     <div className={className}>
-      <button onClick={handleUserProfile}>Profile</button>
-      <button onClick={handleEvents}>Events</button>
-      <button onClick={logoutUser}>Logout</button>
+      <button className="firstButton" onClick={handleUserProfile}>Profile</button>
+      <button className="secondButton"onClick={handleEvents}>Events</button>
+      <button className="thirdButton"onClick={logoutUser}>Logout</button>
     </div>
   )
 
