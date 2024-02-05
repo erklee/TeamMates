@@ -133,6 +133,7 @@ export default function EventCreateForm() {
           onSubmit={handleSubmit}
           className="eventCreateForm"
         >
+          {errors?.title && <p className="date errors">{errors?.title ? errors.title : ''}</p>}
           <label id="createFormTitle" htmlFor="title">
             <p>Title</p>
             <input 
@@ -143,9 +144,9 @@ export default function EventCreateForm() {
                 e.preventDefault();
                 setTitle(e.target.value);
               }}
-              required
+              
             />
-            <p className="date errors">{errors?.title ? errors.title : ''}</p>
+
           </label>
           <label htmlFor="description">
             <p>Description</p>
@@ -161,8 +162,12 @@ export default function EventCreateForm() {
               }}
             ></textarea>
           </label>
-          <label htmlFor="date">
+          {errors?.date && <p className="date errors">{errors?.date ? errors.date : ''}</p>}
+
+          <label 
+            htmlFor="date">
             <p>Date</p>
+  
             <input 
               type="date" 
               className="event-date input"
@@ -172,8 +177,9 @@ export default function EventCreateForm() {
                 setEventDate(e.target.value);
               }}
               required
+
             />
-            <p className="date errors">{errors?.date ? errors.date : ''}</p>
+
           </label>
           <label htmlFor="category">
             <p>Category</p>
@@ -216,6 +222,8 @@ export default function EventCreateForm() {
               required
             />
           </label>
+          { errors?.location && <p className="address errors">{errors?.location ? errors.location : ''}</p> }
+
           <div id="address-input-wrapper">
             <label htmlFor="address-line-1">
               <p>Address Line 1</p>
@@ -314,7 +322,6 @@ export default function EventCreateForm() {
                 <option value="WY">Wyoming</option>
               required
               </select>
-
             </label>
 
             <label htmlFor="zipcode">
@@ -331,7 +338,7 @@ export default function EventCreateForm() {
               />
             </label>
             <br />
-            <p className="address errors">{errors?.location ? errors.location : ''}</p>
+
           </div>
           
           <button className="eventCreateButton"type="submit">Submit</button>
