@@ -1,9 +1,9 @@
 import { useState } from "react";
 // import { useParams } from "react-router-dom";
 // import jwtFetch from "../../store/jwt";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { composeEvent } from "../../store/events";
-// import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./EventCreateForm.css";
 import eventFormPic from '../../assets/images/sports/allSports2.jpeg';
 
@@ -145,6 +145,7 @@ export default function EventCreateForm() {
               }}
               required
             />
+            <p className="date errors">{errors?.title ? errors.title : ''}</p>
           </label>
           <label htmlFor="description">
             <p>Description</p>
@@ -158,7 +159,6 @@ export default function EventCreateForm() {
                 e.preventDefault();
                 setDescription(e.target.value);
               }}
-              required
             ></textarea>
           </label>
           <label htmlFor="date">
@@ -173,6 +173,7 @@ export default function EventCreateForm() {
               }}
               required
             />
+            <p className="date errors">{errors?.date ? errors.date : ''}</p>
           </label>
           <label htmlFor="category">
             <p>Category</p>
@@ -329,6 +330,7 @@ export default function EventCreateForm() {
                 required
               />
             </label>
+            <br />
             <p className="address errors">{errors?.location ? errors.location : ''}</p>
           </div>
           
