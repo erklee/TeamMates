@@ -29,6 +29,8 @@ function NavBar() {
   }, [dispatch]);
 
 
+
+
   const handleMainPage = e => {
     e.preventDefault();
     navigate("/");
@@ -66,18 +68,21 @@ function NavBar() {
 
 
 
+
+
   const getLinks = () => {
 
     const createEventButton = (
-      <button onClick={handleCreateEvent} id='create-button'>Create Event</button>
+      <button onClick={handleCreateEvent} id='create-button'><span>+</span> Event</button>
     );
   
     if (loggedIn) {
+
       return (
         <div className="links-nav">
           {createEventButton}
           <div className='userIconContainer' onClick={handleProfileDropdown}>
-          {/* <button onClick={handleCreateEvent} id='create-button'>Create Event</button> //this shows only for when the user is logged in  */}
+            {/* <button onClick={handleCreateEvent} id='create-button'>Create Event</button> //this shows only for when the user is logged in  */}
             <img src={currentUser?.profileImageUrl}  height='25' width='25' alt="profile icon" />
             <p>{currentUser.fname}</p>
           </div>
@@ -85,7 +90,7 @@ function NavBar() {
 
         </div>
           
-      );
+      ); 
     } else {
       return (
         <div className="links-auth">

@@ -3,29 +3,53 @@
   flex-direction: row;
 }
 
+.links-auth button {
+  font-family: sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+}
+
 .links-nav {
   display: flex;
   flex-direction: row;
+  align-items: center;
   z-index: 2;
 }
 
 
+
+
 #create-button {
-  position: relative;
-  margin-right: 20px;
-  height: 30px;
+  margin-right: 50px;
+  font-size: 20px;
+  font-weight: 500;
+  font-family: sans-serif;
   color: white;
-  background-color: black;
+  background-color: rgb(255, 85, 0);
   border-color: white;
+  width: 100px;
+  height: 40px;
   border-style: solid;
-  transition: 0.3s;
-  border-radius: 2px;
-  top: 20px;
+  border-radius: 10px;
+  transition: 0.5s;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
 }
 
+#create-button span{
+  font-size: 20px;
+  margin-right: 5px;
+  font-weight: 700;
+
+}
 #create-button:hover {
   background-color: white;
-  color: black;
+  color: rgb(255, 85, 0);
+  border-radius: rgb(255, 85, 0);
+  
 }
 
 
@@ -48,34 +72,44 @@
   border-radius: 20px;
 }
 
+.userIconContainer {
+  font-family: sans-serif;
+}
+
 #navBarSignUp {
   margin-right: 50px;
   color: white;
-  background-color: black;
+  background-color: rgb(255, 85, 0);
   border-color: white;
+  width: 100px;
+  height: 40px;
   border-style: solid;
-  border-radius: 2px;
+  border-radius: 10px;
   transition: 0.3s;
 }
 
 #navBarSignUp:hover {
   background-color: white;
-  color: black;
+  color: rgb(255, 85, 0);
+  border-color: rgb(255, 85, 0);
 }
 
 #navBarLogin {
   margin-right: 20px;
   color: white;
-  background-color: black;
+  background-color: rgb(255, 85, 0);
+  height: 40px;
+  width: 100px;
   border-color: white;
   border-style: solid;
   transition: 0.3s;
-  border-radius: 2px;
+  border-radius: 10px;
 }
 
 #navBarLogin:hover {
   background-color: white;
-  color: black;
+  color: rgb(255, 85, 0);
+  border-color: rgb(255, 85, 0);
 }
 
 .navBarWrapper {
@@ -101,6 +135,7 @@
   color: white;
   font-size: 50px;
   font-weight: 600;
+  transition: .5s;
 }
 
 .navBarContainer h1 span {
@@ -108,4 +143,22 @@
   font-size: 50px;
   font-weight: 600;
   z-index: 2;
+  transition: .5s;
+}
+
+.navBarContainer h1 {
+  color: white;
+  font-size: 50px;
+  font-weight: 600;
+  /* padding: 500px 0px; */
+}
+
+.navBarContainer h1:hover {
+  color: rgb(255, 85, 0);
+  cursor: pointer;
+}
+
+.navBarContainer h1:hover span {
+  color: white;
+  cursor: pointer;
 }

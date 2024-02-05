@@ -9,7 +9,6 @@ import { hideModal} from '../../store/modals';
 export default function ProfileDropdown({className, setVisible, currentUser}){
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  console.log(currentUser)
   const handleEvents = (e) =>  {
     e.preventDefault();
     setVisible(false)
@@ -30,9 +29,9 @@ export default function ProfileDropdown({className, setVisible, currentUser}){
   };
   return (
     <div className={className}>
-      <button onClick={handleUserProfile}>Profile</button>
-      <button onClick={handleEvents}>Events</button>
-      <button onClick={logoutUser}>Logout</button>
+      <button className="firstButton" onClick={handleUserProfile}>Profile</button>
+      <button className="secondButton"onClick={handleEvents}>Events</button>
+      <button className="thirdButton"onClick={logoutUser}>Logout</button>
     </div>
   )
 

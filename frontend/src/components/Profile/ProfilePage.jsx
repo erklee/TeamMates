@@ -6,7 +6,7 @@ import { fetchUser } from "../../store/users";
 import { fetchUserEvents } from "../../store/events";
 import UserEventsIndex from "./UserEventsIndex";
 import backgroundImg from "../../assets/images/footballField.jpeg"
-
+import Footer from "../AboutUs/Footer";
 
 
 
@@ -16,7 +16,7 @@ function ProfilePage() {
   const {id} = useParams();
   const {user} = useSelector(state => state.users)
   const userEvents = useSelector(state => state.events.user)
-  console.log(userEvents)
+
   
     
   useEffect(() =>{
@@ -41,6 +41,7 @@ function ProfilePage() {
             <UserEventsIndex userEvents={userEvents}/>
           </div>
         </div>
+        <Footer />
       </div>
       
 

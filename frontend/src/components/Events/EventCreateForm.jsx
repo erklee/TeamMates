@@ -6,7 +6,7 @@ import { composeEvent } from "../../store/events";
 import { useNavigate } from "react-router-dom";
 import "./EventCreateForm.css";
 import eventFormPic from '../../assets/images/sports/allSports2.jpeg';
-
+import Footer from "../AboutUs/Footer";
 
 const SPORTS = [
   "basketball",
@@ -337,6 +337,7 @@ export default function EventCreateForm() {
           <button className="eventCreateButton"type="submit">Submit</button>
         </form>
       </div>
+      <Footer />
     </div>
   );
 }

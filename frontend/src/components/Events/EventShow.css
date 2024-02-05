@@ -51,6 +51,31 @@
   padding-left: 20px;
 }
 
+.eventShowDetails h2 {
+  font-family: sans-serif;
+  font-size: 30px;
+  font-weight: 900;
+}
+
+.eventShowDetails p span {
+  font-size: 16px;
+  font-weight: 550;
+  font-family: sans-serif;
+}
+
+.eventShowDetails p  {
+  font-size: 16px;
+  font-family: sans-serif;
+  margin-bottom: 5px;
+  padding-right: 10px;
+}
+
+.eventShowDetails a {
+  padding-right: 10px;
+}
+
+
+
 .eventShowAttendanceWrapper {
   border-bottom-right-radius: 10px;
   width: 50%;

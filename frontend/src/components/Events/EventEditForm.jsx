@@ -4,6 +4,7 @@ import { useLoaderData, useParams, useNavigate } from 'react-router-dom';
 import { fetchEvent, updatedEvent } from "../../store/events";
 import eventFormPic from '../../assets/images/sports/allSports2.jpeg';
 import './EventEditForm.css';
+import Footer from "../AboutUs/Footer";
 
 const SPORTS = [
   "basketball",
@@ -270,6 +271,7 @@ function Edit(){
         </form>
       
       </div>
+      <Footer />
     </div>
   );
 

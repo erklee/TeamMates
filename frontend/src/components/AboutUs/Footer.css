@@ -1,0 +1,50 @@
+.aboutUsWrapers {
+  background-color: black;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  height: 200px;
+  margin-top: 150px;
+  align-items: first baseline;
+}
+
+.aboutUsWrapers h2 {
+  color: white;
+  padding: 20px;
+}
+
+.developerInfo {
+  color: white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.developerInfo p{
+  font-size: 20px;
+  font-weight: 400;
+  /* text-decoration: underline; */
+}
+
+
+
+.githubIcon {
+  filter: invert(1);
+  width: 40px;
+  height: 40px;
+}
+
+.linkedInIcon {
+  filter: invert(1);
+  width: 40px;
+  height: 40px;
+}
+
+.bioIconsWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 90px;
+
+}
