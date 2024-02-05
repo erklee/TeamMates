@@ -111,11 +111,16 @@ section {
 
 body {
   line-height: 1;
+  scroll-snap-type: y mandatory;
 }
 
 ol,
 ul {
   list-style: none;
+}
+
+::-webkit-scrollbar {
+  display: none;
 }
 
 blockquote,
