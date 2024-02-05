@@ -4,6 +4,8 @@ const SEND_FRIEND_REQUEST = "friends/SEND_FRIEND_REQUEST"
 const ACCEPT_FRIEND_REQUEST = "friends/ACCEPT_FRIEND_REQUEST"
 const REJECT_FRIEND_REQUEST = "friends/REJECT_FRIEND_REQUEST"
 const UNFRIEND = "friends/UNFRIEND"
+const GET_FRIEND_REQUESTS = "friends/GET_FRIEND_REQUESTS";
+const GET_FRIENDS = "friends/GET_FRIENDS";
 
 export const sendFriendRequest = (senderId) => ({
   type: SEND_FRIEND_REQUEST,
@@ -20,10 +22,20 @@ export const rejectFriendRequest = (senderId) => ({
   payload: senderId,
 });
 
-  export const unFriend = (friend) => ({
-    type: UNFRIEND,
-    payload: friend,
-  })
+export const unFriend = (friend) => ({
+  type: UNFRIEND,
+  payload: friend,
+})
+
+export const getFriendRequests = (friendRequests) => ({
+  type: GET_FRIEND_REQUESTS,
+  payload: friendRequests,
+});
+
+export const getFriends = (friends) => ({
+  type: GET_FRIENDS,
+  payload: friends,
+});
 
   export const sendFriendRequestThunk = (friendId) => async (dispatch) => {
     try {
@@ -109,6 +121,44 @@ export const unfriendThunk = (friendId) => async (dispatch) => {
   }
 };
 
+export const getFriendRequestsThunk = () => async (dispatch) => {
+  try {
+    const response = await jwtFetch('api/users/current');
+    const currentUser = await response.json();
+
+    
+    if (!currentUser || !currentUser._id) {
+      console.error('User ID not available');
+      return;
+    }
+
+    const friendRequestsResponse = await jwtFetch(`api/users/friend-requests/${currentUser._id}`);
+    const friendRequestsData = await friendRequestsResponse.json();
+    dispatch(getFriendRequests(friendRequestsData));
+  } catch (error) {
+    console.error('Error fetching friend requests:', error);
+  }
+};
+
+export const getFriendsThunk = () => async (dispatch) => {
+  try {
+    const response = await jwtFetch('api/users/current');
+    const currentUser = await response.json();
+
+   
+    if (!currentUser || !currentUser._id) {
+      console.error('User ID not available');
+      return;
+    }
+
+    const friendsResponse = await jwtFetch(`api/users/friends/${currentUser._id}`);
+    const friendsData = await friendsResponse.json();
+
+    dispatch(getFriends(friendsData));
+  } catch (error) {
+    console.error('Error fetching friends:', error);
+  }
+};
  
 const initialState = {
   friendRequests: [],
@@ -137,7 +187,17 @@ const friendReducer = (state = initialState, action) => {
     case UNFRIEND:
       return {
         ...state,
-        friendRequests: state.friends.filter((friendId) => friendId !== action.payload),
+        friends: state.friends.filter((friendId) => friendId !== action.payload),
+      };
+    case GET_FRIEND_REQUESTS:
+      return {
+        ...state,
+        friendRequests: action.payload,
+      };
+    case GET_FRIENDS:
+      return {
+        ...state,
+        friends: action.payload,
       };
     default:
       return state

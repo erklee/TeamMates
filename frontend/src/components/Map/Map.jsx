@@ -294,7 +294,7 @@ const EventMap = () => {
                 <p>{`Sport: ${selectedMarker.event.category.slice(0,1).toUpperCase()}${selectedMarker.event.category.slice(1)}`}</p>
                 <p>{`Address: ${selectedMarker.event.location.address} ${selectedMarker.event.location.zipcode}`}</p>
                 <p>{`Date: ${formatDate(selectedMarker.event.date)}`}</p>
-                <p>{`Particpants: ${selectedMarker.event.attendees.length}`}</p>
+                <p>{`Participants: ${selectedMarker.event.attendees.length}`}</p>
               </div>
             </div>
           }

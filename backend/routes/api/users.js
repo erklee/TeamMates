@@ -132,6 +132,16 @@ router.get('/current', restoreUser, (req, res) => {
   });
 });
 
+router.get('/requests', async (req, res, next) => {
+  try {
+    const potentialFriends = await User.find({ requestIds: req.user })
+    const potentialFriendIds = [...potentialFriends].map(friend => friend._id)
+    return res.json(potentialFriendIds);
+  }
+  catch(err) {
+    next(err)
+  }
+});
 
 router.get('/:id', async (req, res, next) => {
   try {
@@ -330,7 +340,9 @@ router.patch('/:id/reject', requireUser, async (req, res, next) => {
 });
 
 
-router.patch('/:id/unfriend', requireUser, async (req, res) => {
+
+
+router.patch('/:id/unfriend', requireUser, async (req, res, next) => {
   try {
     const friendUser = await User.findById(req.params.id);
     const youUser = await User.findById(req.user._id);
@@ -356,4 +368,62 @@ router.patch('/:id/unfriend', requireUser, async (req, res) => {
   }
 });
 
+// Get friend requests for the logged-in user
+router.get('/friend-requests/:id', requireUser, async (req, res, next) => {
+  try {
+    const youUserId = req.user?._id;
+
+    if (!youUserId || !mongoose.Types.ObjectId.isValid(youUserId)) {
+      return res.status(400).json({ errors: ['Invalid user ID'] });
+    }
+
+    const youUser = await User.findById(youUserId);
+    
+    if (!youUser) {
+      console.error('User not found:', youUserId);
+      return res.status(400).json({ errors: ['You are not a valid user'] });
+    }
+
+    const friends = await User.find({ _id: { $in: youUser.requestIds } });
+
+    return res.json(friends);
+  } catch (err) {
+    next(err);
+  }
+});
+
+
+router.get('/friends/:id', requireUser, async (req, res, next) => {
+  try {
+    const youUserId = req.user?._id;
+
+    if (!youUserId || !ObjectId.isValid(youUserId)) {
+      console.error('Invalid user ID:', youUserId);
+      return res.status(400).json({ errors: ['Invalid user ID'] });
+    }
+
+    // Find the user by ID
+    const youUser = await User.findById(youUserId);
+
+    
+
+    if (!youUser) {
+      console.error('User not found:', youUserId);
+      return res.status(400).json({ errors: ['You are not a valid user'] });
+    }
+
+    // Fetch the friends using 'friendIds' and project only the needed fields
+    const friends = await User.find({ _id: { $in: youUser.friendIds } });
+
+    return res.json(friends);
+  } catch (err) {
+    console.error('Error fetching friends:', err.message);
+    next(err);
+  }
+});
+
+
 module.exports = router;
+
+
+// ...

@@ -1,9 +1,9 @@
 import { useState } from "react";
 // import { useParams } from "react-router-dom";
 // import jwtFetch from "../../store/jwt";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { composeEvent } from "../../store/events";
-// import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./EventCreateForm.css";
 import eventFormPic from '../../assets/images/sports/allSports2.jpeg';
 
@@ -26,9 +26,11 @@ const DIFFICULTIES = [
 
 
 export default function EventCreateForm() {
-  // const navigate = useNavigate();
-  // const event = useSelector(state => state.events.new);
-  // const currentUser = useSelector(state => state.session.user);
+
+  const navigate = useNavigate();
+  // const event = useSelector(state => state.events.new)
+  const currentUser = useSelector(state => state.session.user);
+  const errors = useSelector(state => state.errors.event);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [eventDate, setEventDate] = useState('');
@@ -93,7 +95,8 @@ export default function EventCreateForm() {
     await setPictureUrl(categoryPictureUrl);
 
     // Dispatch the composeEvent action
-    await dispatch(composeEvent({
+    
+    const res = await dispatch(composeEvent({
       title,
       description,
       date: eventDate,
@@ -106,6 +109,10 @@ export default function EventCreateForm() {
       },
       pictureUrl: categoryPictureUrl, // Use the category-specific pictureUrl
     }));
+
+    if (!res.errors) {
+      navigate(`/profile/${currentUser["_id"]}`)
+    }
   };
 
 
@@ -138,6 +145,7 @@ export default function EventCreateForm() {
               }}
               required
             />
+            <p className="date errors">{errors?.title ? errors.title : ''}</p>
           </label>
           <label htmlFor="description">
             <p>Description</p>
@@ -151,7 +159,6 @@ export default function EventCreateForm() {
                 e.preventDefault();
                 setDescription(e.target.value);
               }}
-              required
             ></textarea>
           </label>
           <label htmlFor="date">
@@ -166,6 +173,7 @@ export default function EventCreateForm() {
               }}
               required
             />
+            <p className="date errors">{errors?.date ? errors.date : ''}</p>
           </label>
           <label htmlFor="category">
             <p>Category</p>
@@ -321,8 +329,9 @@ export default function EventCreateForm() {
                 }} 
                 required
               />
-            
             </label>
+            <br />
+            <p className="address errors">{errors?.location ? errors.location : ''}</p>
           </div>
           
           <button className="eventCreateButton"type="submit">Submit</button>
