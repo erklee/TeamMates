@@ -81,18 +81,18 @@ export default function EventCreateForm() {
     }
 
     // Set the state values and pictureUrl
-    await setTitle("");
-    await setDescription("");
-    await setEventDate("");
-    await setCategory("");
-    await setAttendeesMax("10");
-    await setAddress1("");
-    await setAddress2("");
-    await setCity("");
-    await setState("NY");
-    await setZipcode("");
-    await setDifficulty("easy");
-    await setPictureUrl(categoryPictureUrl);
+    // await setTitle("");
+    // await setDescription("");
+    // await setEventDate("");
+    // await setCategory("");
+    // await setAttendeesMax("10");
+    // await setAddress1("");
+    // await setAddress2("");
+    // await setCity("");
+    // await setState("NY");
+    // await setZipcode("");
+    // await setDifficulty("easy");
+    // await setPictureUrl(categoryPictureUrl);
 
     // Dispatch the composeEvent action
     
