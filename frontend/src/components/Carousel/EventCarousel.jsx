@@ -77,6 +77,7 @@ function EventCarousel() {
       </div>
       <Carousel className='carouselContainer' activeIndex={index} onSelect={handleSelect} interval={3000} pause={false}>
         {events.map((slide, i) => {
+          console.log(slide)
           return (
             <Carousel.Item slide={slide} key ={i}>        
               <img
@@ -87,7 +88,8 @@ function EventCarousel() {
               />
               <Carousel.Caption>
                 <h3 className='eventCarouselDetails'>{slide.category[0].toUpperCase() + slide.category.slice(1)}</h3>
-                <p className='eventCarouselDetails'>{slide.description[0].toUpperCase() + slide.description.slice(1)}</p>
+                <p className='eventCarouselDetails'>{slide.title[0].toUpperCase() + slide.title.slice(1)}</p>
+                <p className='eventCarouselDetails'>{slide.location.address + " " +slide.location.zipcode}</p>
               </Carousel.Caption>
             </Carousel.Item>
           );

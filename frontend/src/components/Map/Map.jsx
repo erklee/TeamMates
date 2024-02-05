@@ -336,7 +336,7 @@ const EventMap = () => {
                 position={selectedMarker.position}
                 onCloseClick={closeInfoWindow}
               >
-                <div >
+                <div className="infoWindowDetailsContainer">
                   <h6>{selectedMarker.event.title}</h6>
                   <p>{selectedMarker.event.description}</p>
                   <p>Difficulty: {selectedMarker.event.difficulty}</p>

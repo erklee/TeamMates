@@ -5,7 +5,9 @@ import { useParams, useNavigate} from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { getCurrentUser } from '../../store/session';
+import { showModal } from '../../store/modals';
 import allSports from "../../assets/images/allSports.jpeg"
+import Footer from '../AboutUs/Footer';
 import "./EventShow.css";
 
 
@@ -16,7 +18,7 @@ function EventShowPage() {
   const dispatch = useDispatch();
   const event = useSelector(state => state.events.new);
   const currentUser = useSelector(state => state.session.user);
-  console.log(currentUser)
+  
   const currentUserId = useSelector(state => state.session.user?._id);
 
   function capitalizeEveryWord(str) {
@@ -53,6 +55,10 @@ function EventShowPage() {
 
 
   const handleAttendClick = async () => {
+    if (!currentUser) {
+      await dispatch(showModal('LoginModal'))
+      await navigate("/")
+    }
     try {
       await dispatch(attendEvent(eventId));
       dispatch(fetchEvent(eventId));
@@ -150,6 +156,7 @@ function EventShowPage() {
             </div>
           </div>
         </div>
+      <Footer />
       </div>
     );
   }
