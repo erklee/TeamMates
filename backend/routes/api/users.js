@@ -9,7 +9,7 @@ const { isProduction } = require('../../config/keys');
 const validateRegisterInput = require('../../validations/register');
 const validateLoginInput = require('../../validations/login');
 const { ObjectId } = require('mongodb');
-
+const profileImageUrl =  "https://mern-teammates-seeds.s3.amazonaws.com/public/blank-profile-pic.png"
 /* GET users listing. */
 // router.get('/', function(req, res, next) {
 //   res.json({
@@ -67,7 +67,8 @@ router.post('/register', validateRegisterInput, async (req, res, next) => {
       city: req.body.address ? req.body.address.city : undefined,
       state: req.body.address ? req.body.address.state : undefined,
       zipcode: req.body.address ? req.body.address.zipcode : undefined
-    }
+    },
+    profileImageUrl,
   });
 
   bcrypt.genSalt(10, (err, salt) => {

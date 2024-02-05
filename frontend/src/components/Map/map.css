@@ -1,12 +1,15 @@
 .eventIndexSideBar {
-    min-width: 400px;
+    min-width: 30vw;
     display: flex;
     flex-direction: column;
+    height: 100vh;
     /* justify-content: space-between; */
 }
 .filters {
     display: flex;
     flex-direction: column;
+    
+    height: 50%;
 }
 
 .eventMapWrapper {
@@ -20,12 +23,12 @@
 
 
 .eventInfoWrapper {
-    position: absolute;
-    bottom: 0;
+    position: relative;
+    top: 0%;
     left: 0;
     background-color: rgb(0, 0, 0);
-    min-height: 500px;
-    width: 500px;
+    min-height: 50%;
+    width: 30vw;
     text-wrap: wrap;
 
 }
@@ -54,8 +57,29 @@
     padding: 10px;
 }
 
+.sideBarEventImgContainer {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
 
+.sideBarImgOverlayText {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 1.5rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
 
-/* .gm-style {
-    
-} */
+.sideBarEventImgContainer img:hover {
+    cursor: pointer;
+    opacity: 0.5;
+}
+
+.sideBarEventImgContainer:hover .sideBarImgOverlayText {
+    opacity: 1;
+}
+

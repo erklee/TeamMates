@@ -70,14 +70,31 @@ const router = createBrowserRouter([
   },
 ]);
 
+// function App() {
+//   const [loaded, setLoaded] = useState(false);
+  
+//   const dispatch = useDispatch();
+//   useEffect(() => {
+//     dispatch(getCurrentUser()).finally(() => setLoaded(true));
+//   }, [dispatch]);
+  
+//   return loaded && <RouterProvider router={router} />;
+// }
+
 function App() {
   const [loaded, setLoaded] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null); // State to hold user data
   const dispatch = useDispatch();
+
   useEffect(() => {
-    dispatch(getCurrentUser()).finally(() => setLoaded(true));
+    dispatch(getCurrentUser())
+      .then((user) => setCurrentUser(user))
+      .finally(() => setLoaded(true));
   }, [dispatch]);
-  
-  return loaded && <RouterProvider router={router} />;
+
+  return loaded && <RouterProvider router={router}>
+    <Layout currentUser={currentUser} />
+  </RouterProvider>;
 }
 
 export default App;

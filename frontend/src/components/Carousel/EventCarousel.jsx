@@ -81,7 +81,7 @@ function EventCarousel() {
             <Carousel.Item slide={slide} key ={i}>        
               <img
                 className="slideImage"
-                src={slide.image || allSports}
+                src={slide.pictureUrl || allSports}
                 alt="slider image"
                 onClick={handleEventShow}
               />
