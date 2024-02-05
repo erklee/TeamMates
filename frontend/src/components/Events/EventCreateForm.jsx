@@ -26,9 +26,11 @@ const DIFFICULTIES = [
 
 
 export default function EventCreateForm() {
-  // const navigate = useNavigate();
-  // const event = useSelector(state => state.events.new);
-  // const currentUser = useSelector(state => state.session.user);
+
+  const navigate = useNavigate();
+  // const event = useSelector(state => state.events.new)
+  const currentUser = useSelector(state => state.session.user);
+  const errors = useSelector(state => state.errors.event);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [eventDate, setEventDate] = useState('');
@@ -93,7 +95,8 @@ export default function EventCreateForm() {
     await setPictureUrl(categoryPictureUrl);
 
     // Dispatch the composeEvent action
-    await dispatch(composeEvent({
+    
+    const res = await dispatch(composeEvent({
       title,
       description,
       date: eventDate,
@@ -106,6 +109,10 @@ export default function EventCreateForm() {
       },
       pictureUrl: categoryPictureUrl, // Use the category-specific pictureUrl
     }));
+
+    if (!res.errors) {
+      navigate(`/profile/${currentUser["_id"]}`)
+    }
   };
 
 
@@ -321,8 +328,8 @@ export default function EventCreateForm() {
                 }} 
                 required
               />
-            
             </label>
+            <p className="address errors">{errors?.location ? errors.location : ''}</p>
           </div>
           
           <button className="eventCreateButton"type="submit">Submit</button>

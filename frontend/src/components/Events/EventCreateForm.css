@@ -1,7 +1,3 @@
-/* .createEventTilte {
-  
-} */
-
 
 
 .eventCreateForm {
@@ -30,6 +26,11 @@
   width: 1000px;
   height: 100%;
   width: 1000px;
+}
+
+.errors {
+  font-size: small;
+  color: red;
 }
 
 .eventCreateForm {

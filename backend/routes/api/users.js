@@ -132,6 +132,16 @@ router.get('/current', restoreUser, (req, res) => {
   });
 });
 
+router.get('/requests', async (req, res, next) => {
+  try {
+    const potentialFriends = await User.find({ requestIds: req.user })
+    const potentialFriendIds = [...potentialFriends].map(friend => friend._id)
+    return res.json(potentialFriendIds);
+  }
+  catch(err) {
+    next(err)
+  }
+});
 
 router.get('/:id', async (req, res, next) => {
   try {
@@ -330,7 +340,9 @@ router.patch('/:id/reject', requireUser, async (req, res, next) => {
 });
 
 
-router.patch('/:id/unfriend', requireUser, async (req, res) => {
+
+
+router.patch('/:id/unfriend', requireUser, async (req, res, next) => {
   try {
     const friendUser = await User.findById(req.params.id);
     const youUser = await User.findById(req.user._id);
