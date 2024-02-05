@@ -25,8 +25,9 @@ const DIFFICULTIES = [
 
 export default function EventCreateForm() {
   const navigate = useNavigate();
-  const event = useSelector(state => state.events.new)
+  // const event = useSelector(state => state.events.new)
   const currentUser = useSelector(state => state.session.user);
+  const errors = useSelector(state => state.errors.event);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [eventDate, setEventDate] = useState('');
@@ -38,13 +39,14 @@ export default function EventCreateForm() {
   const [state, setState] = useState('');
   const [zipcode, setZipcode] = useState('');
   const [difficulty, setDifficulty] = useState(DIFFICULTIES[0]);
+  
  
   const dispatch = useDispatch();
 
   const handleSubmit = async e => {
     e.preventDefault();
     
-    dispatch(composeEvent({
+    const res = await dispatch(composeEvent({
       title,
       description,
       date: eventDate,
@@ -56,7 +58,10 @@ export default function EventCreateForm() {
         zipcode,
       },
     }));
-    navigate(`/profile/${currentUser["_id"]}`)
+
+    if (!res.errors) {
+      navigate(`/profile/${currentUser["_id"]}`)
+    }
   };
 
 
@@ -65,7 +70,7 @@ export default function EventCreateForm() {
 
   return (
     <div className="createEventPage">
-      <div className="createEventTilte">
+      <div className="createEventTitle">
             Event Details
       </div>
       <form 
@@ -82,6 +87,7 @@ export default function EventCreateForm() {
               e.preventDefault();
               setTitle(e.target.value);
             }}/>
+          <p className="title errors">{errors?.title ? errors.title : ''}</p>
         </label>
         <label htmlFor="description">Description:
           <textarea 
@@ -104,6 +110,7 @@ export default function EventCreateForm() {
               e.preventDefault();
               setEventDate(e.target.value);
             }}/>
+          <p className="date errors">{errors?.date ? errors.date : ''}</p>
         </label>
         <label htmlFor="category">Category:
           <select 
@@ -139,6 +146,7 @@ export default function EventCreateForm() {
               e.preventDefault();
               setAttendeesMax(e.target.value);
             }}/>
+          <p className="attendeesMax errors">{errors?.attendeesMax ? errors.attendeesMax : ''}</p>
         </label>
         <div id="address-input wrapper">
           <label htmlFor="address-line-1">Address Line 1:
@@ -230,17 +238,18 @@ export default function EventCreateForm() {
               <option value="WY">Wyoming</option>
             </select>
           </label>
+          <label htmlFor="zipcode">Zipcode:
+            <input 
+              type="text"
+              className="zipcode input"
+              value={zipcode}
+              onChange={e => {
+                e.preventDefault();
+                setZipcode(e.target.value);
+              }} />
+          </label>
+          <p className="address errors">{errors?.location ? errors.location : ''}</p>
         </div>
-        <label htmlFor="zipcode">Zipcode:
-          <input 
-            type="text"
-            className="zipcode input"
-            value={zipcode}
-            onChange={e => {
-              e.preventDefault();
-              setZipcode(e.target.value);
-            }} />
-        </label>
         <button type="submit">Submit</button>
       </form>
     </div>

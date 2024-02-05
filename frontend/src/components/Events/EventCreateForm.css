@@ -1,5 +1,10 @@
-.createEventTilte {
+.createEventTitle {
   
+}
+
+.errors {
+  font-size: small;
+  color: red;
 }
 
 .eventCreateForm {
