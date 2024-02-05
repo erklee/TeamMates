@@ -1,5 +1,5 @@
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { fetchEvent, attendEvent, unAttendEvent , deleteEvent} from '../../store/events';
 import { useParams, useNavigate} from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -15,6 +15,7 @@ function EventShowPage() {
   const dispatch = useDispatch();
   const event = useSelector(state => state.events.new);
   const currentUser = useSelector(state => state.session.user);
+  console.log(currentUser)
   const currentUserId = useSelector(state => state.session.user?._id);
 
   useEffect(() => {
@@ -97,7 +98,7 @@ function EventShowPage() {
       return(
 
         <li className="eventShowAttendee" onClick={handleUserProfile}key={index}>
-          {attendee.fname.slice(0,1).toUpperCase() + attendee.fname.slice(1) + " " + attendee.lname.slice(0,1).toUpperCase() + attendee.lname.slice(1)}
+          {attendee.fname?.slice(0,1).toUpperCase() + attendee.fname?.slice(1) + " " + attendee.lname?.slice(0,1).toUpperCase() + attendee.lname?.slice(1)}
         </li>
       ); 
     }
@@ -117,7 +118,7 @@ function EventShowPage() {
             
 
           }
-          {(isUserAttending) ? (
+          {(isUserAttending && !!currentUser) ? (
             <button className="unattendBtn"onClick={handleUnattendClick}>Unattend</button>
           ) : (
             <button className="attendBtn"onClick={handleAttendClick}>Attend</button>

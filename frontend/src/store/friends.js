@@ -4,10 +4,33 @@ const SEND_FRIEND_REQUEST = "friends/SEND_FRIEND_REQUEST"
 const ACCEPT_FRIEND_REQUEST = "friends/ACCEPT_FRIEND_REQUEST"
 const REJECT_FRIEND_REQUEST = "friends/REJECT_FRIEND_REQUEST"
 const UNFRIEND = "friends/UNFRIEND"
+const GET_FRIEND_REQUESTS = "friends/GET_FRIEND_REQUESTS";
+const GET_FRIENDS = "friends/GET_FRIENDS";
 
 const FETCH_INCOMING_FRIEND_REQUESTS_SUCCESS = 'friends/FETCH_INCOMING_FRIEND_REQUESTS_SUCCESS';
 const FETCH_OUTGOING_FRIEND_REQUESTS_SUCCESS = 'friends/FETCH_OUTGOING_FRIEND_REQUESTS_SUCCESS';
 const SEND_FRIEND_REQUEST_SUCCESS = 'friends/SEND_FRIEND_REQUEST_SUCCESS';
+
+const UPDATE_FRIEND_REQUESTS = 'friends/UPDATE_FRIEND_REQUESTS';
+
+export const updateFriendRequests = (updatedData) => ({
+  type: UPDATE_FRIEND_REQUESTS,
+  payload: updatedData,
+});
+
+export const sendFriendRequestThunk = (friendId) => async (dispatch) => {
+  try {
+    const response = await jwtFetch(`/api/users/${friendId}/friend`, { method: 'PATCH' });
+    if (!response.ok) {
+      throw new Error('Failed to send friend request');
+    }
+    const updatedData = await response.json();
+    // Dispatch an action to update Redux store based on updatedData
+    dispatch(updateFriendRequests(updatedData)); // Now correctly defined
+  } catch (error) {
+    console.error('Error sending friend request:', error);
+  }
+};
 
 export const fetchIncomingFriendRequests = () => async (dispatch) => {
   try {
@@ -85,35 +108,57 @@ export const rejectFriendRequest = (senderId) => ({
   payload: senderId,
 });
 
-  export const unFriend = (friend) => ({
-    type: UNFRIEND,
-    payload: friend,
-  })
+export const unFriend = (friend) => ({
+  type: UNFRIEND,
+  payload: friend,
+})
 
-  export const sendFriendRequestThunk = (friendId) => async (dispatch) => {
-    // try {
-    //   const response = await jwtFetch(`api/users/${friendId}/friend`, {
-    //     method: 'PATCH',
-    //   });
+export const getFriendRequests = (friendRequests) => ({
+  type: GET_FRIEND_REQUESTS,
+  payload: friendRequests,
+});
+
+export const getFriends = (friends) => ({
+  type: GET_FRIENDS,
+  payload: friends,
+});
+
+  // export const sendFriendRequestThunk = (friendId) => async (dispatch) => {
+  //   // try {
+  //   //   const response = await jwtFetch(`api/users/${friendId}/friend`, {
+  //   //     method: 'PATCH',
+  //   //   });
   
-    //   const data = await response.json();
-    //   dispatch(sendFriendRequest(data.sender));
-    // } catch (error) {
-    //   console.error('Error sending friend request:', error);
-    // }
+  //   //   const data = await response.json();
+  //   //   dispatch(sendFriendRequest(data.sender));
+  //   // } catch (error) {
+  //   //   console.error('Error sending friend request:', error);
+  //   // }
 
-    try {
-      const response = await jwtFetch(`api/users/${friendId}/friend`, { method: 'PATCH' });
-      if (!response.ok) {
-        throw new Error('Failed to send friend request');
-      }
-      // Assuming the response body contains the friendId or some success indicator
-      dispatch({ type: SEND_FRIEND_REQUEST_SUCCESS, payload: { friendId } });
-    } catch (error) {
-      console.error('Error sending friend request:', error);
-      // Optionally dispatch an error handling action here
-    }
-  };
+  //   // try {
+  //   //   const response = await jwtFetch(`api/users/${friendId}/friend`, { method: 'PATCH' });
+  //   //   if (!response.ok) {
+  //   //     throw new Error('Failed to send friend request');
+  //   //   }
+  //   //   // Assuming the response body contains the friendId or some success indicator
+  //   //   dispatch({ type: SEND_FRIEND_REQUEST_SUCCESS, payload: { friendId } });
+  //   // } catch (error) {
+  //   //   console.error('Error sending friend request:', error);
+  //   //   // Optionally dispatch an error handling action here
+  //   // }
+
+  //   try {
+  //     const response = await jwtFetch(`api/users/${friendId}/friend`, { method: 'PATCH' });
+  //     if (!response.ok) {
+  //       throw new Error('Failed to send friend request');
+  //     }
+  //     const updatedData = await response.json();
+  //     // Dispatch an action to update Redux store based on updatedData
+  //     dispatch(updateFriendRequests(updatedData)); // Assume updateFriendRequests is an action creator that updates the store
+  //   } catch (error) {
+  //     console.error('Error sending friend request:', error);
+  //   }
+  // };
   
   
 
@@ -186,6 +231,44 @@ export const unfriendThunk = (friendId) => async (dispatch) => {
   }
 };
 
+export const getFriendRequestsThunk = () => async (dispatch) => {
+  try {
+    const response = await jwtFetch('api/users/current');
+    const currentUser = await response.json();
+
+    
+    if (!currentUser || !currentUser._id) {
+      console.error('User ID not available');
+      return;
+    }
+
+    const friendRequestsResponse = await jwtFetch(`api/users/friend-requests/${currentUser._id}`);
+    const friendRequestsData = await friendRequestsResponse.json();
+    dispatch(getFriendRequests(friendRequestsData));
+  } catch (error) {
+    console.error('Error fetching friend requests:', error);
+  }
+};
+
+export const getFriendsThunk = () => async (dispatch) => {
+  try {
+    const response = await jwtFetch('api/users/current');
+    const currentUser = await response.json();
+
+   
+    if (!currentUser || !currentUser._id) {
+      console.error('User ID not available');
+      return;
+    }
+
+    const friendsResponse = await jwtFetch(`api/users/friends/${currentUser._id}`);
+    const friendsData = await friendsResponse.json();
+
+    dispatch(getFriends(friendsData));
+  } catch (error) {
+    console.error('Error fetching friends:', error);
+  }
+};
  
 const initialState = {
   outgoingFriendRequests: [],
@@ -229,19 +312,57 @@ const friendReducer = (state = initialState, action) => {
     case UNFRIEND:
       return {
         ...state,
-        friendRequests: state.friends.filter((friendId) => friendId !== action.payload),
+        friends: state.friends.filter((friendId) => friendId !== action.payload),
+      };
+    case GET_FRIEND_REQUESTS:
+      return {
+        ...state,
+        friendRequests: action.payload,
+      };
+    case GET_FRIENDS:
+      return {
+        ...state,
+        friends: action.payload,
       };
 
       case SEND_FRIEND_REQUEST_SUCCESS:
+    // Ensure that only valid IDs are added to the outgoingFriendRequests array.
+    if (action.payload) { // Assuming payload is the friend request ID or relevant data
         return {
-          ...state,
-          outgoingFriendRequests: [...state.outgoingFriendRequests, action.payload.friendId],
+            ...state,
+            outgoingFriendRequests: [...state.outgoingFriendRequests, action.payload].filter(Boolean), // The .filter(Boolean) removes falsy values
         };
+    }
+    return state;
 
+      // case SEND_FRIEND_REQUEST_SUCCESS:
+      //   return {
+      //     ...state,
+      //     outgoingFriendRequests: [...state.outgoingFriendRequests, action.payload.friendId],
+      //   };
+
+    //   case SEND_FRIEND_REQUEST_SUCCESS:
+    // // Assuming the action.payload is the friend request ID
+    // return {
+    //     ...state,
+    //     outgoingFriendRequests: [...state.outgoingFriendRequests, action.payload]
+    // };
+
+        // case UPDATE_FRIEND_REQUESTS:
+        //   const { outgoingFriendRequest } = action.payload;
+        //   return {
+        //     ...state,
+        //     outgoingFriendRequests: [...state.outgoingFriendRequests, outgoingFriendRequest],
+        //   };
+        case UPDATE_FRIEND_REQUESTS:
+          const { outgoingFriendRequest } = action.payload; // Assuming this is the correct structure
+          return {
+              ...state,
+              outgoingFriendRequests: state.outgoingFriendRequests.concat(outgoingFriendRequest)
+          };
     default:
       return state
 
-    // ... other cases
   }
 };
   

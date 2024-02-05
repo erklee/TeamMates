@@ -9,12 +9,13 @@ import * as modalActions from './store/modals'
 import * as userActions from './store/users'
 import * as eventActions from './store/events'
 import * as friendActions from './store/friends'
+import { PersistGate } from 'redux-persist/integration/react';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 
-const store = configureStore();
+const { store, persistor } = configureStore();
 
 if (import.meta.env.MODE !== 'production') {
   window.store = store;
@@ -29,7 +30,9 @@ if (import.meta.env.MODE !== 'production') {
 ReactDOM.createRoot(document.getElementById('root')).render(
   // <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <PersistGate loading={null} persistor={persistor}> {/* Use PersistGate here */}
+        <App />
+      </PersistGate>
     </Provider>
   // </React.StrictMode>
 );

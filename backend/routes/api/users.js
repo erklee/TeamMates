@@ -9,7 +9,7 @@ const { isProduction } = require('../../config/keys');
 const validateRegisterInput = require('../../validations/register');
 const validateLoginInput = require('../../validations/login');
 const { ObjectId } = require('mongodb');
-
+const profileImageUrl =  "https://mern-teammates-seeds.s3.amazonaws.com/public/blank-profile-pic.png"
 /* GET users listing. */
 // router.get('/', function(req, res, next) {
 //   res.json({
@@ -67,7 +67,8 @@ router.post('/register', validateRegisterInput, async (req, res, next) => {
       city: req.body.address ? req.body.address.city : undefined,
       state: req.body.address ? req.body.address.state : undefined,
       zipcode: req.body.address ? req.body.address.zipcode : undefined
-    }
+    },
+    profileImageUrl,
   });
 
   bcrypt.genSalt(10, (err, salt) => {
@@ -173,14 +174,12 @@ router.get('/:id', async (req, res, next) => {
 });
 
 
-// ...
 
 router.patch('/:id/friend', requireUser, async (req, res, next) => {
   try {
     const friendUserId = req.params.id;
     const youUserId = req.user?._id;
 
-    // Validate if youUserId is valid
     if (!youUserId || !ObjectId.isValid(youUserId)) {
       return res.status(400).json({ errors: ['Invalid user ID'] });
     }
@@ -211,38 +210,34 @@ router.patch('/:id/friend', requireUser, async (req, res, next) => {
       await youUser.save();
       await friendUser.save();
 
-      // Respond with the sender's data
+      
       return res.json({
         youUser,
         friendUser,
-        sender: youUser, // Include the sender's data in the response
+        sender: youUser, 
       });
     }
 
     friendUser.requestIds.push(youUser._id);
     await friendUser.save();
 
-    // Respond with the sender's data
+    
     return res.json({
       friendUser,
-      sender: youUser, // Include the sender's data in the response
+      sender: youUser, 
     });
   } catch (err) {
     next(err);
   }
 });
 
-// routes/api/users.js
 
-// routes/api/users.js
-
-// Assuming the logic for adding friend requests is correct
 router.patch('/:id/accept', requireUser, async (req, res, next) => {
   try {
     const friendUserId = req.params.id;
     const youUserId = req.user?._id;
 
-    // Validate if youUserId is valid
+    
     if (!youUserId || !ObjectId.isValid(youUserId)) {
       return res.status(400).json({ errors: ['Invalid user ID'] });
     }
@@ -273,21 +268,21 @@ router.patch('/:id/accept', requireUser, async (req, res, next) => {
       await youUser.save();
       await friendUser.save();
 
-      // Respond with the sender's data
+      
       return res.json({
         youUser,
         friendUser,
-        sender: youUser, // Include the sender's data in the response
+        sender: friendUser, 
       });
     }
 
     friendUser.requestIds.push(youUser._id);
     await friendUser.save();
 
-    // Respond with the sender's data
+    
     return res.json({
       sender: friendUser,
-      youUser, // Include the sender's data in the response
+      youUser, 
     });
   } catch (err) {
     next(err);
@@ -299,7 +294,7 @@ router.patch('/:id/reject', requireUser, async (req, res, next) => {
     const friendUserId = req.params.id;
     const youUserId = req.user?._id;
 
-    // Validate if youUserId is valid
+    
     if (!youUserId || !ObjectId.isValid(youUserId)) {
       return res.status(400).json({ errors: ['Invalid user ID'] });
     }
@@ -320,7 +315,7 @@ router.patch('/:id/reject', requireUser, async (req, res, next) => {
 
       await youUser.save();
 
-      // Respond with the sender's data
+      
       return res.json({
         youUser,
         friendUser,
@@ -361,4 +356,62 @@ router.patch('/:id/unfriend', requireUser, async (req, res) => {
   }
 });
 
+// Get friend requests for the logged-in user
+router.get('/friend-requests/:id', requireUser, async (req, res, next) => {
+  try {
+    const youUserId = req.user?._id;
+
+    if (!youUserId || !mongoose.Types.ObjectId.isValid(youUserId)) {
+      return res.status(400).json({ errors: ['Invalid user ID'] });
+    }
+
+    const youUser = await User.findById(youUserId);
+    
+    if (!youUser) {
+      console.error('User not found:', youUserId);
+      return res.status(400).json({ errors: ['You are not a valid user'] });
+    }
+
+    const friends = await User.find({ _id: { $in: youUser.requestIds } });
+
+    return res.json(friends);
+  } catch (err) {
+    next(err);
+  }
+});
+
+
+router.get('/friends/:id', requireUser, async (req, res, next) => {
+  try {
+    const youUserId = req.user?._id;
+
+    if (!youUserId || !ObjectId.isValid(youUserId)) {
+      console.error('Invalid user ID:', youUserId);
+      return res.status(400).json({ errors: ['Invalid user ID'] });
+    }
+
+    // Find the user by ID
+    const youUser = await User.findById(youUserId);
+
+    
+
+    if (!youUser) {
+      console.error('User not found:', youUserId);
+      return res.status(400).json({ errors: ['You are not a valid user'] });
+    }
+
+    // Fetch the friends using 'friendIds' and project only the needed fields
+    const friends = await User.find({ _id: { $in: youUser.friendIds } });
+
+    return res.json(friends);
+  } catch (err) {
+    console.error('Error fetching friends:', err.message);
+    next(err);
+  }
+});
+
+
 module.exports = router;
+
+
+// ...

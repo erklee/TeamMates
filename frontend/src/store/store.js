@@ -8,6 +8,10 @@ import modals from './modals';
 import events from './events'
 import users from './users'
 import friends from './friends'
+import { persistStore, persistReducer } from 'redux-persist'; // Import persistStore and persistReducer
+import storage from 'redux-persist/lib/storage'; // Import default storage
+
+
 
 const rootReducer = combineReducers({
   session, 
@@ -17,6 +21,14 @@ const rootReducer = combineReducers({
   users,
   friends
 });
+
+const persistConfig = {
+  key: 'root',
+  storage,
+  whitelist: ['session', 'friends'] // Specify which reducers you want to store
+};
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 let enhancer;
 if (import.meta.env.MODE === "production") {
@@ -29,7 +41,9 @@ if (import.meta.env.MODE === "production") {
 }
 
 const configureStore = (preloadedState) => {
-  return createStore(rootReducer, preloadedState, enhancer);
+  const store = createStore(persistedReducer, preloadedState, enhancer);
+  const persistor = persistStore(store); // Persist the store
+  return { store, persistor };
 };
 
 

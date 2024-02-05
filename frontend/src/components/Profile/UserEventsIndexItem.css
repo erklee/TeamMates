@@ -6,6 +6,7 @@
 .userEventsItemWrapper {
   display: flex;
   flex-direction: row;
+  position: relative;
 }
 
 .userEventItemInfoWrapper {
@@ -34,4 +35,23 @@
 
 .userEventItemInfo {
   padding: 20px;
+}
+
+.userEventsItemEditButton {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: rgb(255, 85, 0);
+  border-style: none;
+  height: 40px;
+  border-radius: 3px;
+  color: white;
+  transition: 0.3s;
+  padding: 10px 10px;
+  z-index: 2px;
+}
+
+.userEventsItemEditButton:hover {
+  background-color: white;
+  color: rgb(255, 85, 0); 
 }
