@@ -39,7 +39,7 @@ export const getFriends = (friends) => ({
 
   export const sendFriendRequestThunk = (friendId) => async (dispatch) => {
     try {
-      const response = await jwtFetch(`api/users/${friendId}/friend`, {
+      const response = await jwtFetch(`/api/users/${friendId}/friend`, {
         method: 'PATCH',
       });
   
@@ -78,7 +78,7 @@ export const acceptFriendRequestThunk = (friendId) => async (dispatch) => {
   
 export const rejectFriendRequestThunk = (friendId) => async (dispatch) => {
   try {
-    const response = await jwtFetch(`api/users/${friendId}/reject`, {
+    const response = await jwtFetch(`/api/users/${friendId}/reject`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -104,7 +104,7 @@ export const rejectFriendRequestThunk = (friendId) => async (dispatch) => {
 
 export const unfriendThunk = (friendId) => async (dispatch) => {
   try {
-    const response = await jwtFetch(`api/users/${friendId}/unfriend`, {
+    const response = await jwtFetch(`/api/users/${friendId}/unfriend`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -145,7 +145,7 @@ export const getFriendRequestsThunk = () => async (dispatch) => {
 
 export const getFriendsThunk = () => async (dispatch) => {
   try {
-    const response = await jwtFetch('api/users/current');
+    const response = await jwtFetch('api/users/current')
     const currentUser = await response.json();
 
    

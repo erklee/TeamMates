@@ -7,7 +7,7 @@ import { fetchUserEvents } from "../../store/events";
 import UserEventsIndex from "./UserEventsIndex";
 import backgroundImg from "../../assets/images/footballField.jpeg"
 import Footer from "../AboutUs/Footer";
-import { getFriendsThunk } from "../../store/friends";
+import { getFriendRequestsThunk, getFriendsThunk, sendFriendRequestThunk, unfriendThunk } from "../../store/friends";
 
 
 
@@ -17,42 +17,38 @@ function ProfilePage() {
 //   const navigate = useNavigate();
   const dispatch = useDispatch();
   const {id} = useParams();
-  const {user} = useSelector(state => state.users)
+  const user = useSelector(state => state.users.user)
   const userEvents = useSelector(state => state.events.user)
-  const friends = useSelector(state => state.friends.friends)
-  console.log(user)
-  console.log(friends)
-    
+  const currentUser = useSelector(state => state.session.user)
+   
+ 
   useEffect(() =>{
+    dispatch(getFriendRequestsThunk())
+    dispatch(getFriendsThunk())
     dispatch(fetchUser(id));
     dispatch(fetchUserEvents(id))
-    dispatch(getFriendsThunk())
   }, [dispatch, id]);
 
-  useEffect(() => {
-    const storedFriends = localStorage.getItem('friends');
-    if (storedFriends) {
-      dispatch({ type: 'GET_FRIENDS', payload: JSON.parse(storedFriends) });
+
+
+  const renderActionButton = () => {
+    if (!currentUser || !currentUser?.friendIds || !id) {
+      return null; // Handle cases where currentUser or id is not defined
     }
-  }, [dispatch]);
+  
+    if (currentUser?.friendIds.includes(id)) {
+      
+      return <button onClick={() => dispatch(unfriendThunk(String(id)))}>Unfriend</button>;
+    } else if(user?.requestIds?.includes(currentUser?._id)){
+      return <h1>...Pending</h1>
+    }
+    else {
+      return <button onClick={() => {
+        dispatch(sendFriendRequestThunk(String(id)));
+      }}>Friend</button>;
+    }
+  }
 
-  // When friends data changes, update local storage
-  useEffect(() => {
-    localStorage.setItem('friends', JSON.stringify(friends));
-  }, [friends]);
-
-  // const renderActionButton = () => {
-  //   const showPending = requestStatus === 'pending' || isRequestSent;
-  //   if (isFriend) {
-  //     return <button onClick={handleUnfriend}>Unfriend</button>;
-  //   } else if (isRequestReceived) {
-  //     return <button onClick={handleAcceptFriendRequest}>Accept</button>;
-  //   } else if (showPending) {
-  //     return <span>Pending</span>;
-  //   } else {
-  //     return <button onClick={handleSendFriendRequest}>Send Friend Request</button>;
-  //   }
-  // };
 
   if (!user) {
     return (
@@ -67,6 +63,8 @@ function ProfilePage() {
           <img src={backgroundImg} alt="background" className="backgoundImg"/>
           <img className="profilePic" src={user.profileImageUrl} alt="Profile" />
           <h1 className="firstLastName" >{user.fname + " " + user.lname}</h1>
+          <h1>{renderActionButton()}</h1>
+      
           <div className="profileInfoWrapper">
             <UserEventsIndex userEvents={userEvents}/>
           </div>
@@ -78,8 +76,8 @@ function ProfilePage() {
     )
   }
 
-
 }
+
 
 
 export default ProfilePage;
