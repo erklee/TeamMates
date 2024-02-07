@@ -88,7 +88,7 @@ export default function LoginModal() {
   const handleDemo = (e) => {
     e.preventDefault();
     setPassword('password');
-    setEmail('shaun@aa.io');
+    setEmail('demo@aa.io');
   };
 
   return (
