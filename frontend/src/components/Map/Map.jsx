@@ -3,17 +3,17 @@ import { GoogleMap, Marker, InfoWindow, LoadScript, MarkerF } from "@react-googl
 import { useDispatch, useSelector } from "react-redux";
 import { fetchEvents } from "../../store/events";
 import { selectAlleventsArray } from "../../store/events";
-import spinping from "../../assets/images/spin-trans.gif"
+import spinping from "../../assets/images/spin-trans.gif";
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import './map.css';
 
 
 const EventMap = () => {
-  const {state} =  useLocation()
+  const {state} =  useLocation();
   const { sport } = state || {};
   const events = useSelector(selectAlleventsArray);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [markers, setMarkers] = useState([]);
   const [userLocation, setUserLocation] = useState(null);
   const [selectedMarker, setSelectedMarker] = useState("");
@@ -27,7 +27,7 @@ const EventMap = () => {
     const monthNames = [
       "January", "February", "March", "April",
       "May", "June", "July", "August",
-      "September", "October", "November", "December"
+      "September", "October", "November", "December",
     ];
     const monthName = monthNames[dateObject.getMonth()];
     const day = dateObject.getDate();
@@ -39,26 +39,26 @@ const EventMap = () => {
   const handleEventShow = e => {
     e.preventDefault();
     // console.log(selectedMarker.event["_id"])
-    navigate(`/events/${selectedMarker.event["_id"]}`)
-  }
+    navigate(`/events/${selectedMarker.event["_id"]}`);
+  };
 
   const handleCategoryButton = e => {
     e.preventDefault();
     if (selectedCategory === e.target.name) {
-      setSelectedCategory("")
+      setSelectedCategory("");
     } else {
-      setSelectedCategory(e.target.name)
+      setSelectedCategory(e.target.name);
     }
-  }
+  };
 
   const handleDifficultyButton = e => {
     e.preventDefault();
     if (selectedDifficulty === e.target.name) {
-      setSelectedDifficulty("")
+      setSelectedDifficulty("");
     } else {
-      setSelectedDifficulty(e.target.name)
+      setSelectedDifficulty(e.target.name);
     }
-  }
+  };
 
   useEffect(() => {
     dispatch(fetchEvents());
@@ -73,10 +73,10 @@ const EventMap = () => {
       try {
         const results = await Promise.allSettled(
           events
-          .filter((event) => 
-          (!selectedCategory || event.category === selectedCategory) && 
+            .filter((event) => 
+              (!selectedCategory || event.category === selectedCategory) && 
           (!selectedDifficulty || event.difficulty === selectedDifficulty)
-        )
+            )
             .map(async (event) => {
               try {
                 const response = await fetch(
@@ -129,13 +129,13 @@ const EventMap = () => {
 
   useEffect(() => {
     const getUserLocation = () => {
-        let confirmGeolocation
-        if (!sessionStorage.getItem('confirmedLocation')) {
-          confirmGeolocation = window.confirm("This app would like to use your location. Allow?");
-          sessionStorage.setItem("confirmedLocation", `${confirmGeolocation}`)
-        } else {
-          confirmGeolocation = JSON.parse(sessionStorage.getItem('confirmedLocation'))
-        }
+      let confirmGeolocation;
+      if (!sessionStorage.getItem('confirmedLocation')) {
+        confirmGeolocation = window.confirm("This app would like to use your location. Allow?");
+        sessionStorage.setItem("confirmedLocation", `${confirmGeolocation}`);
+      } else {
+        confirmGeolocation = JSON.parse(sessionStorage.getItem('confirmedLocation'));
+      }
 
       if (confirmGeolocation && navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
@@ -180,17 +180,17 @@ const EventMap = () => {
     if (distance === 1) {
       zoom = 15; 
     } if (distance === 5){
-        zoom = 13
+      zoom = 13;
     } if (distance === 10){
-        zoom = 12
+      zoom = 12;
     }
     if (distance === 15){
-        zoom = 11
+      zoom = 11;
     }if (distance === 25){
-        zoom = 10.5
+      zoom = 10.5;
     }if (distance === 50){
-      zoom = 9.5
-  }
+      zoom = 9.5;
+    }
 
    
     return zoom;
@@ -208,8 +208,8 @@ const EventMap = () => {
   };
 
   const img = {
-    url: spinping
-}
+    url: spinping,
+  };
 
   return (
     <div className="eventMapWrapper">
@@ -248,7 +248,7 @@ const EventMap = () => {
             </div>
           </div>
 
-           <div className="filterCategoryButtonWrapper">
+          <div className="filterCategoryButtonWrapper">
             <p>Difficulty:</p>
             <div className="filterCategoryButtonsContainer">
               <div className="categoryButtonRow">
@@ -258,6 +258,7 @@ const EventMap = () => {
               </div>
             </div>
           </div>
+
 
           {/* <select
             value={selectedDifficulty}
@@ -312,14 +313,14 @@ const EventMap = () => {
             onLoad={() => console.log("Map is loaded")}
           >
             {userLocation && window.google && window.google.maps && (
-            <MarkerF
-              position={userLocation}
+              <MarkerF
+                position={userLocation}
 
               
-              animation={window.google.maps.Animation.BOUNCE}
-              icon={img}
-            />
-          )}
+                animation={window.google.maps.Animation.BOUNCE}
+                icon={img}
+              />
+            )}
 
 
             {markers.map((marker, index) => (
@@ -327,8 +328,8 @@ const EventMap = () => {
                 key={`${marker.id} ${index}`}
                 position={marker.position}
                 onClick={() => {
-                  setSelectedMarker(marker) 
-                  console.log(marker)}}
+                  setSelectedMarker(marker); 
+                  console.log(marker);}}
               />
             ))}
             {selectedMarker && (
