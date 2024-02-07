@@ -227,38 +227,38 @@ const EventMap = () => {
             <option value="soccer">Soccer</option>
             <option value="hockey">Hockey</option>
           </select> */}
+          <div>
+            <div className="filterCategoryButtonWrapper">
+              <p>Category:</p>
+              <div className="filterCategoryButtonsContainer">
+                <div className="categoryButtonRow">
+                  <button name="basketball" onClick={handleCategoryButton} className={`filterCategoryButtons ${selectedCategory === "basketball" ? "selected" : ""}`}>Basketball</button>
+                  <button name="football" onClick={handleCategoryButton} className={`filterCategoryButtons ${selectedCategory === "football" ? "selected" : ""}`}>Football</button>
+                  <button name="hockey" onClick={handleCategoryButton} className={`filterCategoryButtons ${selectedCategory === "hockey" ? "selected" : ""}`}>Hockey</button>
 
-          <div className="filterCategoryButtonWrapper">
-            <p>Category:</p>
-            <div className="filterCategoryButtonsContainer">
-              <div className="categoryButtonRow">
-                <button name="basketball" onClick={handleCategoryButton} className={`filterCategoryButtons ${selectedCategory === "basketball" ? "selected" : ""}`}>Basketball</button>
-                <button name="football" onClick={handleCategoryButton} className={`filterCategoryButtons ${selectedCategory === "football" ? "selected" : ""}`}>Football</button>
-                <button name="hockey" onClick={handleCategoryButton} className={`filterCategoryButtons ${selectedCategory === "hockey" ? "selected" : ""}`}>Hockey</button>
-
-              </div>
-              <div className="categoryButtonRow">
-                <button name="baseball" onClick={handleCategoryButton} className={`filterCategoryButtons ${selectedCategory === "baseball" ? "selected" : ""}`}>Baseball</button>
-                <button name="tennis" onClick={handleCategoryButton} className={`filterCategoryButtons ${selectedCategory === "tennis" ? "selected" : ""}`}>Tennis</button>
-                <button name="soccer" onClick={handleCategoryButton} className={`filterCategoryButtons ${selectedCategory === "soccer" ? "selected" : ""}`}>Soccer</button>
-              </div>
-              {/* <div className="categoryButtonRow">
+                </div>
+                <div className="categoryButtonRow">
+                  <button name="baseball" onClick={handleCategoryButton} className={`filterCategoryButtons ${selectedCategory === "baseball" ? "selected" : ""}`}>Baseball</button>
+                  <button name="tennis" onClick={handleCategoryButton} className={`filterCategoryButtons ${selectedCategory === "tennis" ? "selected" : ""}`}>Tennis</button>
+                  <button name="soccer" onClick={handleCategoryButton} className={`filterCategoryButtons ${selectedCategory === "soccer" ? "selected" : ""}`}>Soccer</button>
+                </div>
+                {/* <div className="categoryButtonRow">
                 
               </div> */}
+              </div>
             </div>
-          </div>
 
-          <div className="filterCategoryButtonWrapper">
-            <p>Difficulty:</p>
-            <div className="filterCategoryButtonsContainer">
-              <div className="categoryButtonRow">
-                <button name="easy" onClick={handleDifficultyButton} className={`filterCategoryButtons ${selectedDifficulty === "easy" ? "selected" : ""}`}>Easy</button>
-                <button name="medium" onClick={handleDifficultyButton} className={`filterCategoryButtons ${selectedDifficulty === "medium" ? "selected" : ""}`}>Medium</button>
-                <button name="hard" onClick={handleDifficultyButton} className={`filterCategoryButtons ${selectedDifficulty === "hard" ? "selected" : ""}`}>Hard</button>
+            <div className="filterCategoryButtonWrapper">
+              <p>Difficulty:</p>
+              <div className="filterCategoryButtonsContainer">
+                <div className="categoryButtonRow">
+                  <button name="easy" onClick={handleDifficultyButton} className={`filterCategoryButtons ${selectedDifficulty === "easy" ? "selected" : ""}`}>Easy</button>
+                  <button name="medium" onClick={handleDifficultyButton} className={`filterCategoryButtons ${selectedDifficulty === "medium" ? "selected" : ""}`}>Medium</button>
+                  <button name="hard" onClick={handleDifficultyButton} className={`filterCategoryButtons ${selectedDifficulty === "hard" ? "selected" : ""}`}>Hard</button>
+                </div>
               </div>
             </div>
           </div>
-
 
           {/* <select
             value={selectedDifficulty}

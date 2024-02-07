@@ -38,9 +38,9 @@
     margin-top: 5px;
 }
 
-.filterCategoryButtonWrapper p {
+/* .filterCategoryButtonWrapper p {
     display: inline-block
-}
+} */
 
 .filterCategoryButtonsContainer {
     display: flex;
