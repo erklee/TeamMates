@@ -209,6 +209,7 @@ export default function EventCreateForm() {
               <option value="hard">Hard</option>
             </select>
           </label>
+          {errors?.attendeesMax && <p className="attendees errors">{errors.attendeesMax}</p>}
           <label htmlFor="max-attendees">
             <p>Max Attendees</p>
             <input 
