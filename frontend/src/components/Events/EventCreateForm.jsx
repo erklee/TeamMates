@@ -81,18 +81,18 @@ export default function EventCreateForm() {
     }
 
     // Set the state values and pictureUrl
-    await setTitle("");
-    await setDescription("");
-    await setEventDate("");
-    await setCategory("");
-    await setAttendeesMax("10");
-    await setAddress1("");
-    await setAddress2("");
-    await setCity("");
-    await setState("NY");
-    await setZipcode("");
-    await setDifficulty("easy");
-    await setPictureUrl(categoryPictureUrl);
+    // await setTitle("");
+    // await setDescription("");
+    // await setEventDate("");
+    // await setCategory("");
+    // await setAttendeesMax("10");
+    // await setAddress1("");
+    // await setAddress2("");
+    // await setCity("");
+    // await setState("NY");
+    // await setZipcode("");
+    // await setDifficulty("easy");
+    // await setPictureUrl(categoryPictureUrl);
 
     // Dispatch the composeEvent action
     
@@ -209,6 +209,7 @@ export default function EventCreateForm() {
               <option value="hard">Hard</option>
             </select>
           </label>
+          {errors?.attendeesMax && <p className="attendees errors">{errors.attendeesMax}</p>}
           <label htmlFor="max-attendees">
             <p>Max Attendees</p>
             <input 

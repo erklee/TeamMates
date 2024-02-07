@@ -46,13 +46,12 @@ const validateEventCreation = [
                     ?.addressComponents
                     ?.filter(component => component.confirmationLevel === 'CONFIRMED')
                     ?.map(component => component.componentType);
-                console.log(validComponents)
-                if(validComponents === undefined) return Promise.reject()
+                if(validComponents === undefined) return Promise.reject();
                 if(!['street_number', 'route', 'locality', 'country'].every(component => validComponents.includes(component))) return Promise.reject();
             }
-            else return false
+            else return Promise.reject();
         })
-        .withMessage("Address is invalid"),
+        .withMessage("Address is invalid."),
         
     handleValidationErrors
 ]
