@@ -393,9 +393,10 @@ router.get('/friend-requests/:id', requireUser, async (req, res, next) => {
 });
 
 
-router.get('/friends/:id', requireUser, async (req, res, next) => {
+router.get('/friends/:id', restoreUser, requireUser, async (req, res, next) => {
   try {
     const youUserId = req.user?._id;
+    
 
     if (!youUserId || !ObjectId.isValid(youUserId)) {
       console.error('Invalid user ID:', youUserId);

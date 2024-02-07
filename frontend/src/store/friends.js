@@ -61,6 +61,7 @@ export const acceptFriendRequestThunk = (friendId) => async (dispatch) => {
     if (response.ok) {
       const data = await response.json();
       const senderData = data.sender || {}; 
+      dispatch(getFriendRequestsThunk())
       dispatch(acceptFriendRequest(senderData));
     } else {
       const data = await response.json();
@@ -88,6 +89,7 @@ export const rejectFriendRequestThunk = (friendId) => async (dispatch) => {
 
     if (response.ok) {
       if (data.sender) {
+        dispatch(getFriendRequestsThunk())
         dispatch(rejectFriendRequest(data.sender));
       } else {
         console.error('Error rejecting friend request: Sender data not found in the response');
@@ -113,6 +115,7 @@ export const unfriendThunk = (friendId) => async (dispatch) => {
 
     if (response.ok) {
       dispatch(unFriend(data));
+      dispatch(getFriendsThunk())
     } else {
       console.error('Error unfriending user:', data.message);
     }
@@ -166,6 +169,7 @@ const initialState = {
 };
 
 const friendReducer = (state = initialState, action) => {
+
   switch (action.type) {
     case SEND_FRIEND_REQUEST:
       return {
@@ -175,7 +179,7 @@ const friendReducer = (state = initialState, action) => {
       case ACCEPT_FRIEND_REQUEST:
         return {
           ...state,
-          friendRequests: state.friendRequests.filter((friend) => friend?._id !== action.payload._id),
+          friendRequests: state.friendRequests.filter(friend => friend._id !== action.payload._id),
           friends: [...state.friends, action.payload],
         };
 

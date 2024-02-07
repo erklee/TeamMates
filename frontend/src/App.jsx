@@ -10,6 +10,8 @@ import Edit from './components/Events/EventEditForm';
 import EventCreateForm from './components/Events/EventCreateForm';
 import ProfilePage from './components/Profile/ProfilePage';
 import EventShowPage from "./components/Events/EventShow"
+import PendingFriendIndex from './components/Friends/PendingFriendIndex';
+import FriendsIndex from './components/Friends/FriendsIndex';
 
 const Layout = () => {
   return (
@@ -57,6 +59,14 @@ const router = createBrowserRouter([
       {
         path: 'profile/:id',
         element: <ProfilePage />
+      },
+      {
+        path: 'pendingfriend',
+        element: <PendingFriendIndex />
+      },
+      {
+        path: 'friends',
+        element: <FriendsIndex />
       }
       // {
       //   path: "login",
