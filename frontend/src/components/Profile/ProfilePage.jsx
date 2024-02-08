@@ -16,7 +16,7 @@ function ProfilePage() {
   const userEvents = useSelector(state => state.events.user);
   const currentUser = useSelector(state => state.session.user);
   const [loading, setLoading] = useState(false);
-  const [friendStatus, setFriendStatus] = useState(null); // State to track friend status: null (not friends), true (friends), false (pending)
+  const [friendStatus, setFriendStatus] = useState(null); 
 
   useEffect(() => {
     setLoading(true);
@@ -35,25 +35,25 @@ function ProfilePage() {
 
   useEffect(() => {
     if (currentUser?.friendIds?.includes(id)) {
-      setFriendStatus(true); // Set friend status to true if they are friends
+      setFriendStatus(true); 
     } else if (user?.requestIds?.includes(currentUser?._id)) {
-      setFriendStatus(false); // Set friend status to false if there's a pending request
+      setFriendStatus(false); 
     } else {
-      setFriendStatus(null); // Set friend status to null if there's no relationship
+      setFriendStatus(null);
     }
   }, [currentUser, user, id]);
 
   const handleUnfriend = async () => {
     setLoading(true);
     await dispatch(unfriendThunk(String(id)));
-    setFriendStatus(null); // Update friend status to null after unfriending
+    setFriendStatus(null); 
     setLoading(false);
   };
 
   const handleSendFriendRequest = async () => {
     setLoading(true);
     await dispatch(sendFriendRequestThunk(String(id)));
-    setFriendStatus(false); // Update friend status to false after sending friend request
+    setFriendStatus(false); 
     setLoading(false);
   };
 
