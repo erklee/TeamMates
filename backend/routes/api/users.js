@@ -128,20 +128,13 @@ router.get('/current', restoreUser, (req, res) => {
       city: req.user.address.city,
       state: req.user.address.state,
       zipcode: req.user.address.zipcode
-    }
+    },
+    friendIds: req.user.friendIds,
+    requestIds: req.user.requestIds
   });
 });
 
-router.get('/requests', async (req, res, next) => {
-  try {
-    const potentialFriends = await User.find({ requestIds: req.user })
-    const potentialFriendIds = [...potentialFriends].map(friend => friend._id)
-    return res.json(potentialFriendIds);
-  }
-  catch(err) {
-    next(err)
-  }
-});
+
 
 router.get('/:id', async (req, res, next) => {
   try {
@@ -176,7 +169,9 @@ router.get('/:id', async (req, res, next) => {
         city: user.address.city,
         state: user.address.state,
         zipcode: user.address.zipcode
-      }
+      },
+      requestIds: user.requestIds,
+      friendIds: user.friendIds
     });
   } catch (err) {
     next(err);
@@ -393,9 +388,10 @@ router.get('/friend-requests/:id', requireUser, async (req, res, next) => {
 });
 
 
-router.get('/friends/:id', requireUser, async (req, res, next) => {
+router.get('/friends/:id', restoreUser, requireUser, async (req, res, next) => {
   try {
     const youUserId = req.user?._id;
+    
 
     if (!youUserId || !ObjectId.isValid(youUserId)) {
       console.error('Invalid user ID:', youUserId);
@@ -426,4 +422,4 @@ router.get('/friends/:id', requireUser, async (req, res, next) => {
 module.exports = router;
 
 
-// ...
+

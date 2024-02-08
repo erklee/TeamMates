@@ -9,7 +9,7 @@ export default function UserEventsIndex({userEvents}) {
       {Object.values(userEvents).map((event) => (
           
           
-        <div className="userEventsIndexItemWrapper" key={event.id}>
+        <div className="userEventsIndexItemWrapper" key={event?._id}>
           <UserEventsIndexItem event={event} />
         </div>
       ))}

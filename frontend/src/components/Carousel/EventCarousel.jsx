@@ -77,7 +77,6 @@ function EventCarousel() {
       </div>
       <Carousel className='carouselContainer' activeIndex={index} onSelect={handleSelect} interval={3000} pause={false}>
         {events.map((slide, i) => {
-          console.log(slide)
           return (
             <Carousel.Item slide={slide} key ={i}>        
               <img
