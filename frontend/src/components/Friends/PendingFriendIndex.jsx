@@ -8,10 +8,11 @@ const PendingFriendIndex =() => {
     const friendrequests = useSelector(state => state.friends.friendRequests)
     const dispatch = useDispatch()
     console.log(friendrequests)
+    const user = useSelector(state => state.session.user)
     
     useEffect(() => {
-       dispatch(getFriendRequestsThunk())
-    }, [dispatch]);
+       dispatch(getFriendRequestsThunk(user._id))
+    }, [dispatch, user._id]);
 
     return(
         <div>

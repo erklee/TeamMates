@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "./ProfilePage.css";
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
@@ -9,48 +9,75 @@ import backgroundImg from "../../assets/images/footballField.jpeg"
 import Footer from "../AboutUs/Footer";
 import { getFriendRequestsThunk, getFriendsThunk, sendFriendRequestThunk, unfriendThunk } from "../../store/friends";
 
-
-
-
-
 function ProfilePage() {
-//   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const {id} = useParams();
-  const user = useSelector(state => state.users.user)
-  const userEvents = useSelector(state => state.events.user)
-  const currentUser = useSelector(state => state.session.user)
-   
- 
-  useEffect(() =>{
-    dispatch(getFriendRequestsThunk())
-    dispatch(getFriendsThunk())
-    dispatch(fetchUser(id));
-    dispatch(fetchUserEvents(id))
+  const { id } = useParams();
+  const user = useSelector(state => state.users.user);
+  const userEvents = useSelector(state => state.events.user);
+  const currentUser = useSelector(state => state.session.user);
+  const [loading, setLoading] = useState(false);
+  const [friendStatus, setFriendStatus] = useState(null); // State to track friend status: null (not friends), true (friends), false (pending)
+
+  useEffect(() => {
+    setLoading(true);
+    dispatch(getFriendRequestsThunk(currentUser._id))
+      .then(() => dispatch(getFriendRequestsThunk(id)))
+      .then(() => dispatch(getFriendsThunk(currentUser._id)))
+      .then(() => setLoading(false));
+  }, [dispatch, currentUser._id, id]);
+
+  useEffect(() => {
+    setLoading(true);
+    dispatch(fetchUser(id))
+      .then(() => dispatch(fetchUserEvents(id)))
+      .then(() => setLoading(false));
   }, [dispatch, id]);
 
+  useEffect(() => {
+    if (currentUser?.friendIds?.includes(id)) {
+      setFriendStatus(true); // Set friend status to true if they are friends
+    } else if (user?.requestIds?.includes(currentUser?._id)) {
+      setFriendStatus(false); // Set friend status to false if there's a pending request
+    } else {
+      setFriendStatus(null); // Set friend status to null if there's no relationship
+    }
+  }, [currentUser, user, id]);
 
+  const handleUnfriend = async () => {
+    setLoading(true);
+    await dispatch(unfriendThunk(String(id)));
+    setFriendStatus(null); // Update friend status to null after unfriending
+    setLoading(false);
+  };
+
+  const handleSendFriendRequest = async () => {
+    setLoading(true);
+    await dispatch(sendFriendRequestThunk(String(id)));
+    setFriendStatus(false); // Update friend status to false after sending friend request
+    setLoading(false);
+  };
 
   const renderActionButton = () => {
-    if (!currentUser || !currentUser?.friendIds || !id) {
-      return null; // Handle cases where currentUser or id is not defined
+    if (!currentUser || !currentUser.friendIds || !id) {
+      return null;
     }
   
-    if (currentUser?.friendIds.includes(id)) {
-      
-      return <button onClick={() => dispatch(unfriendThunk(String(id)))}>Unfriend</button>;
-    } else if(user?.requestIds?.includes(currentUser?._id)){
-      return <h1>...Pending</h1>
-    }
-    else {
-      return <button onClick={() => {
-        dispatch(sendFriendRequestThunk(String(id)));
-      }}>Friend</button>;
+    if (friendStatus === true) {
+      return <button onClick={handleUnfriend}>Unfriend</button>
+    } else if (friendStatus === false) {
+      return <h1>...Pending</h1>;
+    } else {
+      return <button onClick={handleSendFriendRequest}>Friend</button>;
     }
   }
 
-
-  if (!user) {
+  if (loading) {
+    return (
+      <div>
+        <h1>Loading...</h1>
+      </div>
+    );
+  } else if (!user) {
     return (
       <div>
         <h1>Waiting...</h1>
@@ -62,7 +89,7 @@ function ProfilePage() {
         <div className="profilePageContainer">
           <img src={backgroundImg} alt="background" className="backgoundImg"/>
           <img className="profilePic" src={user.profileImageUrl} alt="Profile" />
-          <h1 className="firstLastName" >{user.fname + " " + user.lname}</h1>
+          <h1 className="firstLastName">{user.fname + " " + user.lname}</h1>
           <h1>{renderActionButton()}</h1>
       
           <div className="profileInfoWrapper">
@@ -71,13 +98,10 @@ function ProfilePage() {
         </div>
         <Footer />
       </div>
-      
-
-    )
+    );
   }
-
 }
 
-
-
 export default ProfilePage;
+
+

@@ -27,14 +27,14 @@ export const unFriend = (friend) => ({
   payload: friend,
 })
 
-export const getFriendRequests = (friendRequests) => ({
+export const getFriendRequests = (friendRequestsId) => ({
   type: GET_FRIEND_REQUESTS,
-  payload: friendRequests,
+  payload: friendRequestsId,
 });
 
-export const getFriends = (friends) => ({
+export const getFriends = (friendsId) => ({
   type: GET_FRIENDS,
-  payload: friends,
+  payload: friendsId,
 });
 
   export const sendFriendRequestThunk = (friendId) => async (dispatch) => {
@@ -54,6 +54,14 @@ export const getFriends = (friends) => ({
 
 export const acceptFriendRequestThunk = (friendId) => async (dispatch) => {
   try {
+    const res = await jwtFetch('/api/users/current');
+    const currentUser = await res.json();
+
+    
+    if (!currentUser || !currentUser._id) {
+      console.error('User ID not available');
+      return;
+    }
     const response = await jwtFetch(`/api/users/${friendId}/accept`, {
       method: 'PATCH',
     });
@@ -61,7 +69,7 @@ export const acceptFriendRequestThunk = (friendId) => async (dispatch) => {
     if (response.ok) {
       const data = await response.json();
       const senderData = data.sender || {}; 
-      dispatch(getFriendRequestsThunk())
+      dispatch(getFriendRequestsThunk(currentUser._id))
       dispatch(acceptFriendRequest(senderData));
     } else {
       const data = await response.json();
@@ -78,6 +86,15 @@ export const acceptFriendRequestThunk = (friendId) => async (dispatch) => {
   
 export const rejectFriendRequestThunk = (friendId) => async (dispatch) => {
   try {
+    const res = await jwtFetch('/api/users/current');
+    const currentUser = await res.json();
+
+    
+    if (!currentUser || !currentUser._id) {
+      console.error('User ID not available');
+      return;
+    }
+
     const response = await jwtFetch(`/api/users/${friendId}/reject`, {
       method: 'PATCH',
       headers: {
@@ -89,7 +106,7 @@ export const rejectFriendRequestThunk = (friendId) => async (dispatch) => {
 
     if (response.ok) {
       if (data.sender) {
-        dispatch(getFriendRequestsThunk())
+        dispatch(getFriendRequestsThunk(currentUser._id))
         dispatch(rejectFriendRequest(data.sender));
       } else {
         console.error('Error rejecting friend request: Sender data not found in the response');
@@ -104,6 +121,14 @@ export const rejectFriendRequestThunk = (friendId) => async (dispatch) => {
 
 export const unfriendThunk = (friendId) => async (dispatch) => {
   try {
+    const res = await jwtFetch('/api/users/current');
+    const currentUser = await res.json();
+
+    if (!currentUser || !currentUser._id) {
+      console.error('User ID not available');
+      return;
+    }
+
     const response = await jwtFetch(`/api/users/${friendId}/unfriend`, {
       method: 'PATCH',
       headers: {
@@ -115,7 +140,7 @@ export const unfriendThunk = (friendId) => async (dispatch) => {
 
     if (response.ok) {
       dispatch(unFriend(data));
-      dispatch(getFriendsThunk())
+      dispatch(getFriendsThunk(currentUser._id))
     } else {
       console.error('Error unfriending user:', data.message);
     }
@@ -124,18 +149,10 @@ export const unfriendThunk = (friendId) => async (dispatch) => {
   }
 };
 
-export const getFriendRequestsThunk = () => async (dispatch) => {
+export const getFriendRequestsThunk = (friendId) => async (dispatch) => {
   try {
-    const response = await jwtFetch('api/users/current');
-    const currentUser = await response.json();
 
-    
-    if (!currentUser || !currentUser._id) {
-      console.error('User ID not available');
-      return;
-    }
-
-    const friendRequestsResponse = await jwtFetch(`api/users/friend-requests/${currentUser._id}`);
+    const friendRequestsResponse = await jwtFetch(`api/users/friend-requests/${friendId}`);
     const friendRequestsData = await friendRequestsResponse.json();
     dispatch(getFriendRequests(friendRequestsData));
   } catch (error) {
@@ -143,18 +160,11 @@ export const getFriendRequestsThunk = () => async (dispatch) => {
   }
 };
 
-export const getFriendsThunk = () => async (dispatch) => {
+export const getFriendsThunk = (friendId) => async (dispatch) => {
   try {
-    const response = await jwtFetch('api/users/current')
-    const currentUser = await response.json();
 
-   
-    if (!currentUser || !currentUser._id) {
-      console.error('User ID not available');
-      return;
-    }
 
-    const friendsResponse = await jwtFetch(`api/users/friends/${currentUser._id}`);
+    const friendsResponse = await jwtFetch(`/api/users/friends/${friendId}`);
     const friendsData = await friendsResponse.json();
 
     dispatch(getFriends(friendsData));
@@ -191,7 +201,7 @@ const friendReducer = (state = initialState, action) => {
     case UNFRIEND:
       return {
         ...state,
-        friends: state.friends.filter((friendId) => friendId !== action.payload),
+        friends: state.friends.filter((friendId) => friendId !== action.payload._id),
       };
     case GET_FRIEND_REQUESTS:
       return {

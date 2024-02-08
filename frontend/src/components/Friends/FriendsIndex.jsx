@@ -7,11 +7,12 @@ import Friend from "./Friend"
 const FriendsIndex = () => {
     const friends = useSelector(state => state.friends.friends)
     const dispatch = useDispatch()
+    const user = useSelector(state => state.session.user)
    
     console.log(friends)
     useEffect(() => {
-        dispatch(getFriendsThunk())
-    }, [dispatch]);
+        dispatch(getFriendsThunk(user._id))
+    }, [dispatch, user._id]);
     return(
         <div>
             {friends?.map((friend, index) => 

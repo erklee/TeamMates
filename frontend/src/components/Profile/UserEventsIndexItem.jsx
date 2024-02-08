@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 
 export default function UserEventsIndexItem({event}) {
   const currentUser = useSelector(state => state.session.user);
-  const isCoordinator = event?.coordinator?.["_id"] === currentUser["_id"]
+  const isCoordinator = event?.coordinator?.["_id"] === currentUser?.["_id"]
   function capitalizeEveryWord(str) {
     const words = str.split(' ');
     for (let i = 0; i < words.length; i++) {
