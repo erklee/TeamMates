@@ -9,7 +9,6 @@ const FriendsIndex = () => {
     const dispatch = useDispatch()
     const user = useSelector(state => state.session.user)
    
-    console.log(friends)
     useEffect(() => {
         dispatch(getFriendsThunk(user._id))
     }, [dispatch, user._id]);
