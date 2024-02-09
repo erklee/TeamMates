@@ -1,6 +1,6 @@
 # TeamMates
 
-![Splash Screen GIF](./frontend/src/assets/images/Splash2_landscape.gif "Splash screen animation showcasing the app")
+![Splash Screen GIF](./frontend/src/assets/images/demo.gif "Splash screen animation")
 
 ## Introduction
 
@@ -177,7 +177,11 @@ Here we are filtering events based on user selection such as category of sports 
 ```
 
 Some math for the distance options.
-Some gif here.
+
+![Maps GIF](./frontend/src/assets/images/maps3.gif "maps demo")
+
+<!-- <img src="./frontend/src/assets/images/maps2.gif" width="700" height="500"> -->
+
 
 ```javascript
  const calculateDistance = (lat1, lon1, lat2, lon2) => {
@@ -247,7 +251,7 @@ const VideoPlayer = () => {
 ## Friends
 
 Our platform implements a system to manage your friends, allowing users to to handle interactions such as accepting/rejecting friend requests, unfriending other users in the frontend. The following is a code snippet showcasing the handling of pending friend requets in the frontend.
-
+![Profile](./frontend/src/assets/images/profile.png "profile")
 
 ```javascript
 const PendingFriend = (friendrequest) => {
