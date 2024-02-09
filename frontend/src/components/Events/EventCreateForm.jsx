@@ -81,6 +81,20 @@ export default function EventCreateForm() {
       categoryPictureUrl = '';
     }
 
+    console.log({
+      title,
+      description,
+      date: eventDate,
+      attendeesMax,
+      difficulty,
+      category,
+      location: {
+        address: `${address1} ${address2}, ${city}, ${state}`,
+        zipcode,
+      },
+      pictureUrl: categoryPictureUrl, // Use the category-specific pictureUrl
+    })
+
     // Set the state values and pictureUrl
     await setTitle("");
     await setDescription("");
@@ -233,6 +247,7 @@ export default function EventCreateForm() {
               <option value="hard">Hard</option>
             </select>
           </label>
+          {errors?.attendeesMax && <p className="attendees errors">{errors.attendeesMax}</p>}
           <label htmlFor="max-attendees">
             <p>Max Attendees</p>
             <input 
