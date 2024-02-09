@@ -30,7 +30,7 @@ function Edit(){
   const [category, setCategory] = useState(event?.category);
   const [time,setTime] = useState(event?.date.split("T")[1].trim())
   const [eventDate, setEventDate] = useState(event?.date.split("T")[0]);
-  const d = new Date(eventDate)
+  
   
   const [description, setDescription] = useState(event?.description);
   const [difficulty, setDifficulty] = useState(event?.difficulty);
