@@ -106,11 +106,17 @@ function EventShowPage() {
       weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
     }) : 'Date not available';
     
+    const formattedTime = event.date ? new Date(event.date).toLocaleTimeString('en-US', {
+      hour: '2-digit', minute: '2-digit',
+    }) : 'Time not available';
+    
     const attendeesList = event.attendees?.map((attendee, index) => {
       const handleUserProfile = (e) => {
         e.preventDefault();
         navigate(`/profile/${attendee["_id"]}`);
       };
+
+
       return(
 
         
@@ -145,6 +151,7 @@ function EventShowPage() {
             <div className='eventShowDetails'>
               <h2>{capitalizeEveryWord(event.title)}</h2>
               <p><span>Date:</span> {formattedDate}</p>
+              <p><span>Time:</span> {formattedTime}</p>
               <p><span>Description:</span> {event.description}</p>
               <p><span>Category:</span> {event.category}</p>
               <p><span>Difficulty:</span> {event.difficulty}</p>

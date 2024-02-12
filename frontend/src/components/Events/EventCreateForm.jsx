@@ -41,6 +41,7 @@ export default function EventCreateForm() {
   const [city, setCity] = useState('');
   const [state, setState] = useState('NY');
   const [zipcode, setZipcode] = useState('');
+  const [time, setTime] = useState('');
   const [difficulty, setDifficulty] = useState(DIFFICULTIES[0]);
   const [, setPictureUrl] = useState('');
   const basketballUrl = 'https://mern-teammates-seeds.s3.amazonaws.com/public/basketball.jpeg';
@@ -80,26 +81,46 @@ export default function EventCreateForm() {
       categoryPictureUrl = '';
     }
 
+    console.log({
+      title,
+      description,
+      date: eventDate,
+      attendeesMax,
+      difficulty,
+      category,
+      location: {
+        address: `${address1} ${address2}, ${city}, ${state}`,
+        zipcode,
+      },
+      pictureUrl: categoryPictureUrl, // Use the category-specific pictureUrl
+    })
+
     // Set the state values and pictureUrl
-    // await setTitle("");
-    // await setDescription("");
-    // await setEventDate("");
-    // await setCategory("");
-    // await setAttendeesMax("10");
-    // await setAddress1("");
-    // await setAddress2("");
-    // await setCity("");
-    // await setState("NY");
-    // await setZipcode("");
-    // await setDifficulty("easy");
-    // await setPictureUrl(categoryPictureUrl);
+    await setTitle("");
+    await setDescription("");
+    await setEventDate("");
+    await setCategory("");
+    await setAttendeesMax("10");
+    await setAddress1("");
+    await setAddress2("");
+    await setCity("");
+    await setState("NY");
+    await setZipcode("");
+    await setTime("")
+    await setDifficulty("easy");
+    await setPictureUrl(categoryPictureUrl);
 
     // Dispatch the composeEvent action
+
+    // const eventDateTime = new Date()
+    // eventDateTime.setDate(eventDate)
+    // eventDateTime.setTime(eventDate)
+
     
     const res = await dispatch(composeEvent({
       title,
       description,
-      date: eventDate,
+      date: `${eventDate}T${time}`,
       attendeesMax,
       difficulty,
       category,
@@ -180,7 +201,24 @@ export default function EventCreateForm() {
 
             />
 
+
           </label>
+          <label 
+            htmlFor="time">
+            <p>Time</p>
+  
+            <input 
+              type="time" 
+              className="event-date input"
+              value={time}
+              onChange={e => {
+                e.preventDefault();
+                setTime(e.target.value);
+              }}
+              required
+
+            />
+            </label>
           <label htmlFor="category">
             <p>Category</p>
             <select 

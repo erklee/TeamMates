@@ -36,6 +36,8 @@ const EventMap = () => {
     return formattedDate;
   }
 
+
+
   const handleEventShow = e => {
     e.preventDefault();
     // console.log(selectedMarker.event["_id"])
