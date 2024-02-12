@@ -31,9 +31,9 @@ export default function FriendsPage() {
           { requestsVisible && < PendingFriendIndex /> }
         </div>
 
-
+        <Footer />
       </div>
-      {/* <Footer /> */}
+
     </div>
   );
 

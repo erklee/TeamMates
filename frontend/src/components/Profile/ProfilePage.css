@@ -11,8 +11,18 @@
   transform: translateX(-50%);
   height: 100%;
   width: 1000px;
-  height: 100%;
-  width: 1000px;
+}
+
+.profilePageWrapper {
+  position: relative;
+  top: 0px;
+  /* You may adjust this based on your design */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  /* min-height: 100vh; */
+  /* min-height: 900px; */
+  background-color: rgba(121, 121, 121, 0.4);
 }
 
 .profilePic {
@@ -50,17 +60,7 @@
   
 }
 
-.profilePageWrapper {
-  position: relative;
-  top: 0px;
-  /* You may adjust this based on your design */
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100vw;
-  /* min-height: 100vh; */
-  /* min-height: 900px; */
-  background-color: rgba(121, 121, 121, 0.4);
-}
+
 
 .friendsButton {
   position: absolute;

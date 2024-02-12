@@ -14,7 +14,7 @@ const FriendsIndex = () => {
     dispatch(getFriendsThunk(user._id));
   }, [dispatch, user?._id]);
   return(
-    <div>
+    <div className="friendsIndexWrapper">
       {friends?.map((friend, index) => 
         <Friend key={`${friend?._id}_${index}`} friend={friend}/>
       )}

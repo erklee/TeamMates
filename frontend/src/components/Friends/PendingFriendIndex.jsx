@@ -15,7 +15,7 @@ const PendingFriendIndex =() => {
   }, [dispatch, user._id]);
 
   return(
-    <div>
+    <div className="pendingFrameWrapper">
       {friendrequests?.map((friendrequest, index) =>
         <PendingFriend key={`${friendrequest?._id}_${index}`} friendrequest={friendrequest}/>
       )}

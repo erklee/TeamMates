@@ -49,3 +49,8 @@
   background-color: rgb(255, 85, 0);
   color: white;
 }
+.friendsIndexWrapper {
+  min-height: 100vh;
+  margin-bottom: 50px;
+  /* overflow-y: scroll; */
+}
