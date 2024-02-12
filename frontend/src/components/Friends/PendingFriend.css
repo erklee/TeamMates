@@ -1,0 +1,43 @@
+.friendRequestActionBtn {
+  font-family: sans-serif;
+  border-radius: 3px;
+  transition: 0.3s;
+  border-style: none;
+  /* padding: 10px; */
+
+  background-color: rgb(255, 85, 0);
+  color: white;
+  height: 30px;
+  font-size: 15px;
+  font-weight: 550;
+  margin-right: 10px;
+}
+
+.friendRequestActionBtn:hover {
+  background-color: black;
+  color: rgb(255, 85, 0);
+}
+
+.pendingFriendContainer {
+  display: flex;
+  flex-direction: row;
+  height: 100px;
+  width: 100%;
+  background-color: white;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  margin-bottom: 10px;
+}
+
+.pendingFriendContainer img {
+  height: 100%;
+}
+
+.pendingFriendInfoContainer {
+  /* margin-left: 20px; */
+  padding: 10px;
+}
+
+.pendingFriendWrapper {
+  min-height: 100vh;
+}

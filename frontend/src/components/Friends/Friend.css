@@ -1,0 +1,56 @@
+.friendsProfilePic {
+  min-height: 100%;
+  width: 100px;
+}
+
+.friendsIndexItemContainer {
+
+  font-family: sans-serif;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 20px;
+  width: 100%;
+  background-color: white;
+  border-style: none;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+
+}
+.friendsInfoContainer {
+  /* padding-top: 2px; */
+  width: 300px;
+  line-height: 10px;
+
+}
+.unfriendButton {
+  font-family: sans-serif;
+  border-radius: 3px;
+  transition: 0.3s;
+  border-style: none;
+  /* padding: 10px; */
+  background-color: black;
+  color: rgb(255, 85, 0);
+  /* color: white; */
+  height: 30px;
+  font-size: 16px;
+  font-weight: 500;
+  position: relative;
+  left: 220px;
+  top: 10px;
+}
+
+
+
+.friendsInfoContainer {
+  padding: 10px;
+}
+
+.unfriendButton:hover {
+  background-color: rgb(255, 85, 0);
+  color: white;
+}
+.friendsIndexWrapper {
+  min-height: 100vh;
+  margin-bottom: 50px;
+  /* overflow-y: scroll; */
+}

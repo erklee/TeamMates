@@ -63,11 +63,11 @@ function ProfilePage() {
     }
   
     if (friendStatus === true) {
-      return <button onClick={handleUnfriend}>Unfriend</button>
+      return <button onClick={handleUnfriend} className="friendsButton">Unfriend</button>
     } else if (friendStatus === false) {
-      return <h1>...Pending</h1>;
-    } else {
-      return <button onClick={handleSendFriendRequest}>Friend</button>;
+      return <button disabled className="friendsButton">...Pending</button>;
+    } else if (currentUser["_id"] !== id) {
+      return <button onClick={handleSendFriendRequest} className="friendsButton">+ Friend</button>;
     }
   }
 
