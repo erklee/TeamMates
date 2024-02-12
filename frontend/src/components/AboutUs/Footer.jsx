@@ -8,7 +8,7 @@ export default function Footer() {
 
   return(
     <footer className='aboutUsWrapers'>
-      <h2>The Developers</h2>
+      <h2>The <span>Developers</span></h2>
       <div className="developerInfo">
         <p>Eric Lee</p>
         <div className='bioIconsWrapper'>

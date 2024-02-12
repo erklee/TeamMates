@@ -1,6 +1,7 @@
 
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
+import profilePic from '../../assets/icons/blank-profile-pic.png'
 
 import { useState  } from 'react';
 import './NavBar.css';
@@ -83,8 +84,8 @@ function NavBar() {
           {createEventButton}
           <div className='userIconContainer' onClick={handleProfileDropdown}>
             {/* <button onClick={handleCreateEvent} id='create-button'>Create Event</button> //this shows only for when the user is logged in  */}
-            <img src={currentUser?.profileImageUrl}  height='25' width='25' alt="profile icon" />
-            <p>{currentUser.fname}</p>
+            <img src={currentUser?.profileImageUrl || profilePic }  height='25' width='25' alt="profile icon" />
+            <p>{currentUser?.fname}</p>
           </div>
           {visible && <ProfileDropdown className="profileDropdownWrapper" currentUser={currentUser} visible={visible} setVisible={setVisible}/>}
 

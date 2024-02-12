@@ -10,11 +10,14 @@
     flex-direction: column;
     padding: 10px;
     height: 30%;
+    overflow: auto;
 }
 .filters p {
     font-family: sans-serif;
     font-weight: 6  00;
 }
+
+
 
 .eventMapWrapper {
     /* height: 100%;
@@ -26,16 +29,18 @@
 }
 
 .filterCategoryButtonWrapper {
+
     display: flex;
     flex-direction: row;;
     min-height: 50px;
     align-items: start;
-        margin-bottom: 10px;
+    margin-bottom: 10px;
+    margin-top: 5px;
 }
 
-.filterCategoryButtonWrapper p {
+/* .filterCategoryButtonWrapper p {
     display: inline-block
-}
+} */
 
 .filterCategoryButtonsContainer {
     display: flex;
@@ -71,9 +76,12 @@
 
 .categoryButtonRow {
     display: flex;
+    flex-direction: row;
     min-width: 350px;
-    justify-content: space-evenly;
+
+    justify-content: space-between;
     margin-bottom: 10px;
+    margin-left: 10%;
 }
 
 .filterRange {
@@ -94,6 +102,8 @@
     min-height: 70%;
     width: 30vw;
     text-wrap: wrap;
+        overflow-y: scroll;
+        scrollbar-color: white;
 
 }
 
@@ -102,6 +112,7 @@
     border-style: solid;
     color: white;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* overflow: auto; */
 
 }
 
@@ -149,6 +160,10 @@
 }
 
 
+.infoWindowDetailsContainer {
+    padding: 15px;
+}
+
 
 
 
@@ -159,3 +174,5 @@
     font-weight: bold;
     cursor: pointer;
 } */
+
+

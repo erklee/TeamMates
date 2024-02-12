@@ -5,7 +5,9 @@ import { useParams, useNavigate} from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { getCurrentUser } from '../../store/session';
+import { showModal } from '../../store/modals';
 import allSports from "../../assets/images/allSports.jpeg"
+import Footer from '../AboutUs/Footer';
 import "./EventShow.css";
 
 
@@ -16,7 +18,7 @@ function EventShowPage() {
   const dispatch = useDispatch();
   const event = useSelector(state => state.events.new);
   const currentUser = useSelector(state => state.session.user);
-  console.log(currentUser)
+  
   const currentUserId = useSelector(state => state.session.user?._id);
 
   function capitalizeEveryWord(str) {
@@ -53,6 +55,10 @@ function EventShowPage() {
 
 
   const handleAttendClick = async () => {
+    if (!currentUser) {
+      await dispatch(showModal('LoginModal'))
+      await navigate("/")
+    }
     try {
       await dispatch(attendEvent(eventId));
       dispatch(fetchEvent(eventId));
@@ -99,11 +105,17 @@ function EventShowPage() {
       weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
     }) : 'Date not available';
     
+    const formattedTime = event.date ? new Date(event.date).toLocaleTimeString('en-US', {
+      hour: '2-digit', minute: '2-digit',
+    }) : 'Time not available';
+    
     const attendeesList = event.attendees?.map((attendee, index) => {
       const handleUserProfile = (e) => {
         e.preventDefault();
         navigate(`/profile/${attendee["_id"]}`);
       };
+
+
       return(
 
         
@@ -138,6 +150,7 @@ function EventShowPage() {
             <div className='eventShowDetails'>
               <h2>{capitalizeEveryWord(event.title)}</h2>
               <p><span>Date:</span> {formattedDate}</p>
+              <p><span>Time:</span> {formattedTime}</p>
               <p><span>Description:</span> {event.description}</p>
               <p><span>Category:</span> {event.category}</p>
               <p><span>Difficulty:</span> {event.difficulty}</p>
@@ -150,6 +163,7 @@ function EventShowPage() {
             </div>
           </div>
         </div>
+      <Footer />
       </div>
     );
   }
