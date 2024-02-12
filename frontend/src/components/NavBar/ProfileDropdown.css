@@ -26,10 +26,13 @@
   font-family: sans-serif;
   font-size: 16px;
 }
+
 .firstButton {
   border-bottom-style: solid;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
+  border-top-style: solid;
+  border-top-color: rgb(255, 85, 0);
 }
 .thirdButton {
   border-bottom-left-radius: 10px;
