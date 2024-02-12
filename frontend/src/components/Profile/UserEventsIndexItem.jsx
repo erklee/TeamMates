@@ -69,7 +69,7 @@ export default function UserEventsIndexItem({event}) {
             <p><span>Date:</span> {`${formatDate(event?.date)}`}</p>
             <p><span>Time:</span> {`${formattedTime}`}</p>
             <p><span>Participants:</span> {`${event.attendees?.length}`}</p>
-            <a target="_blank" href={`https://maps.google.com/?q=${event.location.address}, ${event.location.zipcode}`} rel="noreferrer">Directions</a>
+            <a target="_blank" href={`https://maps.google.com/?q=${event?.location?.address}, ${event?.location?.zipcode}`} rel="noreferrer">Directions</a>
           </div>
         </div>
       </div>
