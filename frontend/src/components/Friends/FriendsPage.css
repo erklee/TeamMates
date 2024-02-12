@@ -1,0 +1,38 @@
+.friendsPageContainer {
+  position: relative;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 100%;
+  width: 700px;
+}
+
+.friendsPageWrapper {
+  min-height: 1000px;
+  background-color: rgba(121, 121, 121, 0.4);
+}
+
+.friendsPageVisibilityButton {
+  display: flex;
+  width: 600px;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.friendsPageVisibilityButton button {
+  background-color: rgb(255, 85, 0);
+  color: white;
+  height: 40px;
+  border-radius: 3px;
+  transition: 0.3s;
+  border-style: none;
+  padding: 10px;
+}
+
+.friendsPageVisibilityButton button:hover {
+  background-color: white;
+  color: rgb(255, 85, 0);
+}

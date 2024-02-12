@@ -9,7 +9,7 @@ import * as modalActions from './store/modals'
 import * as userActions from './store/users'
 import * as eventActions from './store/events'
 import * as friendActions from './store/friends'
-
+import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -27,9 +27,9 @@ if (import.meta.env.MODE !== 'production') {
 }
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  // <React.StrictMode>
+  <React.StrictMode>
     <Provider store={store}>
       <App />
     </Provider>
-  // </React.StrictMode>
+  </React.StrictMode>
 );

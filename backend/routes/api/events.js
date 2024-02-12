@@ -26,7 +26,7 @@ router.get("/", async function (req, res, next) {
 router.get("/:id", async function (req, res, next) {
   try {
     const event = await Event.findById(req.params.id)
-      .populate("coordinator", "_id username")
+      .populate("coordinator", "_id username fname lname")
       .populate("attendees", "_id username fname lname");
     return res.json(event);
   }
@@ -115,7 +115,7 @@ router.post("/", requireUser, validateEventCreation, async function (req, res, n
   }
 });
 
-router.patch("/:id", requireUser, validateEventUpdate, async function (req, res, next) {
+router.patch("/:id", requireUser, async function (req, res, next) {
   let event;
   try {
     event = await Event.findById(req.params.id);

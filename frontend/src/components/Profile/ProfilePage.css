@@ -29,7 +29,6 @@
 }
 
 .firstLastName {
-
   position: absolute;
   color: white;
   top: 240px;
@@ -39,6 +38,8 @@
 }
 
 .profileInfoWrapper {
+  bottom: 7px;
+  position: relative;
   border-style: none;
   height: 800px;
   background-color: rgb(241, 241, 241);
@@ -61,3 +62,22 @@
   background-color: rgba(121, 121, 121, 0.4);
 }
 
+.friendsButton {
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  height: 40px;
+  border-radius: 3px;
+  transition: 0.3s;
+  border-style: none;
+  padding: 10px;
+  background-color: rgb(255, 85, 0);
+  color: white;
+  font-size: 20px;
+  text-align: center;
+}
+
+.friendsButton:hover {
+  background-color: white;
+  color: rgb(255, 85, 0);
+}

@@ -17,6 +17,7 @@ function EventShowPage() {
   const { eventId } = useParams(); 
   const dispatch = useDispatch();
   const event = useSelector(state => state.events.new);
+
   const currentUser = useSelector(state => state.session.user);
   
   const currentUserId = useSelector(state => state.session.user?._id);
@@ -147,6 +148,7 @@ function EventShowPage() {
               <p><span>Description:</span> {event.description}</p>
               <p><span>Category:</span> {event.category}</p>
               <p><span>Difficulty:</span> {event.difficulty}</p>
+              <p><span>Coordinater:</span> {`${event.coordinator.fname} ${event.coordinator.lname}`}</p>
               <p><span>Address:</span> {`${event.location.address} ${event.location.zipcode}`} </p>
               <a target="_blank" href={`https://maps.google.com/?q=${event.location.address}, ${event.location.zipcode}`} rel="noreferrer">Directions</a>
             </div>

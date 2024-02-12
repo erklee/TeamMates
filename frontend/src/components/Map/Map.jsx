@@ -329,7 +329,7 @@ const EventMap = () => {
                 position={marker.position}
                 onClick={() => {
                   setSelectedMarker(marker); 
-                  console.log(marker);}}
+                }}
               />
             ))}
             {selectedMarker && (
