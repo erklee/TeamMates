@@ -150,14 +150,10 @@ export const unfriendThunk = (friendId) => async (dispatch) => {
 };
 
 export const getFriendRequestsThunk = (friendId) => async (dispatch) => {
-  try {
 
     const friendRequestsResponse = await jwtFetch(`api/users/friend-requests/${friendId}`);
     const friendRequestsData = await friendRequestsResponse.json();
     dispatch(getFriendRequests(friendRequestsData));
-  } catch (error) {
-    console.error('Error fetching friend requests:', error);
-  }
 };
 
 export const getFriendsThunk = (friendId) => async (dispatch) => {
