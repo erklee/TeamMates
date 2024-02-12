@@ -75,11 +75,16 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  width: 100%;
 }
 
 #address-input-wrapper input {
-  width: 475px;
+  width: 960px;
 }
+
+/* .address-line {
+  width: 100%;
+} */
 
 .eventCreateCityStateZip {
   display: flex;
