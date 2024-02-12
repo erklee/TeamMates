@@ -151,7 +151,7 @@ export const unfriendThunk = (friendId) => async (dispatch) => {
 
 export const getFriendRequestsThunk = (friendId) => async (dispatch) => {
 
-    const friendRequestsResponse = await jwtFetch(`api/users/friend-requests/${friendId}`);
+    const friendRequestsResponse = await jwtFetch(`/api/users/friend-requests/${friendId}`);
     const friendRequestsData = await friendRequestsResponse.json();
     dispatch(getFriendRequests(friendRequestsData));
 };
