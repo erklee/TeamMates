@@ -130,6 +130,8 @@ function EventShowPage() {
 
     return (
       <div className='eventShowPageWrapper'>
+        <div className='show-page-container'>
+
         <div className='event-wrapper-info'>
           <img className="eventShowPic" src={event.pictureUrl || allSports} alt="eventPicture" height={300} width={300}/>
           
@@ -164,6 +166,7 @@ function EventShowPage() {
               <ul>{attendeesList}</ul>
             </div>
           </div>
+        </div>
         </div>
       <Footer />
       </div>
