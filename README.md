@@ -6,7 +6,7 @@
 
 Are you lonely? Do you need more physical activities in your life but aren't sure where to start? TeamMates is the solution you've been searching for! Our application enables you to initiate the change you need in your life and meet all the friends you'll ever need. Organize sporting events and connect with other users to get moving and create lasting friendships. [CHECK IT OUT!](https://teammates.onrender.com/)
 
-TeamMates is an application where users can organize sporting events and connect with each other. New users can discover events near them based on their current location and receive directions to the event. Once signed in, users can create their own events based on their preferences (e.g., sport category, address, date). If they're unhappy with their event for any reason, they can make changes or delete it entirely. Users can also connect with others by viewing profiles and seeing what events they're attending.
+TeamMates is an application where users can organize sporting events and connect with each other. New users can discover events near them based on their current location and receive directions to the event. Once signed in, users can create their own events based on their preferences (e.g., sport category, address, date). If you're the coordinator of the event, changes can be made and even be deleted entirely! Users can also connect with others by viewing profiles and seeing what events they're attending.
 
 ## Technologies
 
@@ -133,7 +133,7 @@ While a zipcode are in all addresses, it's not mandatory for an address to be co
 
 ## Google Maps API
 
-Here we are filtering events based on user selection such as category of sports or the difficulty level. For each event, there is a request to the Google Maps API's geocode endpoint which includes the event's address. Once the response is received, we extract the geo location data (longitude and latitude) for the address of the event. We are then able to calculate teh distance of each event from the user's currenct location.
+Here we are filtering events based on user selection such as category of sports or the difficulty level. For each event, there is a request to the Google Maps API's geocode endpoint which includes the event's address. Once the response is received, we extract the geo location data (longitude and latitude) for the address of the event. We are then able to calculate the distance of each event from the user's currenct location.
 
 ```JavaScript
 
