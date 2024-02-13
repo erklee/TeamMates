@@ -15,7 +15,7 @@ const PendingFriend = (friendrequest) => {
 
   return(
     <div className="pendingFriendContainer">
-      <img onClick={handleProfilePage} src={friendrequest.friendrequest.profileImageUrl} alt="" />
+      <img onClick={handleProfilePage} src={friendrequest?.friendrequest?.profileImageUrl} alt="" />
       <div className="pendingFriendInfoContainer">
         <p>{friendrequest?.friendrequest?.fname} {friendrequest?.friendrequest?.lname}</p>
         <button className="friendRequestActionBtn"onClick={() => dispatch(rejectFriendRequestThunk(String(friendrequest?.friendrequest?._id)))}>Reject</button>
@@ -26,3 +26,4 @@ const PendingFriend = (friendrequest) => {
 };
 
 export default PendingFriend;
+

@@ -140,7 +140,7 @@ export const unfriendThunk = (friendId) => async (dispatch) => {
 
     if (response.ok) {
       dispatch(unFriend(data));
-      dispatch(getFriendsThunk(currentUser._id))
+      dispatch(getFriendsThunk(currentUser._id));
     } else {
       console.error('Error unfriending user:', data.message);
     }
@@ -149,20 +149,21 @@ export const unfriendThunk = (friendId) => async (dispatch) => {
   }
 };
 
-export const getFriendRequestsThunk = (friendId) => async (dispatch) => {
 
-    const friendRequestsResponse = await jwtFetch(`api/users/friend-requests/${friendId}`);
+export const getFriendRequestsThunk = (friendId) => async (dispatch) => {
+  try {
+    const friendRequestsResponse = await jwtFetch(`/api/users/friend-requests/${friendId}`);
     const friendRequestsData = await friendRequestsResponse.json();
     dispatch(getFriendRequests(friendRequestsData));
+  } catch (error) {
+    console.error('Error fetching friend requests:', error);
+  }
 };
 
 export const getFriendsThunk = (friendId) => async (dispatch) => {
   try {
-
-
     const friendsResponse = await jwtFetch(`/api/users/friends/${friendId}`);
     const friendsData = await friendsResponse.json();
-
     dispatch(getFriends(friendsData));
   } catch (error) {
     console.error('Error fetching friends:', error);

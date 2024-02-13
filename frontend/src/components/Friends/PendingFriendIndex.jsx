@@ -7,7 +7,6 @@ import PendingFriend from "./Pendingfriend";
 const PendingFriendIndex =() => {
   const friendrequests = useSelector(state => state.friends.friendRequests);
   const dispatch = useDispatch();
-  console.log(friendrequests);
   const user = useSelector(state => state.session.user);
     
   useEffect(() => {
