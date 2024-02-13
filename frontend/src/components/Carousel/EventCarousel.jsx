@@ -86,9 +86,9 @@ function EventCarousel() {
                 onClick={handleEventShow}
               />
               <Carousel.Caption>
-                <h3 className='eventCarouselDetails'>{slide.category[0].toUpperCase() + slide.category.slice(1)}</h3>
-                <p className='eventCarouselDetails'>{slide.title[0].toUpperCase() + slide.title.slice(1)}</p>
-                <p className='eventCarouselDetails'>{slide.location.address + " " +slide.location.zipcode}</p>
+                <h3 className='eventCarouselDetails' onClick={handleEventShow}>{slide.category[0].toUpperCase() + slide.category.slice(1)}</h3>
+                <p className='eventCarouselDetails' onClick={handleEventShow}>{slide.title[0].toUpperCase() + slide.title.slice(1)}</p>
+                <p className='eventCarouselDetails' onClick={handleEventShow}>{slide.location.address + " " +slide.location.zipcode}</p>
               </Carousel.Caption>
             </Carousel.Item>
           );
