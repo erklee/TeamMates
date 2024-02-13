@@ -25,5 +25,5 @@ const PendingFriend = (friendrequest) => {
   );
 };
 
-export default PendingFriend;
+export default PendingFriend
 
