@@ -343,25 +343,21 @@ router.patch('/:id/unfriend', requireUser, async (req, res, next) => {
     const youUser = await User.findById(req.user._id);
 
     if (
-      youUser.friendIds &&
-      youUser.requestIds &&
-      youUser.friendIds.every(id => !id.equals(friendUser._id)) &&
-      youUser.requestIds.every(id => !id.equals(friendUser._id))
+      !youUser.friendIds.some(id => id.equals(friendUser._id))
     ) {
       return res.json({ errors: ["You are not friends with this user"] });
     }
 
     friendUser.friendIds = friendUser.friendIds.filter(id => !id.equals(youUser._id));
-    friendUser.requestIds = friendUser.requestIds.filter(id => !id.equals(youUser._id));
-    const fUser = await friendUser.save();
     youUser.friendIds = youUser.friendIds.filter(id => !id.equals(friendUser._id));
-    youUser.requestIds = youUser.friendIds.filter(id => !id.equals(friendUser._id));
+    const fUser = await friendUser.save();
     const yUser = await youUser.save();
     return res.json([yUser, fUser]);
   } catch (err) {
     next(err);
   }
 });
+
 
 // Get friend requests for the logged-in user
 router.get('/friend-requests/:id', requireUser, async (req, res, next) => {
@@ -388,7 +384,7 @@ router.get('/friend-requests/:id', requireUser, async (req, res, next) => {
 });
 
 
-router.get('/friends/:id', restoreUser, requireUser, async (req, res, next) => {
+router.get('/friends/:id',  requireUser, async (req, res, next) => {
   try {
     const youUserId = req.user?._id;
     

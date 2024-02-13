@@ -9,7 +9,6 @@ import * as modalActions from './store/modals'
 import * as userActions from './store/users'
 import * as eventActions from './store/events'
 import * as friendActions from './store/friends'
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 

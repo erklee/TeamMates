@@ -37,7 +37,7 @@ export default function EventCreateForm() {
   const [category, setCategory] = useState(SPORTS[0]);
   const [attendeesMax, setAttendeesMax] = useState(10);
   const [address1, setAddress1] = useState('');
-  const [address2, setAddress2] = useState('');
+  // const [address2, setAddress2] = useState('');
   const [city, setCity] = useState('');
   const [state, setState] = useState('NY');
   const [zipcode, setZipcode] = useState('');
@@ -89,7 +89,7 @@ export default function EventCreateForm() {
       difficulty,
       category,
       location: {
-        address: `${address1} ${address2}, ${city}, ${state}`,
+        address: `${address1}, ${city}, ${state}`,
         zipcode,
       },
       pictureUrl: categoryPictureUrl, // Use the category-specific pictureUrl
@@ -102,11 +102,11 @@ export default function EventCreateForm() {
     await setCategory("");
     await setAttendeesMax("10");
     await setAddress1("");
-    await setAddress2("");
+    // await setAddress2("");
     await setCity("");
     await setState("NY");
     await setZipcode("");
-    await setTime("")
+    await setTime(""),
     await setDifficulty("easy");
     await setPictureUrl(categoryPictureUrl);
 
@@ -125,7 +125,7 @@ export default function EventCreateForm() {
       difficulty,
       category,
       location: {
-        address: `${address1} ${address2}, ${city}, ${state}`,
+        address: `${address1}, ${city}, ${state}`,
         zipcode,
       },
       pictureUrl: categoryPictureUrl, // Use the category-specific pictureUrl
@@ -265,10 +265,10 @@ export default function EventCreateForm() {
 
           <div id="address-input-wrapper">
             <label htmlFor="address-line-1">
-              <p>Address Line 1</p>
+              <p>Address</p>
               <input 
                 type="text" 
-                className="address-line-1 input" 
+                className="address-line" 
                 value={address1}
                 onChange={e => {
                   e.preventDefault();
@@ -277,7 +277,7 @@ export default function EventCreateForm() {
                 required
               />
             </label>
-            <label htmlFor="address-line-2">
+            {/* <label htmlFor="address-line-2">
               <p>Address Line 2</p>
               <input 
                 type="text" 
@@ -287,7 +287,7 @@ export default function EventCreateForm() {
                   e.preventDefault();
                   setAddress2(e.target.value);
                 }} />
-            </label>
+            </label> */}
           </div>
           <div className="eventCreateCityStateZip">
             <label htmlFor="address-city">

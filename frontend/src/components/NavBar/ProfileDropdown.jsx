@@ -14,6 +14,11 @@ export default function ProfileDropdown({className, setVisible, currentUser}){
     setVisible(false)
     navigate('events');
   }
+  const handleFriends = (e) =>  {
+    e.preventDefault();
+    setVisible(false)
+    navigate('friends');
+  }
   const logoutUser = e => {
     e.preventDefault();
     setVisible(false)
@@ -31,6 +36,7 @@ export default function ProfileDropdown({className, setVisible, currentUser}){
     <div className={className}>
       <button className="firstButton" onClick={handleUserProfile}>Profile</button>
       <button className="secondButton"onClick={handleEvents}>Events</button>
+      <button className="secondButton"onClick={handleFriends}>Friends</button>
       <button className="thirdButton"onClick={logoutUser}>Logout</button>
     </div>
   )

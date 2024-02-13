@@ -17,6 +17,7 @@ function EventShowPage() {
   const { eventId } = useParams(); 
   const dispatch = useDispatch();
   const event = useSelector(state => state.events.new);
+
   const currentUser = useSelector(state => state.session.user);
   
   const currentUserId = useSelector(state => state.session.user?._id);
@@ -129,6 +130,8 @@ function EventShowPage() {
 
     return (
       <div className='eventShowPageWrapper'>
+        <div className='show-page-container'>
+
         <div className='event-wrapper-info'>
           <img className="eventShowPic" src={event.pictureUrl || allSports} alt="eventPicture" height={300} width={300}/>
           
@@ -154,6 +157,7 @@ function EventShowPage() {
               <p><span>Description:</span> {event.description}</p>
               <p><span>Category:</span> {event.category}</p>
               <p><span>Difficulty:</span> {event.difficulty}</p>
+              <p><span>Coordinater:</span> {`${event.coordinator.fname} ${event.coordinator.lname}`}</p>
               <p><span>Address:</span> {`${event.location.address} ${event.location.zipcode}`} </p>
               <a target="_blank" href={`https://maps.google.com/?q=${event.location.address}, ${event.location.zipcode}`} rel="noreferrer">Directions</a>
             </div>
@@ -162,6 +166,7 @@ function EventShowPage() {
               <ul>{attendeesList}</ul>
             </div>
           </div>
+        </div>
         </div>
       <Footer />
       </div>

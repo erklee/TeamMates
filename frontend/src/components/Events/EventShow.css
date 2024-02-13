@@ -5,9 +5,13 @@
   left: 50%;
   transform: translateX(-50%);
   width: 100vw;
-  min-height: 100vh;
+  min-height: 100%;
   /* min-height: 900px; */
   background-color: rgba(121, 121, 121, 0.4);
+}
+
+.show-page-container {
+  min-height: 100vh;
 }
 
 .event-wrapper-info {

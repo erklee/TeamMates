@@ -7,6 +7,7 @@ export default function UserEventsIndexItem({event}) {
   const currentUser = useSelector(state => state.session.user);
   const isCoordinator = event?.coordinator?._id === currentUser?._id
   function capitalizeEveryWord(str) {
+    if (!str) return "";
     const words = str?.split(' ');
     for (let i = 0; i < words.length; i++) {
       words[i] = words[i]?.charAt(0)?.toUpperCase() + words[i]?.slice(1);
@@ -50,7 +51,7 @@ export default function UserEventsIndexItem({event}) {
 
         <div className='userEventsImageContainer'>
           <div className="userEventsImageOverlayText" onClick={handleEventShow} >Go To Event</div>
-          <img src={event.pictureUrl || allSports} alt="Event Picture"
+          <img src={event?.pictureUrl || allSports} alt="Event Picture"
             height={400} width={400} className="userEventsItemPic"onClick={handleEventShow}
           />
         </div>
@@ -58,17 +59,18 @@ export default function UserEventsIndexItem({event}) {
           <button className='userEventsItemEditButton' onClick={handleEdit}>Edit</button>
         } 
         <div className='userEventItemInfoWrapper'>
-          <h1 className='userEventItemTitle' onClick={handleEventShow}>{capitalizeEveryWord(event.title)}</h1>
+          <h1 className='userEventItemTitle' onClick={handleEventShow}>{capitalizeEveryWord(event?.title)}</h1>
           <div className='userEventItemInfo'>
 
             <p><span>Description:</span> {`${event?.description}`}</p>
-            <p><span>Sport:</span> {`${event?.category?.slice(0,1).toUpperCase()}${event.category?.slice(1)}`}</p>
-            <p><span>Difficulty:</span> {`${event?.difficulty?.slice(0,1).toUpperCase()}${event.difficulty?.slice(1)}`}</p>
+
+            <p><span>Sport:</span> {`${event?.category?.slice(0,1).toUpperCase()}${event?.category?.slice(1)}`}</p>
+            <p><span>Difficulty:</span> {`${event?.difficulty?.slice(0,1).toUpperCase()}${event?.difficulty?.slice(1)}`}</p>
             <p><span>Address:</span> {`${event?.location?.address} ${event?.location?.zipcode}`}</p>
             <p><span>Date:</span> {`${formatDate(event?.date)}`}</p>
             <p><span>Time:</span> {`${formattedTime}`}</p>
-            <p><span>Participants:</span> {`${event?.attendees?.length}`}</p>
-            <a target="_blank" href={`https://maps.google.com/?q=${event?.location?.address}, ${event.location.zipcode}`} rel="noreferrer">Directions</a>
+            <p><span>Participants:</span> {`${event.attendees?.length}`}</p>
+            <a target="_blank" href={`https://maps.google.com/?q=${event?.location?.address}, ${event?.location?.zipcode}`} rel="noreferrer">Directions</a>
           </div>
         </div>
       </div>

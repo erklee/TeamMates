@@ -11,7 +11,8 @@ import EventCreateForm from './components/Events/EventCreateForm';
 import ProfilePage from './components/Profile/ProfilePage';
 import EventShowPage from "./components/Events/EventShow"
 import PendingFriendIndex from './components/Friends/PendingFriendIndex';
-import FriendsIndex from './components/Friends/FriendsIndex';
+// import FriendsIndex from './components/Friends/FriendsIndex';
+import FriendsPage from './components/Friends/FriendsPage';
 
 const Layout = () => {
   return (
@@ -62,11 +63,11 @@ const router = createBrowserRouter([
       },
       {
         path: 'pendingfriend',
-        element: <PendingFriendIndex />
+        element: < PendingFriendIndex />
       },
       {
         path: 'friends',
-        element: <FriendsIndex />
+        element: < ProtectedRoute component={FriendsPage} />
       }
       // {
       //   path: "login",
