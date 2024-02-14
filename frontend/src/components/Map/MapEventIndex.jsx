@@ -1,10 +1,10 @@
-import {useNavigate} from 'react-router-dom'
+// import {useNavigate} from 'react-router-dom'
 // import './map.css';
 import "./MapEventIndex.css"
 import MapEventIndexItem from './MapEventIndexItem';
 
 const MapEventIndex = ({events}) => {
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
   console.log(events);
   const eventsIndex = Object.values(events);
   console.log(eventsIndex);
