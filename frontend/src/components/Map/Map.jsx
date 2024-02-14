@@ -285,7 +285,7 @@ const EventMap = () => {
         <div className="eventInfoWrapper">
           {!selectedMarker && 
             <div className="mapEventIndex">
-              <MapEventIndex events={events}/>
+              <MapEventIndex events={events} selectedCategory={selectedCategory} selectedDifficulty={selectedDifficulty} />
             </div>
           }
           {selectedMarker && 

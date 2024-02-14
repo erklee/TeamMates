@@ -33,16 +33,17 @@ const MapEventIndexItem = ({event}) => {
       <div className="mapEventIndexItem" key={event?._id}>
         <div className="mapIndexItemImgContainer"> 
           <div className="mapIndexItemOverlayText" onClick={handleEventShow} >Go To Event</div>
-          <img src={event.pictureUrl} onClick={handleEventShow} className="mapIndexItemPic" alt="picture"/>
+          <img src={event?.pictureUrl} onClick={handleEventShow} className="mapIndexItemPic" alt="picture"/>
         </div>
         {/* <img src={event.pictureUrl} alt="picture"/> */}
         <div className="mapIndexItemDetails">
-          <p>{event.title.slice(0,1).toUpperCase() + event.title.slice(1)}</p>
-          <p>{`Description: ${event.description}`}</p>
-          <p>{`Sport: ${event.category.slice(0,1).toUpperCase()}${event.category.slice(1)}`}</p>
-          <p>{`Address: ${event.location.address} ${event.location.zipcode}`}</p>
-          <p>{`Date: ${formatDate(event.date)}`}</p>
-          <p>{`Participants: ${event.attendees.length}`}</p>
+          <p>{event?.title.slice(0,1).toUpperCase() + event?.title.slice(1)}</p>
+          <p>{`Description: ${event?.description}`}</p>
+          <p>{`Sport: ${event?.category.slice(0,1).toUpperCase()}${event.category?.slice(1)}`}</p>
+          <p>{`Address: ${event?.location.address} ${event?.location.zipcode}`}</p>
+          <p>{`Difficulty: ${event?.difficulty}`}</p>
+          <p>{`Date: ${formatDate(event?.date)}`}</p>
+          <p>{`Participants: ${event?.attendees?.length}`}</p>
         </div>
         <hr />
       </div>
