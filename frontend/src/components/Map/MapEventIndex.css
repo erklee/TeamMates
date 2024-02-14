@@ -1,0 +1,42 @@
+.mapIndexItemImgContainer {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.mapIndexItemOverlayText {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 1.5rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.mapIndexItemImgContainer:hover .mapIndexItemOverlayText {
+  opacity: 1;
+}
+
+.mapIndexItemImgContainer img:hover {
+  cursor: pointer;
+  opacity: 0.5;
+}
+
+.mapIndexItemImgContainer img {
+  width: 100%;
+}
+
+.IndexItemImgContainer:hover .sideBarImgOverlayText {
+  opacity: 1;
+}
+
+.mapIndexItemDetails p {
+  line-height: 20px;
+  word-wrap: break-word;
+}
+
+.mapIndexItemDetails {
+  padding: 15px;
+}

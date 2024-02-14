@@ -5,7 +5,7 @@ import { fetchEvents } from "../../store/events";
 import { selectAlleventsArray } from "../../store/events";
 import spinping from "../../assets/images/spin-trans.gif";
 import { useLocation, useNavigate } from 'react-router-dom';
-
+import MapEventIndex from "./MapEventIndex";
 import './map.css';
 
 
@@ -16,12 +16,11 @@ const EventMap = () => {
   const navigate = useNavigate();
   const [markers, setMarkers] = useState([]);
   const [userLocation, setUserLocation] = useState(null);
-  const [selectedMarker, setSelectedMarker] = useState("");
+  const [selectedMarker, setSelectedMarker] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(sport ||"");
   const [selectedDifficulty, setSelectedDifficulty] = useState("");
   const [filterRange, setFilterRange] = useState(10);
   const dispatch = useDispatch();
-
   function formatDate(inputDateString) {
     const dateObject = new Date(inputDateString);
     const monthNames = [
@@ -284,6 +283,11 @@ const EventMap = () => {
           </div>
         </div>
         <div className="eventInfoWrapper">
+          {!selectedMarker && 
+            <div className="mapEventIndex">
+              <MapEventIndex events={events}/>
+            </div>
+          }
           {selectedMarker && 
             <div className="eventInfo">
               <div className="sideBarEventImgContainer"> 
