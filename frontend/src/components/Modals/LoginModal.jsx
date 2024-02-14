@@ -8,12 +8,12 @@ import lockIcon from "../../assets/icons/lockIconWhite.png";
 import emailIcon from "../../assets/icons/emailIconWhite.png";
 import { getCurrentUser } from '../../store/session';
 import "./LoginModal.css";
-// import {useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 
 
 
 export default function LoginModal() {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const modalVisible = useSelector(state => state.modals["LoginModal"]);
   // console.log('showModal:', showModal);
   const currentUser = useSelector(state => state.session.user);
@@ -59,11 +59,16 @@ export default function LoginModal() {
   //     // You might want to show an error message or perform other actions here
   //   }
   // };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(login({ email, password })); 
-    setEmail('');
-    setPassword('');
+    const res = await dispatch(login({ email, password })); 
+    
+    if (!res.errors) {
+      navigate('/events')
+      setEmail('');
+      setPassword('');
+    }
+
   }
 
 
@@ -87,8 +92,11 @@ export default function LoginModal() {
 
   const handleDemo = (e) => {
     e.preventDefault();
-    setPassword('password');
-    setEmail('demo@aa.io');
+    setEmail('');
+    setPassword('');
+  
+    dispatch(login({email: 'demo@aa.io', password: 'password' })); 
+    navigate('/events')
   };
 
   return (
