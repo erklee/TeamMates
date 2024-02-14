@@ -1,13 +1,33 @@
 // import {useNavigate} from 'react-router-dom'
 // import './map.css';
-import "./MapEventIndex.css"
+import "./MapEventIndex.css";
 import MapEventIndexItem from './MapEventIndexItem';
 
-const MapEventIndex = ({events}) => {
+const MapEventIndex = ({events, selectedCategory, selectedDifficulty}) => {
   // const navigate = useNavigate()
   console.log(events);
+  console.log(selectedCategory);
+  console.log(selectedDifficulty);
   const eventsIndex = Object.values(events);
-  console.log(eventsIndex);
+  // console.log(eventsIndex)
+  let filters = {
+    category: selectedCategory || "",
+    difficulty: selectedDifficulty || "",
+  };
+
+
+  let filteredEvents = eventsIndex.filter(event => {
+    for (let key in filters) {
+      if (filters[key] && event[key] !== filters[key]) {
+        return false;
+      }
+    }
+    return true;
+  });
+
+  console.log(filteredEvents);
+  // console.log(filteredEvents)
+  // console.log(eventsIndex);
 
   // function formatDate(inputDateString) {
   //   const dateObject = new Date(inputDateString);
@@ -30,10 +50,20 @@ const MapEventIndex = ({events}) => {
   //   navigate(`/events/${event?._id}`);
   // };
 
+  if (filteredEvents.length === 0) {
+    return (
+      <>
+
+        {eventsIndex.map((event) => (
+          <MapEventIndexItem event={event} key={event._id}/>
+        ))}
+      </>
+    );
+  } 
+
   return (
     <>
-
-      {Object.values(events).map((event) => (
+      {filteredEvents.map((event) => (
         // <div className="mapEventIndexItem" key={event?._id}>
         //   <div className="mapIndexItemImgContainer"> 
         //     {/* <div className="mapIndexItemImgOverlayText" onClick={handleEventShow} >Go To Event</div> */}
@@ -52,6 +82,7 @@ const MapEventIndex = ({events}) => {
         // </div>
         <MapEventIndexItem event={event} key={event._id}/>
       ))}
+
     
     </>
   );
