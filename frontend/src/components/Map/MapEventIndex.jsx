@@ -5,9 +5,6 @@ import MapEventIndexItem from './MapEventIndexItem';
 
 const MapEventIndex = ({events, selectedCategory, selectedDifficulty}) => {
   // const navigate = useNavigate()
-  console.log(events);
-  console.log(selectedCategory);
-  console.log(selectedDifficulty);
   const eventsIndex = Object.values(events);
   // console.log(eventsIndex)
   let filters = {
@@ -25,7 +22,6 @@ const MapEventIndex = ({events, selectedCategory, selectedDifficulty}) => {
     return true;
   });
 
-  console.log(filteredEvents);
   // console.log(filteredEvents)
   // console.log(eventsIndex);
 

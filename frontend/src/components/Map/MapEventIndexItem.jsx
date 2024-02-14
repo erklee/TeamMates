@@ -4,6 +4,8 @@ import {useNavigate} from 'react-router-dom';
 
 const MapEventIndexItem = ({event}) => {
   const navigate = useNavigate();
+  // const currentDate = new Date()
+  // const eventDate = new Date(event.date)
 
   function formatDate(inputDateString) {
     const dateObject = new Date(inputDateString);
@@ -22,10 +24,10 @@ const MapEventIndexItem = ({event}) => {
   const handleEventShow = e => {
     e.preventDefault();
     // console.log(selectedMarker.event["_id"])
-    console.log(event);
     navigate(`/events/${event?._id}`);
   };
 
+  // if (eventDate >= currentDate) 
   return (
     <>
 
