@@ -10,7 +10,7 @@ import Edit from './components/Events/EventEditForm';
 import EventCreateForm from './components/Events/EventCreateForm';
 import ProfilePage from './components/Profile/ProfilePage';
 import EventShowPage from "./components/Events/EventShow"
-import PendingFriendIndex from './components/Friends/PendingFriendIndex';
+// import PendingFriendIndex from './components/Friends/PendingFriendIndex';
 // import FriendsIndex from './components/Friends/FriendsIndex';
 import FriendsPage from './components/Friends/FriendsPage';
 
@@ -59,16 +59,16 @@ const router = createBrowserRouter([
       },
       {
         path: 'profile/:id',
-        element: <ProfilePage />
+        element: <ProtectedRoute component={ProfilePage} />
       },
-      {
-        path: 'pendingfriend',
-        element: < PendingFriendIndex />
-      },
+      // {
+      //   path: 'pendingfriend',
+      //   element: < ProtectedRoute comPendingFriendIndex />
+      // },
       {
         path: 'friends',
         element: < ProtectedRoute component={FriendsPage} />
-      }
+      },
       // {
       //   path: "login",
       //   element: <AuthRoute component={LoginForm} />
