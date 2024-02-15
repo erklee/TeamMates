@@ -13,7 +13,7 @@ export const AuthRoute = ({ component: Component, ...props }) => {
 
 export const ProtectedRoute = ({ component: Component, ...props }) => {
   const loggedIn = useSelector(state => !!state.session.user);
-
+  
   return (
     loggedIn ? 
       <Component {...props} /> :
