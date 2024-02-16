@@ -15,7 +15,7 @@ export default function Footer() {
           <a href="https://github.com/erklee"  target="_blank" rel="noopener noreferrer">
             <img src={githubIcon}  className="githubIcon" alt="Description of the image" />
           </a>
-          <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer">
+          <a href="https://www.linkedin.com/in/eric-lee-0184aa1a2/" target="_blank" rel="noopener noreferrer">
             <img src={linkedInIcom} className="linkedInIcon" alt="Description of the image" />
           </a>
         </div>
@@ -38,7 +38,7 @@ export default function Footer() {
           <a href="https://github.com/PlasmaNuke"  target="_blank" rel="noopener noreferrer">
             <img src={githubIcon}  className="githubIcon" alt="Description of the image" />
           </a>
-          <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer">
+          <a href="https://www.linkedin.com/in/peter-nolan-45828b2ab/" target="_blank" rel="noopener noreferrer">
             <img src={linkedInIcom} className="linkedInIcon" alt="Description of the image" />
           </a>
         </div>
