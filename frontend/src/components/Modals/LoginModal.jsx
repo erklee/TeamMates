@@ -90,12 +90,12 @@ export default function LoginModal() {
 
 
 
-  const handleDemo = (e) => {
+  const handleDemo = async (e) => {
     e.preventDefault();
     setEmail('');
     setPassword('');
   
-    dispatch(login({email: 'demo@aa.io', password: 'password' })); 
+    await dispatch(login({email: 'demo@aa.io', password: 'password' })); 
     navigate('/events')
   };
 
