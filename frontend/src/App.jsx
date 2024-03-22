@@ -9,7 +9,7 @@ import { getCurrentUser } from './store/session';
 import Edit from './components/Events/EventEditForm';
 import EventCreateForm from './components/Events/EventCreateForm';
 import ProfilePage from './components/Profile/ProfilePage';
-import EventShowPage from "./components/Events/EventShow"
+import EventShowPage from "./components/Events/EventShow";
 // import PendingFriendIndex from './components/Friends/PendingFriendIndex';
 // import FriendsIndex from './components/Friends/FriendsIndex';
 import FriendsPage from './components/Friends/FriendsPage';
