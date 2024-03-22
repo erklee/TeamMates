@@ -3,16 +3,18 @@
     display: flex;
     flex-direction: column;
     height: 100vh;
+    overflow-y: scroll;
     /* justify-content: space-between; */
 }
 .filters {
     display: flex;
     flex-direction: column;
     padding: 10px;
-    height: 30%;
-
-    overflow: auto;
+    max-height: 35vh;
+    margin-bottom: 3dvh;
+    margin-top: 1dvh;
 }
+
 .filters p {
     font-family: sans-serif;
     font-weight: 6  00;
@@ -46,13 +48,14 @@
 .filterCategoryButtonsContainer {
     display: flex;
     flex-direction: column;
+    
     /* margin-right: 100px; */
 
 }
 
 .filterCategoryButtons {
-    height: 40px;
-    width: 100px;
+    height: 6dvh;
+    width: 6dvw;
     border-radius: 4px;
     background-color: rgb(255, 85, 0);
     color: white;
@@ -78,8 +81,8 @@
 .categoryButtonRow {
     display: flex;
     flex-direction: row;
-    min-width: 350px;
-
+    min-width: 100%;
+    gap:10px;
     justify-content: space-between;
     margin-bottom: 10px;
     margin-left: 3%;
@@ -90,6 +93,7 @@
     flex-direction: row;
     justify-content: space-between;
     width: 225px;
+    
 }
 
 .mapEventIndex {
@@ -173,7 +177,9 @@
 
 
 
-
+#DifficultyLabel{
+    padding-right:5.3px;
+}
 
 /* .gm-style-iw-close {
     color: #333333;

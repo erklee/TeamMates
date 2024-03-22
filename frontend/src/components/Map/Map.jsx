@@ -204,8 +204,8 @@ const EventMap = () => {
   };
 
   const containerStyle = {
-    width: '70vw',
-    height: '100vh',
+    width: '70dvw',
+    height: '100dvh',
   };
 
   const img = {
@@ -250,7 +250,7 @@ const EventMap = () => {
             </div>
 
             <div className="filterCategoryButtonWrapper">
-              <p>Difficulty:</p>
+              <p id="DifficultyLabel">Difficulty:</p>
               <div className="filterCategoryButtonsContainer">
                 <div className="categoryButtonRow">
                   <button name="easy" onClick={handleDifficultyButton} className={`filterCategoryButtons ${selectedDifficulty === "easy" ? "selected" : ""}`}>Easy</button>
@@ -356,6 +356,7 @@ const EventMap = () => {
           </GoogleMap>
         </LoadScript>
       </div>
+      
     </div>
   );
 };
