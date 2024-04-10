@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useMemo } from "react";
 import "./VideoPlayer.css";
 import video from "../../assets/videos/teammates.mp4"
 import video2 from "../../assets/videos/basketball.mp4"
@@ -8,40 +8,35 @@ import video5 from "../../assets/videos/baseball.mp4"
 import video6 from "../../assets/videos/basketball2.mp4"
 
 
+
 // import videos from "../../assets/videos/teammates.mp4"
 
 const VideoPlayer = () => {
-  const videos = [
-    // "../../assets/videos/teammates.mp4",
-    // "../../assets/videos/basketball.mp4",
-    video, video2, video3, video4, video5, video6
-  ];
+  const videos = useMemo(() => [
+   video, video2, video3, video4, video5, video6],[])
 
   const [currentVideoIndex, setCurrentVideoIndex] = useState(Math.floor(Math.random() * 6));
 
-  useEffect(() => {
-    const videoElement = document.getElementById('video-player');
-    
-    // Check if there are more videos to play
-    if (currentVideoIndex < videos.length) {
-      // Update the source and play the current video
-      videoElement.src = videos[currentVideoIndex];
-      videoElement.play();
-    }
-  }, [videos, currentVideoIndex]);
 
-  const handleVideoEnded = () => {
-    // When a video ends, move to the next one
-    setCurrentVideoIndex((prevIndex) => (prevIndex + 1) % videos.length);
+  const handleVideoEnded = async() => {
+    const nextVideoIndex = (currentVideoIndex + 1) % videos.length ;
+    setCurrentVideoIndex(nextVideoIndex);
+
+    const videoElement = document.getElementById('video-player');
+    videoElement.src = videos[nextVideoIndex];
+    if(videoElement.src === videos[nextVideoIndex])
+    await videoElement.play();
   };
 
+
   return (
-    <section>
+    <section id="video-player-wrapper">
       <h1 className="videoSlogan">Make Friends, Play Sports, Stay Connected</h1>
       <video
         id="video-player"
         onEnded={handleVideoEnded}
         src={videos[currentVideoIndex]} 
+        preload="auto"
         muted  
         autoPlay// controls
       >
