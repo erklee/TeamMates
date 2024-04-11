@@ -1,8 +1,8 @@
 import {useNavigate} from 'react-router-dom';
 import './EventCarousel.css';
-import {useEffect} from "react";
-import {useDispatch} from 'react-redux';
-import { fetchEvents } from "../../store/events";
+// import {useEffect} from "react";
+// import {useDispatch} from 'react-redux';
+// import { fetchEvents } from "../../store/events";
 // import Carousel from 'react-bootstrap/Carousel';
 // import allSports from '../../assets/images/allSports.jpeg';
 import basketball from "../../assets/icons/sports/basketball.png";
@@ -23,15 +23,15 @@ function EventCarousel() {
   const navigate = useNavigate();
   // const [index, setIndex] = useState(0);
   // const events = Object.values(useSelector(state => state.events.all)).slice(0,4);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   // const handleSelect = (selectedIndex) => {
 
   //   setIndex(selectedIndex);
   // };
 
-  useEffect(() => {
-    dispatch(fetchEvents());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(fetchEvents());
+  // }, [dispatch]);
 
   const handleIcons = e => {
     e.preventDefault();

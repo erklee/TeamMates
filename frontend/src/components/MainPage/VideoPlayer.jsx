@@ -24,8 +24,7 @@ const VideoPlayer = () => {
 
     const videoElement = document.getElementById('video-player');
     videoElement.src = videos[nextVideoIndex];
-    if(videoElement.src === videos[nextVideoIndex])
-    await videoElement.play();
+    if(videoElement.src === videos[nextVideoIndex]) await videoElement.play();
   };
 
 
