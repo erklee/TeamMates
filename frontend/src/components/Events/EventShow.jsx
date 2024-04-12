@@ -146,7 +146,10 @@ function EventShowPage() {
           {(isUserAttending && currentUser) ? (
             <button className="unattendBtn"onClick={handleUnattendClick}>Unattend</button>
           ) : (
-            <button className="attendBtn"onClick={handleAttendClick}>Attend</button>
+            <button className="attendBtn" onClick={handleAttendClick} type="submit" disabled={event.attendeesMax === event.attendees.length} style={{
+              backgroundColor: event.attendeesMax === event.attendees.length? 'gray' : 'rgb(255, 85, 0)',
+              color:  event.attendeesMax === event.attendees.length? 'black' : 'white'
+            }}>Attend</button>
           )}
           <div className='eventShowInfoWrapper'>
             
@@ -159,6 +162,7 @@ function EventShowPage() {
               <p><span>Difficulty:</span> {event.difficulty}</p>
               <p><span>Coordinater:</span> {`${event.coordinator.fname} ${event.coordinator.lname}`}</p>
               <p><span>Address:</span> {`${event.location.address} ${event.location.zipcode}`} </p>
+              <p><span>Max Capacity:</span> {`${event?.attendeesMax}`} </p>
               <a target="_blank" href={`https://maps.google.com/?q=${event.location.address}, ${event.location.zipcode}`} rel="noreferrer">Directions</a>
             </div>
             <div className='eventShowAttendanceWrapper'>

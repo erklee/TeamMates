@@ -2,6 +2,7 @@
 .eventCreatePage {
   background-color: rgba(153, 153, 153, 0.3);
   min-height: 160vh;
+  /* margin-bottom: 170px; */
 }
 .eventCreateForm {
   border-style: solid;
@@ -12,6 +13,7 @@
   scrollbar-width: thin;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
+  margin-bottom: 150px;
 }
 
 .eventCreateForm p {

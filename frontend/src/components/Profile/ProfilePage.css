@@ -11,6 +11,7 @@
   transform: translateX(-50%);
   height: 100%;
   width: 1000px;
+ 
 }
 
 .profilePageWrapper {
@@ -22,6 +23,10 @@
   width: 100vw;
   /* min-height: 100vh; */
   /* min-height: 900px; */
+  /* background-color: rgba(121, 121, 121, 0.4); */
+ margin-bottom: 170px;
+}
+#outside{
   background-color: rgba(121, 121, 121, 0.4);
 }
 

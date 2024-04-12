@@ -85,6 +85,7 @@ function ProfilePage() {
     );
   } else {
     return (
+      <div id="outside">
       <div className="profilePageWrapper">
         <div className="profilePageContainer">
           <img src={backgroundImg} alt="background" className="backgoundImg"/>
@@ -96,6 +97,8 @@ function ProfilePage() {
             <UserEventsIndex userEvents={userEvents}/>
           </div>
         </div>
+        
+      </div>
         <Footer />
       </div>
     );

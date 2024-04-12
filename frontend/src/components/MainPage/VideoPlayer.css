@@ -1,22 +1,35 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
-#video-player {
-  /* position: absolute; */
-  /* height: 500px; */
-  width: 100vw;
+/* #video-player {
   position: relative;
-  left: 50%;
-  transform: translateX(-50%);
-  border-style: solid;
+  /* left: 50%;
+  transform: translateX(-50%); */
+  /* border-style: solid;
   border-width: 10px;
   border-color: rgb(0, 0, 0);
   border-right-style: none;
   border-left-style: none;
   border-top-style: none;
   margin-top: 0px;
+  background-color: black;
+  width: 100%;
+  height: 500px; 
+} */ 
+#video-player-wrapper {
+  position: relative;
 }
+#video-player {
+  width: 100vw;
+  height:500px;
+  background: linear-gradient(to bottom, black, #333, #666, #999, #bbb, #ddd, #eee, #f0f0f0, white);
+
+}
+
+
+
 
 #video-player::-internal-media-controls-overlay-cast-button {
   display: none;
+  
 }
 
 .videoSlogan {
@@ -35,6 +48,7 @@
   transform: translateX(-50%);
   color: white;
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+  /* text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); */
   
   z-index: 1;
 }
