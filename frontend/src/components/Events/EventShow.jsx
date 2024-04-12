@@ -64,7 +64,7 @@ function EventShowPage() {
       await dispatch(attendEvent(eventId));
       dispatch(fetchEvent(eventId));
     } catch (error) {
-      console.log("oh no");
+      // console.log("oh no");
     }
   };
     
@@ -73,7 +73,7 @@ function EventShowPage() {
       await dispatch(unAttendEvent(eventId));
       dispatch(fetchEvent(eventId)); 
     } catch (error) {
-      console.log("shit");
+      // console.log("shit");
     }
   };
 

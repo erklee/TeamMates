@@ -152,7 +152,7 @@ const EventMap = () => {
           { enableHighAccuracy: true }
         );
       } else {
-        console.log("User denied geolocation access or not supported.");
+        // console.log("User denied geolocation access or not supported.");
         setUserLocation({ lat: 40.71679995490363, lng: -73.99771308650402 });
       }
     };
