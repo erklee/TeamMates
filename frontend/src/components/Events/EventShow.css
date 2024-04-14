@@ -1,3 +1,6 @@
+/* #outside{
+  background-color: rgba(121, 121, 121, 0.4);
+} */
 .eventShowPageWrapper {
   position: relative;
   top: 0px;
@@ -7,11 +10,15 @@
   width: 100vw;
   min-height: 100%;
   /* min-height: 900px; */
-  background-color: rgba(121, 121, 121, 0.4);
+  /* background-color: rgba(121, 121, 121, 0.4);
+  margin-bottom: 170px; */
+  margin-bottom: 50px;
+
 }
 
 .show-page-container {
   min-height: 100vh;
+  
 }
 
 .event-wrapper-info {

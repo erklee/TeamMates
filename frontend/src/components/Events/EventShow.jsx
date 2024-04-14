@@ -129,6 +129,7 @@ function EventShowPage() {
     
 
     return (
+      <div id='outside'>
       <div className='eventShowPageWrapper'>
         <div className='show-page-container'>
 
@@ -172,6 +173,7 @@ function EventShowPage() {
           </div>
         </div>
         </div>
+      </div>
       <Footer />
       </div>
     );
