@@ -35,7 +35,7 @@ export default function Footer() {
       <div className="developerInfo">
         <p>Peter Nolan</p>
         <div  className='bioIconsWrapper'>
-          <a href="https://github.com/PlasmaNuke"  target="_blank" rel="noopener noreferrer">
+          <a href="https://github.com/ptrnln"  target="_blank" rel="noopener noreferrer">
             <img src={githubIcon}  className="githubIcon" alt="Description of the image" />
           </a>
           <a href="https://www.linkedin.com/in/peter-nolan-45828b2ab/" target="_blank" rel="noopener noreferrer">

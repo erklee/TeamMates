@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { getFriendRequestsThunk } from "../../store/friends";
-import PendingFriend from "./Pendingfriend";
+import PendingFriend from "./PendingFriend";
 
 const PendingFriendIndex =() => {
   const friendrequests = useSelector(state => state.friends.friendRequests);

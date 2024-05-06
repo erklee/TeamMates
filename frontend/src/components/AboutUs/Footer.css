@@ -7,7 +7,7 @@
   min-height: 100px;
   /* margin-top: 170px; */
   align-items: first baseline;
-  position: relative;
+  position: fixed;
   bottom: 0px;
 }
 
