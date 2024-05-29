@@ -383,6 +383,9 @@ export default function EventCreateForm() {
           <button className="eventCreateButton"type="submit">Submit</button>
         </form>
       </div>
+      <div id="spacer">
+
+      </div>
       <Footer />
     </div>
   );

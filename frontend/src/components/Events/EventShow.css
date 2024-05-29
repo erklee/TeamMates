@@ -12,7 +12,7 @@
   /* min-height: 900px; */
   /* background-color: rgba(121, 121, 121, 0.4);
   margin-bottom: 170px; */
-  margin-bottom: 50px;
+  /* margin-bottom: 50px; */
 
 }
 
@@ -47,7 +47,7 @@
   background-color: white;
   border-bottom-right-radius: 10px;
   border-bottom-left-radius: 10px;
-
+  
 }
 
 .eventShowInfoWrapper {
@@ -60,6 +60,7 @@
   width: 500px;
   padding-top: 5px;
   padding-left: 20px;
+  padding-bottom:200px;
 }
 
 .eventShowDetails h2 {

@@ -13,6 +13,7 @@
   transform: translateX(-50%);
   width: 700px;
   max-width: 100%;
+  margin-bottom: 150px;
 }
 
 .friendsPageVisibilityButton {

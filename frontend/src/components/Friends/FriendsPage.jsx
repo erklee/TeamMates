@@ -30,6 +30,9 @@ export default function FriendsPage() {
           { friendsVisible && < FriendsIndex /> }
           { requestsVisible && < PendingFriendIndex /> }
         </div>
+        {/* <div id="spacer">
+
+        </div> */}
       <Footer  />
 
     
