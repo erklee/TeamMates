@@ -3,7 +3,7 @@ import SignUpModal from "../Modals/SignUpModal";
 import EventCarousel from "../Carousel/EventCarousel";
 import VideoPlayer from "./VideoPlayer";
 import Footer from "../AboutUs/Footer";
-import "./MainPage.css"
+
 
 function MainPage() {
 
@@ -13,8 +13,10 @@ function MainPage() {
       <SignUpModal  />
       <LoginModal />
       <VideoPlayer />
-      <div id="eventCarouselMainPage">
+      
       <EventCarousel />
+      <div id="spacer">
+
       </div>
       <Footer />
      
