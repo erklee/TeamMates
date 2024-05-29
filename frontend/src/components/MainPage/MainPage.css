@@ -6,3 +6,7 @@
 .mainPageWrapper section {
   /* scroll-snap-align: start end; */
 }
+
+#eventCarouselMainPage{
+  margin-bottom: 200px;
+}

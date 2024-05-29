@@ -99,6 +99,9 @@ function ProfilePage() {
         </div>
         
       </div>
+       <div id="spacer">
+
+        </div>
         <Footer />
       </div>
     );

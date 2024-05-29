@@ -173,6 +173,9 @@ function EventShowPage() {
           </div>
         </div>
         </div>
+        <div id='spacer'>
+
+        </div>
       </div>
       <Footer />
       </div>
