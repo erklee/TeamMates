@@ -19,7 +19,7 @@ const EventMap = () => {
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(sport ||"");
   const [selectedDifficulty, setSelectedDifficulty] = useState("");
-  const [filterRange, setFilterRange] = useState(10);
+  const [filterRange, setFilterRange] = useState(1000);
   const dispatch = useDispatch();
   function formatDate(inputDateString) {
     const dateObject = new Date(inputDateString);
@@ -109,7 +109,7 @@ const EventMap = () => {
         const newMarkers = results
           .filter((result) => result.status === "fulfilled" && result.value !== null)
           .map((result) => result.value)
-          .filter((marker) => marker?.distance !== undefined && marker.distance <= filterRange);
+          .filter((marker) => filterRange === null || (marker?.distance !== undefined && marker.distance <= filterRange));
 
         if (isMounted) {
           setMarkers(newMarkers);
@@ -190,14 +190,16 @@ const EventMap = () => {
     }if (distance === 25){
       zoom = 10.5;
     }if (distance === 50){
-      zoom = 9.5;
+      zoom = 10;
+    }if(distance === 1000){
+      zoom = 9.5
     }
 
    
     return zoom;
   };
 
-  const filterRangeOptions = [1, 5, 10, 15, 25, 50];
+  const filterRangeOptions = [1000, 1, 5, 10, 15, 25, 50];
 
   const closeInfoWindow = () => {
     setSelectedMarker(null);
@@ -211,6 +213,9 @@ const EventMap = () => {
   const img = {
     url: spinping,
   };
+  const filteredEvents = markers
+  .filter(marker => marker.distance <= filterRange)
+  .map(marker => marker.event);
 
   return (
     <div className="eventMapWrapper">
@@ -276,7 +281,7 @@ const EventMap = () => {
             <select value={filterRange} onChange={(e) => setFilterRange(parseInt(e.target.value))}>
               {filterRangeOptions.map((option, index) => (
                 <option key={`${option?.id} ${index}`} value={option}>
-                  {`${option} mile${option > 1 ? "s" : ""} away`}
+                  {option !== 1000? `${option} mile${option > 1 ? "s" : ""} away` : "Select a range"}
                 </option>
               ))}
             </select>
@@ -285,7 +290,10 @@ const EventMap = () => {
         <div className="eventInfoWrapper">
           {!selectedMarker && 
             <div className="mapEventIndex">
-              <MapEventIndex events={events} selectedCategory={selectedCategory} selectedDifficulty={selectedDifficulty} />
+           
+                 <MapEventIndex events={filteredEvents} selectedCategory={selectedCategory} selectedDifficulty={selectedDifficulty} />
+              
+             
             </div>
           }
           {selectedMarker && 
