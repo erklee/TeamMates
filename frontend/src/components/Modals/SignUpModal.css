@@ -169,7 +169,9 @@
   margin-left: 10px;
 }
 
-.zipCodeInput {
-  /* margin-left: 10px; */
+@media (max-width: 600px){
 
+.signUpModal{
+  top: 45%;
+}
 }
