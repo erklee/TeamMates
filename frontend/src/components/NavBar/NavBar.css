@@ -162,3 +162,27 @@
   color: white;
   cursor: pointer;
 }
+
+@media (max-width: 600px){
+  .navBarContainer {
+    padding: 2px 2px
+  }
+  .navBarContainer h1 {
+    font-size: 25px;
+  }
+  .navBarContainer h1 span {
+    font-size: 25px;
+  }
+  #navBarSignUp {
+    margin-right: 10px;
+    width: 60px;
+    height: 40px;
+    font-size: 12px;
+  }
+  #navBarLogin{
+    margin-right: 10px;
+    width: 60px;
+    height: 40px;
+    font-size: 12px;
+  }
+}

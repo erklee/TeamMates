@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {signup, clearSessionErrors } from '../../store/session';
+import {signup, login, clearSessionErrors } from '../../store/session';
+import { useNavigate } from 'react-router-dom';
 import { hideModal } from '../../store/modals';
 import closeIcon from "../../assets/icons/closeIcon2.png";
 import DatePicker from 'react-datepicker';
@@ -12,6 +13,7 @@ import "./SignUpModal.css";
 export default function SignUpModal() {
   const modalVisible = useSelector(state => state.modals["SignUpModal"]);
   const currentUser = useSelector(state => state.session.user);
+  const navigate = useNavigate()
 
   const [email, setEmail] = useState('');
   const [fname, setFname] = useState('');
@@ -33,6 +35,14 @@ export default function SignUpModal() {
   }, [dispatch]);
 
 
+  const handleDemo = async (e) => {
+    e.preventDefault();
+    setEmail('');
+    setPassword('');
+  
+    await dispatch(login({email: 'demo@aa.io', password: 'password' })); 
+    navigate('/events')
+  };
 
   const handleHideModal = (e) => {
     e.preventDefault();
@@ -196,7 +206,8 @@ export default function SignUpModal() {
         >
           Sign Up
         </button>
-
+        <button className='signUpSubmit' onClick={handleDemo}>Demo</button>
+        
         <img src={closeIcon} onClick={handleHideModal} className="closeSignUpImg" alt="closeIcon" />
 
         {/* <button className='closeSignUpModal' onClick={handleHideModal}>close</button> */}

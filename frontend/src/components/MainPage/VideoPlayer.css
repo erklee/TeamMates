@@ -52,3 +52,12 @@
   
   z-index: 1;
 }
+
+@media (max-width: 600px){
+  .videoSlogan{
+    font-size: 19px;
+  }
+  #video-player{
+    height: 300px;
+  }
+}

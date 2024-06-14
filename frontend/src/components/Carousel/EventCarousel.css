@@ -1,10 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
-.slideImage {
-  height: 80vh;
+/* .slideImage {
+  height: 20vh;
   width: 100%;
   cursor: pointer;
-}
+} */
 
  #EventsHeader{
   margin-top: 50px;
@@ -19,12 +19,6 @@
 
   /* If they want the carousel remove this and uncomment the line below */
 }
-
-
-
-
-
-
 
 
 .carouselWrapper h1 {
@@ -88,8 +82,22 @@
   text-align: center;
 }
 
-.carousel-control-prev,
+/* .carousel-control-prev,
 .carousel-control-next {
-  /* Add your styles here */
+
   color: #007bff;
+} */
+
+@media (max-width: 600px){
+  .sportsIconInfoContainer img {
+    width: 70px;
+    height: 70px;
+  }
+  .sportsIconContainer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+  #EventsHeader{
+    margin-top: 10px;
+  }
 }
