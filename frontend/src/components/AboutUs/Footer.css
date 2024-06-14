@@ -55,3 +55,34 @@
   width: 90px;
 
 }
+
+@media (max-width: 600px){
+  .aboutUsWrapers{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .developerInfo{
+    padding: 2px;
+    align-self: center;
+    align-items:normal;
+  }
+  .developerInfo p{
+    margin-left: 20px;
+    font-size: 10px;
+  }
+  .githubIcon {
+    
+    width: 20px;
+    height: 20px;
+  }
+  .linkedInIcon{
+   
+    width: 20px;
+    height: 20px;
+  }
+  .bioIconsWrapper{
+    margin-left: 20px;
+    width: 10px;
+    margin-bottom: 10px;
+  }
+}

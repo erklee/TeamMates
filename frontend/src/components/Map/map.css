@@ -113,7 +113,7 @@
     width: 30vw;
     text-wrap: wrap;
     overflow-y: auto;
-    /* scrollbar-color: white; */
+ 
     scrollbar-color: auto;
 
 }
