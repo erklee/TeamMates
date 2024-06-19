@@ -40,3 +40,26 @@
 .mapIndexItemDetails {
   padding: 15px;
 }
+
+
+@media (max-width: 600px){
+  .mapIndexItemImgContainer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+  }
+  .mapIndexItemImgContainer img{
+    width: 70vw;
+    height: 20vh;
+  }
+  .mapIndexItemDetails p{
+    line-height: 15px;
+  }
+
+  .mapIndexItemDetails{
+    width: 100vw;
+  }
+
+}
+
