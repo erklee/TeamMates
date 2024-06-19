@@ -179,20 +179,20 @@ const EventMap = () => {
 
     
     if (distance === 1) {
-      zoom = 15; 
+      zoom = window.innerWidth <= 600 ? 14.5 : 15
     } if (distance === 5){
-      zoom = 13;
+      zoom = window.innerWidth <= 600 ? 12 : 13
     } if (distance === 10){
-      zoom = 12;
+      zoom = window.innerWidth <= 600 ? 10 : 12
     }
     if (distance === 15){
-      zoom = 11;
+      zoom = window.innerWidth <= 600 ? 9.5 : 11
     }if (distance === 25){
-      zoom = 10.5;
+      zoom = window.innerWidth <= 600 ? 9 : 10.5
     }if (distance === 50){
-      zoom = 10;
+      zoom = window.innerWidth <= 600 ? 8.5 : 10
     }if(distance === 1000){
-      zoom = 9.5
+      zoom = window.innerWidth <= 600 ? 8.5 : 9.5
     }
 
    
@@ -206,8 +206,8 @@ const EventMap = () => {
   };
 
   const containerStyle = {
-    width: '70dvw',
-    height: '100dvh',
+    width: window.innerWidth <= 600 ? '100vw' : '70dvw',
+    height: window.innerWidth <= 600 ? '30dvh' : '100dvh',
   };
 
   const img = {
@@ -277,15 +277,35 @@ const EventMap = () => {
           </select> */}
 
           <div className="filterRange">
-            <p>Filter Range:</p>
-            <select value={filterRange} onChange={(e) => setFilterRange(parseInt(e.target.value))}>
-              {filterRangeOptions.map((option, index) => (
-                <option key={`${option?.id} ${index}`} value={option}>
-                  {option !== 1000? `${option} mile${option > 1 ? "s" : ""} away` : "Select a range"}
-                </option>
-              ))}
-            </select>
+            {window.innerWidth > 600 ? (
+              <>
+                <p>Filter Range:</p>
+                <select value={filterRange} onChange={(e) => setFilterRange(parseInt(e.target.value))} >
+                  {filterRangeOptions.map((option, index) => (
+                    <option key={`${option} ${index}`} value={option}>
+                      {option !== 1000 ? `${option} mile${option > 1 ? "s" : ""} away` : "Select a range"}
+                    </option>
+                  ))}
+                </select>
+                </>
+            ) : (
+              <>
+              <div id="gridRange">
+                <p>Filter Range:</p>
+                {filterRangeOptions.map((option) => (
+                  <button
+                    key={option}
+                    className={`rangeButton ${filterRange === option ? 'active' : ''}`}
+                    onClick={() => setFilterRange(option)}
+                  >
+                    {option !== 1000 ? `${option} mile${option > 1 ? "s" : ""}` : "All"}
+                  </button>
+                ))}
+              </div>
+              </>
+            )}
           </div>
+
         </div>
         <div className="eventInfoWrapper">
           {!selectedMarker && 

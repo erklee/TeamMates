@@ -11,8 +11,8 @@
     flex-direction: column;
     padding: 10px;
     max-height: 35vh;
-    margin-bottom: 3dvh;
-    margin-top: 1dvh;
+    margin-bottom: 3vh;
+    margin-top: 1vh;
 }
 
 .filters p {
@@ -28,6 +28,7 @@
     /* position:relative; */
     display: flex;
     flex-direction: row;
+    
 
 }
 
@@ -93,7 +94,8 @@
     flex-direction: row;
     justify-content: space-between;
     width: 225px;
-    
+    position: relative;
+   
 }
 
 .mapEventIndex {
@@ -109,13 +111,10 @@
     background-color: rgb(0, 0, 0);
     min-height: 70%;
     max-height: 70%;
-
     width: 30vw;
     text-wrap: wrap;
     overflow-y: auto;
- 
     scrollbar-color: auto;
-
 }
 
 .eventInfo {
@@ -189,3 +188,47 @@
 } */
 
 
+@media (max-width: 600px){
+    .filters{
+        margin-bottom: 120px;
+    }
+    .eventMapWrapper{
+        width: 100vw;
+        flex-direction: column-reverse;
+    }
+    .filterCategoryButtons {
+        width: 23vw;
+    }
+    .eventInfoWrapper{
+        width: 100vw; 
+    }
+
+    #gridRange{      
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+    }
+   
+
+    .rangeButton {
+        padding: 10px 25px;
+        margin: 4px;
+        border: none;
+        cursor: pointer;
+        background-color: rgb(255, 85, 0);;
+        color: white;
+        font-size: 16px;
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
+      }
+      
+      .rangeButton:hover {
+        background-color: rgb(255, 85, 0);;
+      }
+      
+      .rangeButton.active {
+        background-color: black;
+        color: rgb(255, 85, 0);
+      }
+      
+     
+}
