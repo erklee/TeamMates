@@ -122,3 +122,25 @@
   background-color: black;
   color: rgb(255, 85, 0);
 }
+
+@media (max-width: 600px){
+  .eventCreateForm{
+    width: 100vw;
+    margin-bottom: 250px;
+  }
+  .eventCreateFormPic{
+    max-width: 600px;
+    object-fit: fill;
+  }
+  .eventCreatePage{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .eventCreateCityStateZip{
+    flex-direction: column;
+  }
+  #address-input-wrapper input{
+    width: 300px;
+  }
+}

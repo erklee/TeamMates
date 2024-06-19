@@ -219,6 +219,7 @@ export default function EventCreateForm() {
 
             />
             </label>
+          
           <label htmlFor="category">
             <p>Category</p>
             <select 

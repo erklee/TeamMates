@@ -197,7 +197,7 @@
         flex-direction: column-reverse;
     }
     .filterCategoryButtons {
-        width: 23vw;
+        width: 90px;
     }
     .eventInfoWrapper{
         width: 100vw; 
@@ -210,7 +210,7 @@
    
 
     .rangeButton {
-        padding: 10px 25px;
+        padding: 10px 23.5px;
         margin: 4px;
         border: none;
         cursor: pointer;
