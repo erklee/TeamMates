@@ -206,8 +206,8 @@ const EventMap = () => {
   };
 
   const containerStyle = {
-    width: window.innerWidth <= 600 ? '100vw' : '70dvw',
-    height: window.innerWidth <= 600 ? '30dvh' : '100dvh',
+    width: window.innerWidth <= 600 ? '100vw' : '80vw',
+    height: window.innerWidth <= 600 ? '30dvh' : '100vh',
   };
 
   const img = {
@@ -216,6 +216,10 @@ const EventMap = () => {
   const filteredEvents = markers
   .filter(marker => marker.distance <= filterRange)
   .map(marker => marker.event);
+
+  const mapOptions = {
+    mapTypeControl: false 
+  };
 
   return (
     <div className="eventMapWrapper">
@@ -344,7 +348,7 @@ const EventMap = () => {
             mapContainerStyle={containerStyle}
             center={userLocation || { lat: 40.71679995490363, lng: -73.99771308650402 }}
             zoom={calculateZoomLevel(filterRange)}
-            onLoad={() => console.log("Map is loaded")}
+            options={mapOptions}
           >
             {userLocation && window.google && window.google.maps && (
               <MarkerF
