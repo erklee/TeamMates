@@ -168,9 +168,11 @@
     padding: 2px 2px
   }
   .navBarContainer h1 {
+    margin-left: 16px;
     font-size: 25px;
   }
   .navBarContainer h1 span {
+    /* margin-left: 10px; */
     font-size: 25px;
   }
   #navBarSignUp {
@@ -184,5 +186,11 @@
     width: 60px;
     height: 40px;
     font-size: 12px;
+  }
+  #create-button{
+    margin-right: 20px;
+  }
+  .userIconContainer {
+    margin-right: 20px;
   }
 }
