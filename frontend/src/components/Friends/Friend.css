@@ -53,3 +53,12 @@
   margin-bottom: 50px;
   /* overflow-y: scroll; */
 }
+
+@media (max-width: 600px){
+  .friendsIndexItemContainer{
+    max-width: 600px;
+  }
+  .unfriendButton{
+    left: -10px;
+  }
+}
