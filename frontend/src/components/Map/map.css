@@ -198,10 +198,15 @@
     }
     .filterCategoryButtons {
         width: 90px;
+        height: 50px;
+        align-self: center;
+       
     }
     .eventInfoWrapper{
         width: 100vw; 
     }
+
+   
 
     /* #gridRange{      
       display: grid;
