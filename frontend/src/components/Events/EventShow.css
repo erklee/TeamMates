@@ -168,17 +168,19 @@
   }
   .eventShowInfoWrapper{
     width: 100vw;
-  
+    
   }
   .eventShowPic {
     max-width: 600px;
     width: 100vw;
-  
   }
   
   .eventShowDetails{
-    width: 50vw;
-    padding-left: 20px;
+    width: 50vw;display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 10px;
+    padding-right: 10px;
   }
 
   .deleteBtn {
