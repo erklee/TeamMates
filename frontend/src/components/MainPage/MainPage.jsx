@@ -3,6 +3,7 @@ import SignUpModal from "../Modals/SignUpModal";
 import EventCarousel from "../Carousel/EventCarousel";
 import VideoPlayer from "./VideoPlayer";
 import Footer from "../AboutUs/Footer";
+import "./mainPage.css"
 
 
 function MainPage() {

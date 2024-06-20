@@ -1,0 +1,6 @@
+@media (max-width: 600px){
+    .mainPageWrapper{
+        max-width: 600px;
+        width: 100vw;
+    }
+}
