@@ -206,8 +206,8 @@ const EventMap = () => {
   };
 
   const containerStyle = {
-    width: window.innerWidth <= 600 ? '100vw' : '80vw',
-    height: window.innerWidth <= 600 ? '30dvh' : '100vh',
+    width: window.innerWidth <= 600 ? '100vw' : '70vw',
+    height: window.innerWidth <= 600 ? '35dvh' : '100vh',
   };
 
   const img = {

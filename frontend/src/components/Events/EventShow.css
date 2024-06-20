@@ -28,7 +28,7 @@
   left: 50%;
   transform: translateX(-50%);
   height: 100%;
-  width: 1000px;
+  /* width: 1000px; */
   height: 100%;
   width: 1000px;
 
@@ -159,5 +159,36 @@
   background-color: white;
   color: rgb(255, 85, 0);
 
+}
+
+@media (max-width: 600px){
+  .event-wrapper-info{
+    width: 100vw;
+    max-width: 600px;
+  }
+  .eventShowInfoWrapper{
+    width: 100vw;
+    
+  }
+  .eventShowPic {
+    max-width: 600px;
+    width: 100vw;
+  }
+  
+  .eventShowDetails{
+    width: 50vw;display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .deleteBtn {
+    top: 8px;
+    right:25px;
+    height: 40px;
+    /* padding: 13px 13px */
+  }
+ 
 }
 
