@@ -190,7 +190,7 @@
 
 @media (max-width: 600px){
     .filters{
-        margin-bottom: 120px;
+        margin-bottom: 20px;
     }
     .eventMapWrapper{
         width: 100vw;
@@ -203,7 +203,7 @@
         width: 100vw; 
     }
 
-    #gridRange{      
+    /* #gridRange{      
       display: grid;
       grid-template-columns: repeat(4, 1fr);
     }
@@ -228,7 +228,7 @@
       .rangeButton.active {
         background-color: black;
         color: rgb(255, 85, 0);
-      }
+      } */
       
      
 }

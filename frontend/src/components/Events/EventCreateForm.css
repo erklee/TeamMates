@@ -130,7 +130,7 @@
   }
   .eventCreateFormPic{
     max-width: 600px;
-    object-fit: fill;
+    object-fit: cover;
   }
   .eventCreatePage{
     display: flex;

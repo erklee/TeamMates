@@ -281,7 +281,7 @@ const EventMap = () => {
           </select> */}
 
           <div className="filterRange">
-            {window.innerWidth > 600 ? (
+            {/* {window.innerWidth > 600 ? ( */}
               <>
                 <p>Filter Range:</p>
                 <select value={filterRange} onChange={(e) => setFilterRange(parseInt(e.target.value))} >
@@ -292,8 +292,8 @@ const EventMap = () => {
                   ))}
                 </select>
                 </>
-            ) : (
-              <>
+            {/* ) : ( */}
+              {/* <>
               <div id="gridRange">
                 <p>Filter Range:</p>
                 {filterRangeOptions.map((option) => (
@@ -307,7 +307,7 @@ const EventMap = () => {
                 ))}
               </div>
               </>
-            )}
+            )} */}
           </div>
 
         </div>

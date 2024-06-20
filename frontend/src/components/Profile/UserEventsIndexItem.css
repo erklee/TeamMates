@@ -107,3 +107,12 @@
 .userEventsImageContainer:hover .userEventsImageOverlayText {
   opacity: 1;
 }
+
+@media (max-width: 600px){
+  .userEventsItemWrapper {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+}

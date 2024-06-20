@@ -89,3 +89,9 @@
   background-color: white;
   color: rgb(255, 85, 0);
 }
+
+@media (max-width: 600px){
+  .profilePageContainer{
+    width: 100vw;
+  }
+}
