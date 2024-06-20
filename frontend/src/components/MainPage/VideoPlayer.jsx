@@ -24,6 +24,7 @@ const VideoPlayer = () => {
 
     const videoElement = document.getElementById('video-player');
     videoElement.src = videos[nextVideoIndex];
+    videoElement.muted = true;
     if(videoElement.src === videos[nextVideoIndex]) await videoElement.play();
   };
 
