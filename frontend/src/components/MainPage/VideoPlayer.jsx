@@ -37,8 +37,9 @@ const VideoPlayer = () => {
         onEnded={handleVideoEnded}
         src={videos[currentVideoIndex]} 
         preload="auto"
-        muted  
-        autoPlay// controls
+        muted 
+        autoPlay 
+        playsInline
       >
       </video>
     </section>
