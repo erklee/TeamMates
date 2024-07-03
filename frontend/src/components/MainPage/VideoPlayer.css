@@ -59,5 +59,7 @@
   }
   #video-player{
     height: 300px;
+    max-width: 600px;
+    width: 100vw;
   }
 }
