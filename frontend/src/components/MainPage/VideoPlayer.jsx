@@ -31,6 +31,7 @@ const VideoPlayer = () => {
 
   return (
     <section id="video-player-wrapper">
+    
       <h1 className="videoSlogan">Make Friends, Play Sports, Stay Connected</h1>
       <video
         id="video-player"
