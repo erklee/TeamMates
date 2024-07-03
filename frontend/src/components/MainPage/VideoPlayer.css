@@ -16,11 +16,15 @@
 } */ 
 #video-player-wrapper {
   position: relative;
+  background: linear-gradient(to bottom, black, #333, #666, #999, #bbb, #ddd, #eee, #f0f0f0, white);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 #video-player {
   width: 100vw;
   height:500px;
-  background: linear-gradient(to bottom, black, #333, #666, #999, #bbb, #ddd, #eee, #f0f0f0, white);
+ 
 
 }
 
@@ -58,8 +62,10 @@
     font-size: 19px;
   }
   #video-player{
+    
     height: 300px;
-    max-width: 300px;
-    width: 100vw;
+    max-width: 600px;
+    width: 90vw;
+
   }
 }
