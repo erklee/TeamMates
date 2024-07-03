@@ -92,6 +92,7 @@
   .carouselWrapper{
     max-width: 600px;
     width: 100vw;
+    overflow-x: hidden;
   }
   .sportsIconInfoContainer img {
     width: 90px;
