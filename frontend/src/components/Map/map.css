@@ -190,7 +190,7 @@
 
 @media (max-width: 600px){
     .filters{
-        margin-bottom: 20px;
+        margin-bottom: 50px;
     }
     .eventMapWrapper{
         width: 100vw;
@@ -200,6 +200,7 @@
         width: 90px;
         height: 50px;
         align-self: center;
+        justify-self: center;
        
     }
     .eventInfoWrapper{

@@ -62,10 +62,11 @@
     font-size: 19px;
   }
   #video-player{
-    
+    object-fit: cover;
     height: 300px;
     max-width: 600px;
     width: 90vw;
+    background-color: transparent;
    
   }
 }

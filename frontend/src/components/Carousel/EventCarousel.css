@@ -89,6 +89,10 @@
 } */
 
 @media (max-width: 600px){
+  .carouselWrapper{
+    max-width: 600px;
+    width: 100vw;
+  }
   .sportsIconInfoContainer img {
     width: 90px;
     height: 90px;
@@ -100,5 +104,7 @@
   }
   #EventsHeader{
     margin-top: 10px;
+    max-width: 600px;
+    width: 100vw;
   }
 }
