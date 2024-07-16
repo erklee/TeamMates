@@ -275,4 +275,4 @@ Shaun Jhingoor [Github](https://github.com/ShaunJhingoor)
 
 Eric Lee [Github](https://github.com/erklee)
 
-Pete Nolan [Github](https://github.com/PlasmaNuke)
+Pete Nolan [Github](https://github.com/ptrnln)
