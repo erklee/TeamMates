@@ -74,16 +74,11 @@ if (isProduction) {
 // CSRF token
 
 
+// Attach Express routers
 app.use('/api/users', usersRouter);
 app.use('/api/csrf', csrfRouter);
 app.use('/api/events', eventsRouter);
-app.use(cors(
-  {
-    origin: ["https://team-mates.vercel.app"],
-    methods: ["POST","GET"],
-    credentials: true
-  }
-))
+
 
 const serverErrorLogger = debug('backend:error');
 
