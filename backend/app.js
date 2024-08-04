@@ -74,7 +74,6 @@ if (isProduction) {
 // CSRF token
 
 
-// Attach Express routers
 app.use('/api/users', usersRouter);
 app.use('/api/csrf', csrfRouter);
 app.use('/api/events', eventsRouter);
