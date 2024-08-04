@@ -15,10 +15,13 @@ export default defineConfig(({ mode }) => ({
     proxy: {
       "/api": "http://localhost:3000",
     },
+    // Uncomment this if you want to open the browser automatically
+    // open: true
   },
-  // To automatically open the app in the browser whenever the server starts,
-  // uncomment the following lines:
-  // server: {
-  //   open: true
-  // }
+  build: {
+    rollupOptions: {
+      input: 'index.html', // Ensure the input is set to index.html
+    },
+  },
 }));
+
