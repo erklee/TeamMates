@@ -13,7 +13,7 @@ export default defineConfig(({ mode }) => ({
   ],
   server: {
     proxy: {
-      "/api": "http://localhost:3000",
+      "/api": "https://team-mates-backend.vercel.app/",
     },
     // Uncomment this if you want to open the browser automatically
     // open: true

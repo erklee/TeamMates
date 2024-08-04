@@ -24,11 +24,13 @@
     "passport-local": "^1.0.0"
   },
   "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.1",
     "dotenv-cli": "^7.3.0",
-    "nodemon": "^3.0.3"
+    "nodemon": "^3.0.3",
+    "vite": "^5.3.5",
+    "vite-plugin-eslint": "^1.8.1"
   },
   "engines": {
     "node": "18.x"
   }
-
 }
