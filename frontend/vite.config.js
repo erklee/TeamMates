@@ -14,7 +14,7 @@ export default defineConfig(({ mode }) => ({
     proxy: {
       // Proxy local API calls to the backend during development
       "/api": {
-        target: mode === "production" ? "https://team-mates-backend.vercel.app/" : "http://localhost:3000",
+        target: mode === "production" ? "https://team-mates-backend.vercel.app" : "http://localhost:3000",
         changeOrigin: true,
         secure: false,
       },
