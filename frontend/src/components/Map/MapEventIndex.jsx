@@ -1,13 +1,14 @@
 import "./MapEventIndex.css";
-import MapEventIndexItem from './MapEventIndexItem';
+import MapEventIndexItem from "./MapEventIndexItem";
 
 const MapEventIndex = ({ events, selectedCategory, selectedDifficulty }) => {
   let filters = {
     category: selectedCategory || "",
     difficulty: selectedDifficulty || "",
   };
+  console.log(events);
 
-  let filteredEvents = events.filter(event => {
+  let filteredEvents = events.filter((event) => {
     for (let key in filters) {
       if (filters[key] && event[key] !== filters[key]) {
         return false;

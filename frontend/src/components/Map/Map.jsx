@@ -1,32 +1,48 @@
 import { useEffect, useState } from "react";
-import { GoogleMap, Marker, InfoWindow, LoadScript, MarkerF } from "@react-google-maps/api";
+import {
+  GoogleMap,
+  Marker,
+  InfoWindow,
+  LoadScript,
+  MarkerF,
+} from "@react-google-maps/api";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchEvents } from "../../store/events";
 import { selectAlleventsArray } from "../../store/events";
 import spinping from "../../assets/images/spin-trans.gif";
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from "react-router-dom";
 import MapEventIndex from "./MapEventIndex";
-import './map.css';
-
+import "./map.css";
 
 const EventMap = () => {
-  const {state} =  useLocation();
+  const { state } = useLocation();
   const { sport } = state || {};
   const events = useSelector(selectAlleventsArray);
   const navigate = useNavigate();
   const [markers, setMarkers] = useState([]);
-  const [userLocation, setUserLocation] = useState(null);
+
+  const DEFAULT_CENTER = { lat: 40.71679995490363, lng: -73.99771308650402 };
+  const [userLocation, setUserLocation] = useState(DEFAULT_CENTER);
   const [selectedMarker, setSelectedMarker] = useState(null);
-  const [selectedCategory, setSelectedCategory] = useState(sport ||"");
+  const [selectedCategory, setSelectedCategory] = useState(sport || "");
   const [selectedDifficulty, setSelectedDifficulty] = useState("");
   const [filterRange, setFilterRange] = useState(1000);
   const dispatch = useDispatch();
   function formatDate(inputDateString) {
     const dateObject = new Date(inputDateString);
     const monthNames = [
-      "January", "February", "March", "April",
-      "May", "June", "July", "August",
-      "September", "October", "November", "December",
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
     ];
     const monthName = monthNames[dateObject.getMonth()];
     const day = dateObject.getDate();
@@ -35,15 +51,13 @@ const EventMap = () => {
     return formattedDate;
   }
 
-
-
-  const handleEventShow = e => {
+  const handleEventShow = (e) => {
     e.preventDefault();
     // console.log(selectedMarker.event["_id"])
     navigate(`/events/${selectedMarker.event["_id"]}`);
   };
 
-  const handleCategoryButton = e => {
+  const handleCategoryButton = (e) => {
     e.preventDefault();
     if (selectedCategory === e.target.name) {
       setSelectedCategory("");
@@ -52,7 +66,7 @@ const EventMap = () => {
     }
   };
 
-  const handleDifficultyButton = e => {
+  const handleDifficultyButton = (e) => {
     e.preventDefault();
     if (selectedDifficulty === e.target.name) {
       setSelectedDifficulty("");
@@ -70,72 +84,99 @@ const EventMap = () => {
   // }, []);
 
   useEffect(() => {
+    let isMounted = true;
+
     const geocodeAddresses = async () => {
       try {
         const results = await Promise.allSettled(
           events
-            .filter((event) => 
-              (!selectedCategory || event.category === selectedCategory) && 
-          (!selectedDifficulty || event.difficulty === selectedDifficulty)
+            .filter(
+              (event) =>
+                (!selectedCategory || event.category === selectedCategory) &&
+                (!selectedDifficulty || event.difficulty === selectedDifficulty)
             )
             .map(async (event) => {
               try {
-                const response = await fetch(
+                const res = await fetch(
                   `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
                     event.location.address
                   )}&key=${import.meta.env.VITE_APP_GOOGLE_MAPS_API_KEY}`
                 );
+                const data = await res.json();
 
-                const data = await response.json();
+                if (data.status !== "OK") {
+                  console.warn(
+                    "Geocode failed:",
+                    data.status,
+                    event.location.address
+                  );
+                  return null;
+                }
 
-                if (data.status === "OK" && data.results && data.results.length > 0) {
-                  const location = data.results[0].geometry.location;
-                  const distance = calculateDistance(
-                    userLocation?.lat,
-                    userLocation?.lng,
+                const location = data.results[0]?.geometry?.location;
+                if (!location) return null;
+
+                // If we don't have userLocation yet, skip distance calc
+                let distance = null;
+                if (userLocation) {
+                  distance = calculateDistanceMiles(
+                    userLocation.lat,
+                    userLocation.lng,
                     location.lat,
                     location.lng
                   );
-
-                  return { id: event.id, position: location, event, distance };
                 }
-              } catch (error) {
-                console.error("Error geocoding address:", error);
+
+                return {
+                  id: event._id || event.id,
+                  position: location,
+                  event,
+                  distance,
+                };
+              } catch (e) {
+                console.error("Error geocoding address:", e);
                 return null;
               }
             })
         );
 
-        const newMarkers = results
-          .filter((result) => result.status === "fulfilled" && result.value !== null)
-          .map((result) => result.value)
-          .filter((marker) => filterRange === null || (marker?.distance !== undefined && marker.distance <= filterRange));
+        // 2) Build markers first (no distance filter if userLocation is missing OR "All")
+        let newMarkers = results
+          .filter((r) => r.status === "fulfilled" && r.value)
+          .map((r) => r.value);
 
-        if (isMounted) {
-          setMarkers(newMarkers);
+        // Apply distance filter only when:
+        // - we have userLocation AND user selected a real range (not 1000/"All")
+        if (userLocation && filterRange !== 1000) {
+          newMarkers = newMarkers.filter(
+            (m) => typeof m.distance === "number" && m.distance <= filterRange
+          );
         }
-      } catch (error) {
-        console.error("Error in geocodeAddresses:", error);
+
+        if (isMounted) setMarkers(newMarkers);
+      } catch (e) {
+        console.error("Error in geocodeAddresses:", e);
       }
     };
 
-    let isMounted = true;
-
     geocodeAddresses();
-
     return () => {
       isMounted = false;
     };
-  }, [events, userLocation, selectedCategory, selectedDifficulty, filterRange, dispatch]);
+  }, [events, userLocation, selectedCategory, selectedDifficulty, filterRange]);
 
   useEffect(() => {
     const getUserLocation = () => {
       let confirmGeolocation;
-      if (!sessionStorage.getItem('confirmedLocation')) {
-        confirmGeolocation = window.confirm("This app would like to use your location. Allow?");
+      if (!sessionStorage.getItem("confirmedLocation")) {
+        confirmGeolocation = window.confirm(
+          "This app would like to use your location. Allow?"
+        );
         sessionStorage.setItem("confirmedLocation", `${confirmGeolocation}`);
       } else {
-        confirmGeolocation = JSON.parse(sessionStorage.getItem('confirmedLocation'));
+        confirmGeolocation = JSON.parse(
+          sessionStorage.getItem("confirmedLocation")
+        );
       }
 
       if (confirmGeolocation && navigator.geolocation) {
@@ -158,44 +199,47 @@ const EventMap = () => {
     };
 
     getUserLocation();
-  }, []);
+  }, [userLocation]);
 
-  const calculateDistance = (lat1, lon1, lat2, lon2) => {
-    const R = 6371;
-    const dLat = (lat2 - lat1) * (Math.PI / 180);
-    const dLon = (lon2 - lon1) * (Math.PI / 180);
+  // 1) Use miles so labels match logic
+  const calculateDistanceMiles = (lat1, lon1, lat2, lon2) => {
+    // Haversine, Earth radius in miles
+    const R = 3959;
+    const toRad = (deg) => deg * (Math.PI / 180);
+    const dLat = toRad(lat2 - lat1);
+    const dLon = toRad(lon2 - lon1);
     const a =
-      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+      Math.sin(dLat / 2) ** 2 +
+      Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon / 2) ** 2;
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    const distance = R * c;
-    return distance;
+    return R * c;
   };
 
-
   const calculateZoomLevel = (distance) => {
-   
     let zoom;
 
-    
     if (distance === 1) {
-      zoom = window.innerWidth <= 600 ? 14.5 : 15
-    } if (distance === 5){
-      zoom = window.innerWidth <= 600 ? 12 : 13
-    } if (distance === 10){
-      zoom = window.innerWidth <= 600 ? 10 : 12
+      zoom = window.innerWidth <= 600 ? 14.5 : 15;
     }
-    if (distance === 15){
-      zoom = window.innerWidth <= 600 ? 9.5 : 11
-    }if (distance === 25){
-      zoom = window.innerWidth <= 600 ? 9 : 10.5
-    }if (distance === 50){
-      zoom = window.innerWidth <= 600 ? 8.5 : 10
-    }if(distance === 1000){
-      zoom = window.innerWidth <= 600 ? 8.5 : 9.5
+    if (distance === 5) {
+      zoom = window.innerWidth <= 600 ? 12 : 13;
+    }
+    if (distance === 10) {
+      zoom = window.innerWidth <= 600 ? 10 : 12;
+    }
+    if (distance === 15) {
+      zoom = window.innerWidth <= 600 ? 9.5 : 11;
+    }
+    if (distance === 25) {
+      zoom = window.innerWidth <= 600 ? 9 : 10.5;
+    }
+    if (distance === 50) {
+      zoom = window.innerWidth <= 600 ? 8.5 : 10;
+    }
+    if (distance === 1000) {
+      zoom = window.innerWidth <= 600 ? 8.5 : 9.5;
     }
 
-   
     return zoom;
   };
 
@@ -206,19 +250,20 @@ const EventMap = () => {
   };
 
   const containerStyle = {
-    width: window.innerWidth <= 600 ? '100vw' : '70vw',
-    height: window.innerWidth <= 600 ? '35dvh' : '100vh',
+    width: window.innerWidth <= 600 ? "100vw" : "70vw",
+    height: window.innerWidth <= 600 ? "35dvh" : "100vh",
   };
 
   const img = {
     url: spinping,
   };
-  const filteredEvents = markers
-  .filter(marker => marker.distance <= filterRange)
-  .map(marker => marker.event);
+  const filteredEvents =
+    !userLocation || filterRange === 1000
+      ? markers.map((m) => m.event)
+      : markers.filter((m) => m.distance <= filterRange).map((m) => m.event);
 
   const mapOptions = {
-    mapTypeControl: false 
+    mapTypeControl: false,
   };
 
   return (
@@ -242,15 +287,62 @@ const EventMap = () => {
               <p>Category:</p>
               <div className="filterCategoryButtonsContainer">
                 <div className="categoryButtonRow">
-                  <button name="basketball" onClick={handleCategoryButton} className={`filterCategoryButtons ${selectedCategory === "basketball" ? "selected" : ""}`}>Basketball</button>
-                  <button name="football" onClick={handleCategoryButton} className={`filterCategoryButtons ${selectedCategory === "football" ? "selected" : ""}`}>Football</button>
-                  <button name="hockey" onClick={handleCategoryButton} className={`filterCategoryButtons ${selectedCategory === "hockey" ? "selected" : ""}`}>Hockey</button>
-
+                  <button
+                    name="basketball"
+                    onClick={handleCategoryButton}
+                    className={`filterCategoryButtons ${
+                      selectedCategory === "basketball" ? "selected" : ""
+                    }`}
+                  >
+                    Basketball
+                  </button>
+                  <button
+                    name="football"
+                    onClick={handleCategoryButton}
+                    className={`filterCategoryButtons ${
+                      selectedCategory === "football" ? "selected" : ""
+                    }`}
+                  >
+                    Football
+                  </button>
+                  <button
+                    name="hockey"
+                    onClick={handleCategoryButton}
+                    className={`filterCategoryButtons ${
+                      selectedCategory === "hockey" ? "selected" : ""
+                    }`}
+                  >
+                    Hockey
+                  </button>
                 </div>
                 <div className="categoryButtonRow">
-                  <button name="baseball" onClick={handleCategoryButton} className={`filterCategoryButtons ${selectedCategory === "baseball" ? "selected" : ""}`}>Baseball</button>
-                  <button name="tennis" onClick={handleCategoryButton} className={`filterCategoryButtons ${selectedCategory === "tennis" ? "selected" : ""}`}>Tennis</button>
-                  <button name="soccer" onClick={handleCategoryButton} className={`filterCategoryButtons ${selectedCategory === "soccer" ? "selected" : ""}`}>Soccer</button>
+                  <button
+                    name="baseball"
+                    onClick={handleCategoryButton}
+                    className={`filterCategoryButtons ${
+                      selectedCategory === "baseball" ? "selected" : ""
+                    }`}
+                  >
+                    Baseball
+                  </button>
+                  <button
+                    name="tennis"
+                    onClick={handleCategoryButton}
+                    className={`filterCategoryButtons ${
+                      selectedCategory === "tennis" ? "selected" : ""
+                    }`}
+                  >
+                    Tennis
+                  </button>
+                  <button
+                    name="soccer"
+                    onClick={handleCategoryButton}
+                    className={`filterCategoryButtons ${
+                      selectedCategory === "soccer" ? "selected" : ""
+                    }`}
+                  >
+                    Soccer
+                  </button>
                 </div>
                 {/* <div className="categoryButtonRow">
                 
@@ -262,9 +354,33 @@ const EventMap = () => {
               <p id="DifficultyLabel">Difficulty:</p>
               <div className="filterCategoryButtonsContainer">
                 <div className="categoryButtonRow">
-                  <button name="easy" onClick={handleDifficultyButton} className={`filterCategoryButtons ${selectedDifficulty === "easy" ? "selected" : ""}`}>Easy</button>
-                  <button name="medium" onClick={handleDifficultyButton} className={`filterCategoryButtons ${selectedDifficulty === "medium" ? "selected" : ""}`}>Medium</button>
-                  <button name="hard" onClick={handleDifficultyButton} className={`filterCategoryButtons ${selectedDifficulty === "hard" ? "selected" : ""}`}>Hard</button>
+                  <button
+                    name="easy"
+                    onClick={handleDifficultyButton}
+                    className={`filterCategoryButtons ${
+                      selectedDifficulty === "easy" ? "selected" : ""
+                    }`}
+                  >
+                    Easy
+                  </button>
+                  <button
+                    name="medium"
+                    onClick={handleDifficultyButton}
+                    className={`filterCategoryButtons ${
+                      selectedDifficulty === "medium" ? "selected" : ""
+                    }`}
+                  >
+                    Medium
+                  </button>
+                  <button
+                    name="hard"
+                    onClick={handleDifficultyButton}
+                    className={`filterCategoryButtons ${
+                      selectedDifficulty === "hard" ? "selected" : ""
+                    }`}
+                  >
+                    Hard
+                  </button>
                 </div>
               </div>
             </div>
@@ -282,18 +398,23 @@ const EventMap = () => {
 
           <div className="filterRange">
             {/* {window.innerWidth > 600 ? ( */}
-              <>
-                <p>Filter Range:</p>
-                <select value={filterRange} onChange={(e) => setFilterRange(parseInt(e.target.value))} >
-                  {filterRangeOptions.map((option, index) => (
-                    <option key={`${option} ${index}`} value={option}>
-                      {option !== 1000 ? `${option} mile${option > 1 ? "s" : ""} away` : "Select a range"}
-                    </option>
-                  ))}
-                </select>
-                </>
+            <>
+              <p>Filter Range:</p>
+              <select
+                value={filterRange}
+                onChange={(e) => setFilterRange(parseInt(e.target.value))}
+              >
+                {filterRangeOptions.map((option, index) => (
+                  <option key={`${option} ${index}`} value={option}>
+                    {option !== 1000
+                      ? `${option} mile${option > 1 ? "s" : ""} away`
+                      : "Select a range"}
+                  </option>
+                ))}
+              </select>
+            </>
             {/* ) : ( */}
-              {/* <>
+            {/* <>
               <div id="gridRange">
                 <p>Filter Range:</p>
                 {filterRangeOptions.map((option) => (
@@ -309,64 +430,91 @@ const EventMap = () => {
               </>
             )} */}
           </div>
-
         </div>
         <div className="eventInfoWrapper">
-          {!selectedMarker && 
+          {!selectedMarker && (
             <div className="mapEventIndex">
-           
-                 <MapEventIndex events={filteredEvents} selectedCategory={selectedCategory} selectedDifficulty={selectedDifficulty} />
-              
-             
+              <MapEventIndex
+                events={filteredEvents}
+                selectedCategory={selectedCategory}
+                selectedDifficulty={selectedDifficulty}
+              />
             </div>
-          }
-          {selectedMarker && 
+          )}
+          {selectedMarker && (
             <div className="eventInfo">
-              <div className="sideBarEventImgContainer"> 
-                <div className="sideBarImgOverlayText" onClick={handleEventShow} >Go To Event</div>
-                <img src={selectedMarker.event.pictureUrl} onClick={handleEventShow} alt="picture"/>
+              <div className="sideBarEventImgContainer">
+                <div
+                  className="sideBarImgOverlayText"
+                  onClick={handleEventShow}
+                >
+                  Go To Event
+                </div>
+                <img
+                  src={selectedMarker.event.pictureUrl}
+                  onClick={handleEventShow}
+                  alt="picture"
+                />
               </div>
               {/* <img src={selectedMarker.event.pictureUrl} alt="picture"/> */}
               <div className="eventInfoDetails">
-                <p>{selectedMarker.event.title.slice(0,1).toUpperCase() + selectedMarker.event.title.slice(1)}</p>
+                <p>
+                  {selectedMarker.event.title.slice(0, 1).toUpperCase() +
+                    selectedMarker.event.title.slice(1)}
+                </p>
                 <p>{`Description: ${selectedMarker.event.description}`}</p>
-                <p>{`Sport: ${selectedMarker.event.category.slice(0,1).toUpperCase()}${selectedMarker.event.category.slice(1)}`}</p>
+                <p>{`Sport: ${selectedMarker.event.category
+                  .slice(0, 1)
+                  .toUpperCase()}${selectedMarker.event.category.slice(1)}`}</p>
                 <p>{`Address: ${selectedMarker.event.location.address} ${selectedMarker.event.location.zipcode}`}</p>
                 <p>{`Date: ${formatDate(selectedMarker.event.date)}`}</p>
                 <p>{`Participants: ${selectedMarker.event.attendees.length}`}</p>
               </div>
             </div>
-          }
+          )}
         </div>
       </div>
       <div>
         <LoadScript
           googleMapsApiKey={import.meta.env.VITE_APP_GOOGLE_MAPS_API_KEY}
-          
         >
-          <GoogleMap 
+          <GoogleMap
             mapContainerStyle={containerStyle}
-            center={userLocation || { lat: 40.71679995490363, lng: -73.99771308650402 }}
+            center={
+              userLocation || {
+                lat: 40.71679995490363,
+                lng: -73.99771308650402,
+              }
+            }
             zoom={calculateZoomLevel(filterRange)}
             options={mapOptions}
           >
             {userLocation && window.google && window.google.maps && (
               <MarkerF
                 position={userLocation}
-
-              
                 animation={window.google.maps.Animation.BOUNCE}
                 icon={img}
               />
             )}
-
 
             {markers.map((marker, index) => (
               <Marker
                 key={`${marker.id} ${index}`}
                 position={marker.position}
                 onClick={() => {
-                  setSelectedMarker(marker); 
+                  let m = marker;
+                  if (m.distance == null && userLocation) {
+                    m = {
+                      ...marker,
+                      distance: calculateDistanceMiles(
+                        userLocation.lat,
+                        userLocation.lng,
+                        marker.position.lat,
+                        marker.position.lng
+                      ),
+                    };
+                  }
+                  setSelectedMarker(m);
                 }}
               />
             ))}
@@ -380,27 +528,22 @@ const EventMap = () => {
                   <p>{selectedMarker.event.description}</p>
                   <p>Difficulty: {selectedMarker.event.difficulty}</p>
                   <p>Distance: {selectedMarker.distance.toFixed(2)} miles</p>
-                  <a target="_blank" href={`https://maps.google.com/?q=${selectedMarker.event.location.address}, ${selectedMarker.event.location.zipcode}`} rel="noreferrer">Directions</a>
 
+                  <a
+                    target="_blank"
+                    href={`https://maps.google.com/?q=${selectedMarker.event.location.address}, ${selectedMarker.event.location.zipcode}`}
+                    rel="noreferrer"
+                  >
+                    Directions
+                  </a>
                 </div>
               </InfoWindow>
             )}
           </GoogleMap>
         </LoadScript>
       </div>
-      
     </div>
   );
 };
 
 export default EventMap;
-
-
-
-
-
-
-
-
-
-
