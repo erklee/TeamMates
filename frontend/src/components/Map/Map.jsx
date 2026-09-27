@@ -5,6 +5,7 @@ import {
   InfoWindow,
   LoadScript,
   MarkerF,
+  useJsApiLoader,
 } from "@react-google-maps/api";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchEvents } from "../../store/events";
@@ -20,6 +21,9 @@ const EventMap = () => {
   const events = useSelector(selectAlleventsArray);
   const navigate = useNavigate();
   const [markers, setMarkers] = useState([]);
+  const { isLoaded } = useJsApiLoader({
+    googleMapsApiKey: import.meta.env.VITE_APP_GOOGLE_MAPS_API_KEY,
+  });
 
   const DEFAULT_CENTER = { lat: 40.71679995490363, lng: -73.99771308650402 };
   const [userLocation, setUserLocation] = useState(DEFAULT_CENTER);
@@ -84,86 +88,96 @@ const EventMap = () => {
   // }, []);
 
   useEffect(() => {
+    if (!isLoaded || !window.google) return;
+
     let isMounted = true;
 
     const geocodeAddresses = async () => {
-      try {
-        const results = await Promise.allSettled(
-          events
-            .filter(
-              (event) =>
-                (!selectedCategory || event.category === selectedCategory) &&
-                (!selectedDifficulty || event.difficulty === selectedDifficulty)
-            )
-            .map(async (event) => {
-              try {
-                const res = await fetch(
-                  `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
-                    event.location.address
-                  )}&key=${import.meta.env.VITE_APP_GOOGLE_MAPS_API_KEY}`
-                );
-                const data = await res.json();
+      const geocoder = new window.google.maps.Geocoder();
 
-                if (data.status !== "OK") {
-                  console.warn(
-                    "Geocode failed:",
-                    data.status,
-                    event.location.address
-                  );
-                  return null;
-                }
+      const filtered = events.filter(
+        (event) =>
+          (!selectedCategory || event.category === selectedCategory) &&
+          (!selectedDifficulty || event.difficulty === selectedDifficulty)
+      );
 
-                const location = data.results[0]?.geometry?.location;
-                if (!location) return null;
+      const results = await Promise.allSettled(
+        filtered.map(async (event) => {
+          try {
+            const response = await geocoder.geocode({
+              address: event.location.address,
+            });
 
-                // If we don't have userLocation yet, skip distance calc
-                let distance = null;
-                if (userLocation) {
-                  distance = calculateDistanceMiles(
-                    userLocation.lat,
-                    userLocation.lng,
-                    location.lat,
-                    location.lng
-                  );
-                }
+            if (!response.results.length) {
+              return null;
+            }
 
-                return {
-                  id: event._id || event.id,
-                  position: location,
-                  event,
-                  distance,
-                };
-              } catch (e) {
-                console.error("Error geocoding address:", e);
-                return null;
-              }
-            })
+            const resultLocation = response.results[0].geometry.location;
+
+            const location = {
+              lat: resultLocation.lat(),
+              lng: resultLocation.lng(),
+            };
+
+            let distance = null;
+
+            if (userLocation) {
+              distance = calculateDistanceMiles(
+                userLocation.lat,
+                userLocation.lng,
+                location.lat,
+                location.lng
+              );
+            }
+
+            return {
+              id: event._id || event.id,
+              position: location,
+              event,
+              distance,
+            };
+          } catch (error) {
+            console.error(
+              "Error geocoding address:",
+              event.location.address,
+              error
+            );
+
+            return null;
+          }
+        })
+      );
+
+      let newMarkers = results
+        .filter((result) => result.status === "fulfilled" && result.value)
+        .map((result) => result.value);
+
+      if (userLocation && filterRange !== 1000) {
+        newMarkers = newMarkers.filter(
+          (marker) =>
+            typeof marker.distance === "number" &&
+            marker.distance <= filterRange
         );
+      }
 
-        // 2) Build markers first (no distance filter if userLocation is missing OR "All")
-        let newMarkers = results
-          .filter((r) => r.status === "fulfilled" && r.value)
-          .map((r) => r.value);
-
-        // Apply distance filter only when:
-        // - we have userLocation AND user selected a real range (not 1000/"All")
-        if (userLocation && filterRange !== 1000) {
-          newMarkers = newMarkers.filter(
-            (m) => typeof m.distance === "number" && m.distance <= filterRange
-          );
-        }
-
-        if (isMounted) setMarkers(newMarkers);
-      } catch (e) {
-        console.error("Error in geocodeAddresses:", e);
+      if (isMounted) {
+        setMarkers(newMarkers);
       }
     };
 
     geocodeAddresses();
+
     return () => {
       isMounted = false;
     };
-  }, [events, userLocation, selectedCategory, selectedDifficulty, filterRange]);
+  }, [
+    isLoaded,
+    events,
+    userLocation,
+    selectedCategory,
+    selectedDifficulty,
+    filterRange,
+  ]);
 
   useEffect(() => {
     const getUserLocation = () => {
@@ -199,7 +213,7 @@ const EventMap = () => {
     };
 
     getUserLocation();
-  }, [userLocation]);
+  }, []);
 
   // 1) Use miles so labels match logic
   const calculateDistanceMiles = (lat1, lon1, lat2, lon2) => {
@@ -475,9 +489,7 @@ const EventMap = () => {
         </div>
       </div>
       <div>
-        <LoadScript
-          googleMapsApiKey={import.meta.env.VITE_APP_GOOGLE_MAPS_API_KEY}
-        >
+        {isLoaded && (
           <GoogleMap
             mapContainerStyle={containerStyle}
             center={
@@ -540,7 +552,7 @@ const EventMap = () => {
               </InfoWindow>
             )}
           </GoogleMap>
-        </LoadScript>
+        )}
       </div>
     </div>
   );
