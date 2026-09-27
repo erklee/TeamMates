@@ -3,7 +3,6 @@ import {
   GoogleMap,
   Marker,
   InfoWindow,
-  LoadScript,
   MarkerF,
   useJsApiLoader,
 } from "@react-google-maps/api";
